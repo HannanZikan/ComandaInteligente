@@ -10,7 +10,7 @@ import StyleIndex from '../styles/index'
 
 export default props => {
     const [text, onChangeText] = useState()
-    const goToCheckIn = () => {props.navigation.navigate("CheckIn")} 
+    const goToLogin = () => {props.navigation.navigate("Login")} 
 
     return (
         <Background>
@@ -21,32 +21,33 @@ export default props => {
                     source={Logo}
                     style={style.logo} />
 
-                <TextInput
-                    style={style.input}
-                    value={text}
-                    placeholder="EMAIL"
-                    placeholderTextColor="#FFF" />
-
-                <TextInput
-                    style={style.input}
-                    value={text}
-                    secureTextEntry={true}
-                    placeholder="SENHA"
-                    placeholderTextColor="#FFF" />
-
                 <TouchableOpacity style={style.button}
-                    onPress={goToCheckIn}>
+                    onPress={goToLogin}>
                     <Text style={style.buttonText}>ENTRAR</Text>
                 </TouchableOpacity>
 
+                <TouchableOpacity style={style.buttonFacebook}>
+                    <View style={StyleIndex.containerRow}>
+                        <Image
+                            resizeMode='contain'
+                            source={FacebookIcon}
+                            style={style.buttonIcon}
+                        />
+                        <Text style={style.buttonTextFacebook}>Entrar com Facebook</Text>
+                    </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={style.buttonGmail}>
                 <View style={StyleIndex.containerRow}>
-                    <TouchableOpacity>
-                        <Text style={style.buttonRow}>Registrar</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={style.buttonRow}>Esqueci minha senha</Text>
-                    </TouchableOpacity>
-                </View>
+                        <Image
+                            resizeMode='contain'
+                            source={GoogleIcon}
+                            style={style.buttonIcon}
+                        />
+                        <Text style={style.buttonTextGmail}>Entrar com Gmail</Text>
+                    </View>
+                    
+                </TouchableOpacity>
 
             </View>
         </Background>

@@ -9,7 +9,6 @@ export default props => {
         <ImageBackground
             source={imagemFundo}
             style={style.background}>
-            {/* LEMBRA DE USAR ESSA MERDA PRA NÃO PASSAR SUFOCO DE NOVO */}
             {props.children}
         </ImageBackground>
     )

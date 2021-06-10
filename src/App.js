@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import { SafeAreaView, Text, StatusBar, View } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native';
 
 import Login from './views/Login'
 import CheckIn from './views/CheckIn'
@@ -10,14 +11,17 @@ import EscolherMetodosPagamento from './views/EscolherPagamento'
 export default () => {
     return (
         <Fragment>
-            <StatusBar
-                backgroundColor="#000"
-            />
+            <NavigationContainer>
+                <StatusBar
+                    backgroundColor="#000"
+                />
+                <CheckIn />
+            </NavigationContainer>
             {/* <Login /> */}
             {/* <CheckIn /> */}
             {/* <Cardapio /> */}
             {/* <Pedido /> */}
-            <EscolherMetodosPagamento />
+            {/* <EscolherMetodosPagamento /> */}
 
         </Fragment>
     )
