@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity} from 'react-native'
 
 import Background from '../components/Background' // imagem de background estilizada para a tela inteira
 import Logo from '../../assets/images/logo.png'
 import StyleIndex from '../styles/index'
 
-
 export default props => {
     const [text, onChangeText] = useState()
-    const goToCheckIn = () => {props.navigation.navigate("CheckIn")} 
-    const goToCadastrar = () => {props.navigation.navigate("CadastrarUsuario")} 
+    const goToCheckIn = () => {props.navigation.navigate("CheckIn")}
 
     return (
         <Background>
@@ -23,31 +21,33 @@ export default props => {
                 <TextInput
                     style={style.input}
                     value={text}
-                    placeholder="EMAIL"
-                    placeholderTextColor="#FFF" />
+                    placeholder="Nome"
+                    placeholderTextColor="#606060" />
+
+                <TextInput
+                    style={style.input}
+                    value={text}
+                    placeholder="E-mail"
+                    placeholderTextColor="#606060" />
 
                 <TextInput
                     style={style.input}
                     value={text}
                     secureTextEntry={true}
-                    placeholder="SENHA"
-                    placeholderTextColor="#FFF" />
+                    placeholder="Senha"
+                    placeholderTextColor="#606060" />
+
+                <TextInput
+                    style={style.input}
+                    value={text}
+                    secureTextEntry={true}
+                    placeholder="Confirme sua senha"
+                    placeholderTextColor="#606060" />
 
                 <TouchableOpacity style={style.button}
                     onPress={goToCheckIn}>
-                    <Text style={style.buttonText}>Entrar</Text>
+                    <Text style={style.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
-
-                <View style={StyleIndex.containerRow}>
-                    <TouchableOpacity
-                        onPress={goToCadastrar}>
-                        <Text style={style.buttonRow}>Registrar</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Text style={style.buttonRow}>Esqueci minha senha</Text>
-                    </TouchableOpacity>
-                </View>
-
             </View>
         </Background>
     )
@@ -59,16 +59,16 @@ const style = StyleSheet.create({
         height: 180,
     },
     input: {
-        height: 50,
+        height: 30,
         width: 300,
         margin: 15,
-        borderWidth: 2,
-        borderRadius: 25,
+        padding: 0,
+        borderBottomWidth: 2,
         borderColor: '#FF6300',
-        textAlign: 'center',
-        fontSize: 18,
+        textAlign: 'left',
+        fontSize: 16,
         fontWeight: 'bold',
-        color: '#FFF'
+        color: '#FFF',
     },
     button: {
         height: 50,
@@ -81,7 +81,7 @@ const style = StyleSheet.create({
     },
     buttonText: {
         textAlign: 'center',
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 'bold',
         color: '#FFF',
     },

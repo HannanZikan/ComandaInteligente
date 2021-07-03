@@ -23,7 +23,7 @@ export default props => {
 
                 <TouchableOpacity style={style.button}
                     onPress={goToLogin}>
-                    <Text style={style.buttonText}>ENTRAR</Text>
+                    <Text style={style.buttonText}>Entrar</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={style.buttonFacebook}>
@@ -82,7 +82,7 @@ const style = StyleSheet.create({
     },
     buttonText: {
         textAlign: 'center',
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 'bold',
         color: '#FFF',
     },

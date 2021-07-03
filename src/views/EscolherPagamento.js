@@ -5,7 +5,6 @@ import Header from '../components/Header'
 import Slogan from '../../assets/images/slogan.png'
 import VoltarComanda from '../../assets/images/novoPedido.png'
 import Pix from '../../assets/images/pix.png'
-import GPay from '../../assets/images/gPayIcon2.png'
 import StyleIndex from '../styles/index'
 import MetodoPagamento from '../components/MetodoPagamento'
 

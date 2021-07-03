@@ -8,6 +8,7 @@ import CheckIn from '../views/CheckIn'
 import Cardapio from '../views/Cardapio'
 import Pedido from '../views/Pedido'
 import EscolherMetodosPagamento from '../views/EscolherPagamento'
+import CadastrarUsuario from '../views/CadastrarUsuario'
 
 
 
@@ -32,6 +33,7 @@ export default props => (
         screenOptions={{ headerShown: false }}>
         <Stack.Screen name='LoginRapido' component={LoginRapido} />
         <Stack.Screen name='Login' component={Login} />
+        <Stack.Screen name='CadastrarUsuario' component={CadastrarUsuario} />
         <Stack.Screen name='CheckIn' component={TabMenu} />
         <Stack.Screen name='Cardapio' component={Cardapio} />
         <Stack.Screen name='Pedido' component={Pedido} />
