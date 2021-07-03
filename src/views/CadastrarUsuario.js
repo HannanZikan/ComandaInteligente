@@ -1,13 +1,33 @@
 import React, { useState } from 'react'
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity} from 'react-native'
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import firebase from '../../firebaseConfig'
 
 import Background from '../components/Background' // imagem de background estilizada para a tela inteira
 import Logo from '../../assets/images/logo.png'
 import StyleIndex from '../styles/index'
 
 export default props => {
-    const [text, onChangeText] = useState()
-    const goToCheckIn = () => {props.navigation.navigate("CheckIn")}
+    const goToCheckIn = () => { props.navigation.navigate("CheckIn") }
+    const [nome, setNome] = useState()
+    const [email, setEmail] = useState('')
+    const [senha, setSenha] = useState('')
+    const [confirmarSenha, setConfirmarSenha] = useState('')
+
+    function criarConta() {
+        if (nome && email && senha && confirmarSenha && senha==confirmarSenha) {
+            firebase.auth().createUserWithEmailAndPassword(email, senha)
+                .then((userCredential) => {
+                    // Signed in
+                    var user = userCredential.user;
+                    // ...
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    console.warn(error.message)
+                });
+        }
+    }
 
     return (
         <Background>
@@ -20,32 +40,36 @@ export default props => {
 
                 <TextInput
                     style={style.input}
-                    value={text}
+                    value={nome}
+                    onChangeText={nome => setNome(nome)}
                     placeholder="Nome"
                     placeholderTextColor="#606060" />
 
                 <TextInput
                     style={style.input}
-                    value={text}
+                    value={email}
+                    onChangeText={email => setEmail(email)}
                     placeholder="E-mail"
                     placeholderTextColor="#606060" />
 
                 <TextInput
                     style={style.input}
-                    value={text}
+                    value={senha}
                     secureTextEntry={true}
+                    onChangeText={senha => setSenha(senha)}
                     placeholder="Senha"
                     placeholderTextColor="#606060" />
 
                 <TextInput
                     style={style.input}
-                    value={text}
+                    value={confirmarSenha}
+                    onChangeText={confirmarSenha => setConfirmarSenha(confirmarSenha)}
                     secureTextEntry={true}
                     placeholder="Confirme sua senha"
                     placeholderTextColor="#606060" />
 
                 <TouchableOpacity style={style.button}
-                    onPress={goToCheckIn}>
+                    onPress={criarConta}>
                     <Text style={style.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
             </View>
