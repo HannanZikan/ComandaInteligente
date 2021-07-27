@@ -27,7 +27,6 @@ export default StyleSheet.create({
         textAlign: 'center',
         fontSize: 18,
         color: '#FFF',
-        
     },
     containerRow: {
         flexDirection: 'row',

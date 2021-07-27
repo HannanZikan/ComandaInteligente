@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import firebase from '../../firebaseConfig'
 
 import Background from '../components/Background' // imagem de background estilizada para a tela inteira
 import Logo from '../../assets/images/logo.png'
@@ -8,9 +9,32 @@ import StyleIndex from '../styles/index'
 
 export default props => {
     const [text, onChangeText] = useState()
-    const goToCheckIn = () => {props.navigation.navigate("CheckIn")} 
-    const goToCadastrar = () => {props.navigation.navigate("CadastrarUsuario")} 
+    const goToCheckIn = () => { props.navigation.navigate("CheckIn") }
+    const goToCadastrar = () => { props.navigation.navigate("CadastrarUsuario") }
 
+    const [email, setEmail] = useState('')
+    const [senha, setSenha] = useState('')
+
+    const onChangeEmail = (email) => {
+        setEmail(email)
+    }
+    const onChangeSenha = (senha) => {
+        setSenha(senha)
+    }
+
+    function login() {
+        if (email && senha) {
+            firebase.auth().signInWithEmailAndPassword(email, senha)
+                .then(() => {
+                    goToCheckIn()
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    console.warn(error.message)
+                });
+        }
+    }
     return (
         <Background>
             <View style={StyleIndex.container}>
@@ -22,26 +46,28 @@ export default props => {
 
                 <TextInput
                     style={style.input}
-                    value={text}
-                    placeholder="EMAIL"
-                    placeholderTextColor="#FFF" />
+                    value={email}
+                    onChangeText={email => onChangeEmail(email)}
+                    placeholder="E-mail"
+                    placeholderTextColor="#606060" />
 
                 <TextInput
                     style={style.input}
-                    value={text}
+                    value={senha}
+                    onChangeText={senha => onChangeSenha(senha)}
                     secureTextEntry={true}
-                    placeholder="SENHA"
-                    placeholderTextColor="#FFF" />
+                    placeholder="Senha"
+                    placeholderTextColor="#606060" />
 
                 <TouchableOpacity style={style.button}
-                    onPress={goToCheckIn}>
+                    onPress={login}>
                     <Text style={style.buttonText}>Entrar</Text>
                 </TouchableOpacity>
 
                 <View style={StyleIndex.containerRow}>
                     <TouchableOpacity
                         onPress={goToCadastrar}>
-                        <Text style={style.buttonRow}>Registrar</Text>
+                        <Text style={style.buttonRow}>Cadastrar-se</Text>
                     </TouchableOpacity>
                     <TouchableOpacity>
                         <Text style={style.buttonRow}>Esqueci minha senha</Text>
@@ -67,7 +93,6 @@ const style = StyleSheet.create({
         borderColor: '#FF6300',
         textAlign: 'center',
         fontSize: 18,
-        fontWeight: 'bold',
         color: '#FFF'
     },
     button: {
@@ -81,7 +106,7 @@ const style = StyleSheet.create({
     },
     buttonText: {
         textAlign: 'center',
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 'bold',
         color: '#FFF',
     },

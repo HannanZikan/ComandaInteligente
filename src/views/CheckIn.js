@@ -3,6 +3,8 @@ import { View, Text, Image, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import Background from '../components/Background'
+import Header from '../components/HeaderCheckIn'
+
 import Logo from '../../assets/images/logo.png'
 import Mira from '../../assets/images/mira.png'
 import StyleIndex from '../styles/index'
@@ -11,17 +13,7 @@ export default props => {
     const proxTela = () => { props.navigation.navigate("Cardapio") }
     return (
         <Background>
-            <View style={StyleIndex.header}>
-                <Image
-                    resizeMode='contain'
-                    source={Logo}
-                    style={style.logo} />
-                <View style={StyleIndex.headerConteinerText}>
-                    <Text style={StyleIndex.headerText}>
-                        Escaneie o QR Code para fazer o Check-in
-                    </Text>
-                </View>
-            </View>
+            <Header />
 
             <View style={StyleIndex.container}>
                 <View style={style.quadro}>

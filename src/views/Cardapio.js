@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity, TextPropTypes } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+
 import Background from '../components/Background'
 import Header from '../components/Header'
 import Slogan from '../../assets/images/slogan.png'
@@ -45,7 +46,7 @@ export default props => {
                     onPress={proxTela}>
                     <Image
                         resizeMode='contain'
-                        source={FazerPedido}
+                        // source={FazerPedido}
                         style={style.btnFazerPedido} />
                 </TouchableOpacity>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native'
 import firebase from '../../firebaseConfig'
 
 import Background from '../components/Background' // imagem de background estilizada para a tela inteira
@@ -7,25 +7,24 @@ import Logo from '../../assets/images/logo.png'
 import StyleIndex from '../styles/index'
 
 export default props => {
-    const goToCheckIn = () => { props.navigation.navigate("CheckIn") }
+    const goToLogIn = () => { props.navigation.navigate("Login") }
+
     const [nome, setNome] = useState()
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
     const [confirmarSenha, setConfirmarSenha] = useState('')
 
     function criarConta() {
-        if (nome && email && senha && confirmarSenha && senha==confirmarSenha) {
+        if (/*nome &&*/ email && senha /*&& confirmarSenha && senha === confirmarSenha*/) {
             firebase.auth().createUserWithEmailAndPassword(email, senha)
-                .then((userCredential) => {
-                    // Signed in
-                    var user = userCredential.user;
-                    // ...
+                .then(() => {
+                    goToLogIn()
                 })
                 .catch((error) => {
                     var errorCode = error.code;
                     var errorMessage = error.message;
                     console.warn(error.message)
-                });
+                })
         }
     }
 
