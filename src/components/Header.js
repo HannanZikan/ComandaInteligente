@@ -1,7 +1,8 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, TextComponent } from 'react-native'
+
 import Logo from '../../assets/images/logo.png'
-import Style from '../styles/index'
+import Style from '../styles/header'
 
 export default props => {
     return (
@@ -9,19 +10,15 @@ export default props => {
             <Image
                 resizeMode='contain'
                 source={Logo}
-                style={style.logo} />
+                style={Style.Logo} />
 
             <View style={Style.headerConteinerText}>
                 <Text style={Style.headerText}>
-                    Hamburgueria Artesanal
+                   {"{nome_estabelecimento}"}
                 </Text>
 
                 <Text style={Style.headerText}>
-                    Tel: (24) 99999-9999
-                </Text>
-
-                <Text style={Style.headerText}>
-                    Comanda: #0000
+                    {"{id_comanda}"}
                 </Text>
             </View>
 
@@ -29,10 +26,3 @@ export default props => {
         </View>
     )
 }
-
-const style = StyleSheet.create({
-    logo: {
-        width: 130,
-        height: 130,
-    },
-})

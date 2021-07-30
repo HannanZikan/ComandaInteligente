@@ -11,7 +11,7 @@ import XTudo from '../../assets/images/x-tudo.png'
 
 
 export default props => {
-    const proxTela = () => { props.navigation.navigate("EscolherMetodosPagamento") }
+    const goToEscolherPagamento = () => { props.navigation.navigate("EscolherPagamento") }
     const antTela = () => { props.navigation.goBack() }
 
     return (
@@ -50,11 +50,10 @@ export default props => {
                                     source={NovoPedido}
                                     style={style.botoes} />
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={proxTela}>
-                                <Image
-                                    resizeMode='contain'
-                                    source={FecharComanda}
-                                    style={style.botoes} />
+                            <TouchableOpacity onPress={goToEscolherPagamento}>
+                                <Text style={style.cardapioText}>
+                                    Fechar Comanda
+                                </Text>
                             </TouchableOpacity>
                         </View>
                     </View>

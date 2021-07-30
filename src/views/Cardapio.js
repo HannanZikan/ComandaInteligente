@@ -11,44 +11,33 @@ import XTudo from '../../assets/images/x-tudo.png'
 import XEgg from '../../assets/images/x-egg.png'
 
 export default props => {
-    const proxTela = () => { props.navigation.navigate("Pedido") }
+    const proxTela = () => { props.navigation.navigate("Pedidos") }
     return (
         <Background>
             <Header />
-            <View style={StyleIndex.container}>
-                <Text style={style.cardapioText}>
-                    Cardápio
-                </Text>
+            <View style={StyleIndex.mainContainer}>
+                <View style={StyleIndex.titleContainer}>
+                    <Text style={style.cardapioText}>
+                        Cardápio
+                    </Text>
+                </View>
+                
+                <View style={StyleIndex.content}>
+                    <ItemCardapio
+                        imagem={XSalada}
+                        titulo="X-Salada - R$8,00"
+                        ingredientes="Pão, Carne, Queijo, Alface, Tomate" />
 
-                <ItemCardapio
-                    imagem={XSalada}
-                    titulo="X-Salada - R$8,00"
-                    ingredientes="Pão, Carne, Queijo, Alface, Tomate" />
+                </View>
 
-                <ItemCardapio
-                    imagem={XTudo}
-                    titulo="X-Tudo - R$14,50"
-                    ingredientes="Pão, Carne, Queijo, Ovo, Bacon, Calabresa, Batata-Palha, Presunto, Alface, Tomate" />
-
-                <ItemCardapio
-                    imagem={XEgg}
-                    titulo="X-Egg - R$8,00"
-                    ingredientes="Pão, Carne, Queijo, Ovo" />
-
-            </View>
-            <View style={[StyleIndex.containerRow, style.footer]}>
-                <Image
-                    resizeMode='contain'
-                    source={Slogan}
-                    style={style.slogan} />
-
-                <TouchableOpacity style={style.btnFazerPedido}
-                    onPress={proxTela}>
-                    <Image
-                        resizeMode='contain'
-                        // source={FazerPedido}
-                        style={style.btnFazerPedido} />
-                </TouchableOpacity>
+                <View style={StyleIndex.footerContainer}>
+                    <TouchableOpacity
+                        onPress={proxTela}>
+                        <Text style={style.cardapioText}>
+                            Pedir
+                        </Text>
+                    </TouchableOpacity>
+                </View>
 
             </View>
 
@@ -65,7 +54,7 @@ const style = StyleSheet.create({
     },
     btnFazerPedido: {
         width: 150,
-
+        borderColor: '#FFF',
     },
     TextFazerPedido: {
         textAlign: 'center',

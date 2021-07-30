@@ -1,32 +1,28 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-    container: {
+    mainContainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
         width: '100%',
         // backgroundColor: '#ccc',
     },
-    header:{
-        // flex: 0.3,
-        paddingTop: 5,
-        paddingLeft: 25,
-        paddingRight: 25,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        // backgroundColor: '#ccc'
-    },
-    headerConteinerText:{
+    content: {
         flex: 1,
-        paddingLeft: 5,
+        // justifyContent: 'center',
+        // alignItems: 'center',
     },
-    headerText: {
-        textAlign: 'center',
-        fontSize: 18,
-        color: '#FFF',
+    titleContainer: {
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 10,
+        width: '100%',
+        backgroundColor: '#ccc',
+    },
+    footerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#ccc',
+        height: 60,
     },
     containerRow: {
         flexDirection: 'row',

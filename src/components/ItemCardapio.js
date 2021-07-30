@@ -5,13 +5,9 @@ import StyleIndex from '../styles/index'
 export default props => {
     return (
         <Fragment>
-            <View style={style.container}>
+            <View style={StyleIndex.container}>
                 <View style={StyleIndex.containerRow}>
-                    <Image
-                        resizeMode='contain'
-                        source={props.imagem}
-                        style={style.imgCardapio}
-                    />
+                    
                     <View style={StyleIndex.container}>
                         <Text style={[StyleIndex.text, style.textNome]}>{props.titulo}</Text>
                         <Text style={style.textIngredientes}>
@@ -26,12 +22,13 @@ export default props => {
 
 const style = StyleSheet.create({
     container: {
+        flex: 0.9,
         backgroundColor: '#FF6300',
         width: 350,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
-        marginTop: 15,
+        // marginTop: 15,
     },
     containerBtn: {
         flexDirection: 'row',

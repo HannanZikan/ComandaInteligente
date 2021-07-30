@@ -7,7 +7,7 @@ import LoginRapido from '../views/LoginRapido'
 import Login from '../views/Login'
 import CheckIn from '../views/CheckIn'
 import Cardapio from '../views/Cardapio'
-import Pedido from '../views/Pedido'
+import Pedidos from '../views/Pedidos'
 import EscolherMetodosPagamento from '../views/EscolherPagamento'
 import CadastrarUsuario from '../views/CadastrarUsuario'
 
@@ -15,7 +15,22 @@ import iconCardapio from '../../assets/images/cardapio.png'
 import iconPerfil from '../../assets/images/icone-perfil.png'
 import iconExit from '../../assets/images/icon-exit.png'
 
+const CardapioStack = createStackNavigator();
+
+function CardapioTabStack() {
+    return (
+        <CardapioStack.Navigator initialRouteName="Cardapio"
+            screenOptions={{ headerShown: false }}>
+            <CardapioStack.Screen name="Cardapio" component={Cardapio} />
+            <CardapioStack.Screen name="Pedidos" component={Pedidos} />
+            <CardapioStack.Screen name="EscolherPagamento" component={EscolherMetodosPagamento} />
+            <CardapioStack.Screen name="CheckIn" component={CheckIn} />
+        </CardapioStack.Navigator>
+    );
+}
+
 const Tab = createBottomTabNavigator()
+
 function TabMenu() {
     return (
         <Tab.Navigator
@@ -30,7 +45,7 @@ function TabMenu() {
                     paddingTop: 5,
                 }
             }}>
-            <Tab.Screen name='Cardápio' component={CheckIn}
+            <Tab.Screen name='Cardápio' component={CardapioTabStack}
                 options={{
                     tabBarIcon: () => (
                         <Image
@@ -43,7 +58,7 @@ function TabMenu() {
                         />
                     )
                 }} />
-            <Tab.Screen name='Perfil' component={Cardapio}
+            <Tab.Screen name='Perfil' component={CheckIn}
                 options={{
                     tabBarIcon: () => (
                         <Image
@@ -56,7 +71,7 @@ function TabMenu() {
                         />
                     )
                 }} />
-            <Tab.Screen name='Sair' component={Pedido}
+            <Tab.Screen name='Pedidos' component={Pedidos}
                 options={{
                     tabBarIcon: () => (
                         <Image
@@ -81,10 +96,10 @@ export default function Routes() {
             <Stack.Screen name='LoginRapido' component={LoginRapido} />
             <Stack.Screen name='Login' component={Login} />
             <Stack.Screen name='CadastrarUsuario' component={CadastrarUsuario} />
-            <Stack.Screen name='CheckIn' component={TabMenu} />
-            <Stack.Screen name='Cardapio' component={Cardapio} />
-            <Stack.Screen name='Pedido' component={Pedido} />
-            <Stack.Screen name='EscolherMetodosPagamento' component={EscolherMetodosPagamento} />
+            <Stack.Screen name='CheckIn' component={CheckIn} />
+            <Stack.Screen name='Cardapio' component={TabMenu} />
+            {/* <Stack.Screen name='Pedido' component={Pedido} />
+            <Stack.Screen name='EscolherMetodosPagamento' component={EscolherMetodosPagamento} /> */}
         </Stack.Navigator>
     )
 }
