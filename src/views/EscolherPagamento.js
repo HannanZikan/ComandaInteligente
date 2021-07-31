@@ -25,7 +25,7 @@ export default props => {
                     metodo='Pix' />
 
                 <MetodoPagamento
-                    imagem={GPay}
+                    // imagem={GPay}
                     metodo='Débito/Crédito' />
 
                 <MetodoPagamento

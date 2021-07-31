@@ -8,7 +8,7 @@ import Login from '../views/Login'
 import CheckIn from '../views/CheckIn'
 import Cardapio from '../views/Cardapio'
 import Pedidos from '../views/Pedidos'
-import EscolherMetodosPagamento from '../views/EscolherPagamento'
+import EscolherPagamento from '../views/EscolherPagamento'
 import CadastrarUsuario from '../views/CadastrarUsuario'
 
 import iconCardapio from '../../assets/images/cardapio.png'
@@ -23,7 +23,7 @@ function CardapioTabStack() {
             screenOptions={{ headerShown: false }}>
             <CardapioStack.Screen name="Cardapio" component={Cardapio} />
             <CardapioStack.Screen name="Pedidos" component={Pedidos} />
-            <CardapioStack.Screen name="EscolherPagamento" component={EscolherMetodosPagamento} />
+            <CardapioStack.Screen name="EscolherPagamento" component={EscolherPagamento} />
             <CardapioStack.Screen name="CheckIn" component={CheckIn} />
         </CardapioStack.Navigator>
     );

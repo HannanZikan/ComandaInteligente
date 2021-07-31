@@ -17,87 +17,53 @@ export default props => {
     return (
         <Background>
             <Header />
-            <View style={StyleIndex.container}>
-                <Text style={style.cardapioText}>
-                    Pedidos
-                </Text>
+            <View style={StyleIndex.mainContainer}>
+                <View style={StyleIndex.titleContainer}>
+                    <Text style={StyleIndex.titleText}>
+                        Pedidos
+                    </Text>
+                </View>
 
-                <ItemCardapio
-                    imagem={XSalada}
-                    titulo="X-Salada - R$8,00"
-                    ingredientes="Qtde: 1 - R$8,00" />
-
-                <ItemCardapio
-                    imagem={XTudo}
-                    titulo="X-Tudo - R$14,50"
-                    ingredientes="Qtde: 2 - R$29,00" />
-                    
-
-            </View>
-                <View style={[StyleIndex.containerRow, style.footer]}>
-                    <Image
-                        resizeMode='contain'
-                        source={Slogan}
-                        style={style.slogan} />
-
-                    <View style={StyleIndex.container}>
-                        <Text style={style.textTotal}>Valor Total: R$37,00</Text>
-                        <View style={StyleIndex.containerRow}>
-
-                            <TouchableOpacity onPress={antTela}>
-                                <Image
-                                    resizeMode='contain'
-                                    source={NovoPedido}
-                                    style={style.botoes} />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={goToEscolherPagamento}>
-                                <Text style={style.cardapioText}>
-                                    Fechar Comanda
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                <View style={StyleIndex.content}>
 
                 </View>
+
+                <View style={StyleIndex.footerContainer}>
+                    <Text style={[ style.txtFecharComanda, style.txtTotal ]}>
+                        Total: R${"{total}"}
+                    </Text>
+
+                    <TouchableOpacity
+                        style={style.btnFecharComanda}
+                        onPress={goToEscolherPagamento}>
+                        <Text style={style.txtFecharComanda}>
+                            Fechar Comanda
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+
+            </View>
 
         </Background>
     )
 }
 
 const style = StyleSheet.create({
-    cardapioText: {
-        color: '#FFF',
-        fontSize: 28,
-        fontWeight: 'bold',
-        // backgroundColor: '#CCC'
+    btnFecharComanda: {
+        width: 170,
+        height: 45,
+        backgroundColor: '#FF6300',
+        padding: 5,
+        marginRight: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    botoes: {
-        width: 115,
-        height: 40,
-        margin: 5,
-        // backgroundColor: '#ccc',
-    },
-    TextFazerPedido: {
-        textAlign: 'center',
-        fontSize: 22,
-        fontWeight: 'bold',
-        color: '#FFF',
-    },
-    slogan: {
-        width: 100,
-        height: 120,
-    },
-    footer: {
-        justifyContent: 'space-between',
-        // backgroundColor: '#ccc',
-        width: '100%',
-        padding: 20,
-    },
-    textTotal: {
-        textAlign: 'center',
+    txtFecharComanda: {
         fontSize: 18,
         fontWeight: 'bold',
         color: '#FFF',
     },
-
+    txtTotal: {
+        marginRight: 30,
+    }
 })
