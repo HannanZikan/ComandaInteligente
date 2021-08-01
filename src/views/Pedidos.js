@@ -2,12 +2,9 @@ import React from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import Background from '../components/Background'
 import Header from '../components/Header'
-import Slogan from '../../assets/images/slogan.png'
-import NovoPedido from '../../assets/images/novoPedido.png'
 import StyleIndex from '../styles/index'
 import ItemCardapio from '../components/ItemCardapio'
-import XSalada from '../../assets/images/x-salada.png'
-import XTudo from '../../assets/images/x-tudo.png'
+
 
 
 export default props => {

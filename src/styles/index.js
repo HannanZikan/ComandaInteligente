@@ -31,16 +31,4 @@ export default StyleSheet.create({
         height: 80,
         // backgroundColor: '#ccc',
     },
-    containerRow: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        // backgroundColor: '#ccc'
-    },
-    text: {
-        textAlign: 'center',
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: '#FFF',
-    },
 })

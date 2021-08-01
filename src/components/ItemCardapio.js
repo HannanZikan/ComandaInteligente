@@ -22,7 +22,7 @@ export default props => {
 
 const style = StyleSheet.create({
     container: {
-        flex: 0.9,
+        // flex: 0.9,
         backgroundColor: '#FF6300',
         width: 350,
         justifyContent: 'center',
