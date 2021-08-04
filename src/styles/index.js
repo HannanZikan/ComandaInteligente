@@ -9,13 +9,12 @@ export default StyleSheet.create({
     content: {
         flex: 1,
         // justifyContent: 'center',
-        // alignItems: 'center',
+        alignItems: 'center',
     },
     titleContainer: {
-        justifyContent: 'flex-start',
         alignItems: 'center',
         padding: 10,
-        marginBottom: 10,
+        // marginBottom: 10,
         width: '100%',
         // backgroundColor: '#ccc',
     },

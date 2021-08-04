@@ -1,17 +1,36 @@
-import React from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import firebase from 'firebase'
 
 import Background from '../components/Background'
 import Header from '../components/Header'
 import Slogan from '../../assets/images/slogan.png'
 import StyleIndex from '../styles/index'
 import ItemCardapio from '../components/ItemCardapio'
-import XSalada from '../../assets/images/x-salada.png'
-import XTudo from '../../assets/images/x-tudo.png'
-import XEgg from '../../assets/images/x-egg.png'
 
 export default props => {
     const goToPedidos = () => { props.navigation.navigate("Pedidos") }
+    const [listFire, setListFire] = useState('')
+
+    useEffect(() => {
+        try {
+            firebase.database().ref('/Cardapio').once('value', (snapshot) => {
+                const list = []
+                snapshot.forEach((childItem) => {
+                    list.push({
+                        key: childItem.key,
+                        nome: childItem.val().nome,
+                        descricao: childItem.val().descricao,
+                        valor: childItem.val().valor,
+                        status: childItem.val().status,
+                    })
+                })
+                setListFire(list)
+            })
+        } catch (error) {
+            alert(error)
+        }
+    }, [])
     return (
         <Background>
             <Header />
@@ -21,12 +40,20 @@ export default props => {
                         Cardápio
                     </Text>
                 </View>
-                
+
                 <View style={StyleIndex.content}>
-                    {/* <ItemCardapio
-                        imagem={XSalada}
-                        titulo="X-Salada - R$8,00"
-                        ingredientes="Pão, Carne, Queijo, Alface, Tomate" /> */}
+
+
+                    <FlatList data={listFire}
+                        keyExtractor={(item) => item.key}
+                        renderItem={({ item }) =>
+                            <ItemCardapio
+                                nome={item.nome}
+                                valor={item.valor}
+                                descricao={item.descricao}
+                            />
+
+                        } />
 
                 </View>
 
@@ -61,4 +88,7 @@ const style = StyleSheet.create({
         fontWeight: 'bold',
         color: '#FFF',
     },
+    teste: {
+        backgroundColor: '#FFF',
+    }
 })

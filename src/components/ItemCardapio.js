@@ -2,34 +2,92 @@ import React, { Fragment } from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity, TextPropTypes } from 'react-native'
 import StyleIndex from '../styles/index'
 
+// imagem apenas ilustrativa, retirar depois
+import sanduiche from '../../assets/images/sanduiche.png'
+
 export default props => {
+
     return (
         <Fragment>
-            <View style={StyleIndex.container}>
-                <View style={StyleIndex.containerRow}>
-                    
-                    <View style={StyleIndex.container}>
-                        <Text style={[StyleIndex.text, style.textNome]}>{props.titulo}</Text>
-                        <Text style={style.textIngredientes}>
-                            {props.ingredientes}
-                        </Text>
+                <View style={style.container}>
+                    <View style={style.containerImg}>
+                        <Image resizeMode='contain'
+                            source={sanduiche}
+                            style={style.imgCardapio} />
+                    </View>
+                    <View style={style.containerTxt}>
+                        <Text style={style.nome}>{props.nome}</Text>
+                        <Text style={style.descricao}>{props.descricao}</Text>
+                        <Text style={style.valor}>{props.valor}</Text>
                     </View>
                 </View>
-            </View>
+
         </Fragment>
     )
 }
 
 const style = StyleSheet.create({
     container: {
-        // flex: 0.9,
-        backgroundColor: '#FF6300',
-        width: 350,
+        flexDirection: 'row',
+        marginTop: 10,
+        paddingBottom: 10,
+        width: 360,
+        borderBottomWidth: 1,
+        borderBottomColor: '#FF6300',
+    },
+    imgCardapio: {
+        width: 85,
+        height: 85,
+    },
+    containerImg: {
+        alignItems: 'center',
+        // marginLeft: 10,
+        // backgroundColor: '#fff',
+    },
+    containerTxt: {
+        flex: 1,
+        marginLeft: 15,
+        // backgroundColor: '#ccc',
+    },
+    nome: {
+        color: '#FFF',
+        fontWeight: 'bold',
+        fontSize: 24,
+    },
+    descricao: {
+        color: '#606060',
+        fontWeight: 'bold',
+        fontSize: 14,
+    },
+    valor: {
+        color: '#FFF',
+        fontWeight: 'bold',
+        fontSize: 18,
+        marginTop: 10,
+    },
+
+
+
+
+
+
+
+
+
+
+    container1: {
+        backgroundColor: '#ccc',
+        width: 380,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
         // marginTop: 15,
     },
+
+
+
+
+
     containerBtn: {
         flexDirection: 'row',
         backgroundColor: '#FF6300',
@@ -41,10 +99,6 @@ const style = StyleSheet.create({
         borderBottomRightRadius: 5,
     },
 
-    imgCardapio: {
-        width: 80,
-        height: 80
-    },
     textNome: {
         fontSize: 24,
     },
