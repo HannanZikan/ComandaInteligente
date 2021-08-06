@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity, TextPropTypes } from 'react-native'
+import React, { Fragment, useState } from 'react'
+import { View, Text, Image, StyleSheet, Pressable, Alert, TouchableOpacity, TextInput, TouchableOpacityBase } from 'react-native'
 import StyleIndex from '../styles/index'
 
 // imagem apenas ilustrativa, retirar depois
@@ -7,20 +7,145 @@ import sanduiche from '../../assets/images/sanduiche.png'
 
 export default props => {
 
+    const [selecao, setSelecao] = useState(false)
+
+    const [observacao, setObservacao] = useState('')
+
+    const onChangeObservacao = (observacao) => {
+        setObservacao(observacao)
+    }
+
+    const [quantidade, setQuantidade] = useState(1)
+    const inc = () => setQuantidade(quantidade + 1)
+    function dec() {
+        if (quantidade < 1) {
+            setQuantidade(1)
+            setSelecao(false)
+        } else if (quantidade >= 1) {
+            setQuantidade(quantidade - 1)
+        }
+    }
+
+    function selecionar(valor) {
+        setSelecao(valor)
+        valor ?
+            setSelecao(true)
+            : (
+                setSelecao(false),
+                setObservacao(''),
+                setQuantidade(1)
+            )
+    }
+
+
+    function organizaPedido() {
+        var valor = props.valor
+        var qtde = quantidade
+        var valorTotal = (valor * qtde)
+        let obs = observacao
+        let nome = props.nome
+        let descricao = props.descricao
+        let itemDoPedido = []
+        itemDoPedido.push(
+            nome,
+            descricao,
+            valorTotal,
+            obs
+        )
+        return props.montarPedido(itemDoPedido)
+    }
+
     return (
         <Fragment>
-                <View style={style.container}>
-                    <View style={style.containerImg}>
-                        <Image resizeMode='contain'
-                            source={sanduiche}
-                            style={style.imgCardapio} />
-                    </View>
-                    <View style={style.containerTxt}>
-                        <Text style={style.nome}>{props.nome}</Text>
-                        <Text style={style.descricao}>{props.descricao}</Text>
-                        <Text style={style.valor}>{props.valor}</Text>
-                    </View>
-                </View>
+            {
+                selecao ?
+                    <Pressable style={style.containerSelecionado}
+                        onLongPress={() => {
+                            selecao ?
+                                selecionar(false)
+                                :
+                                selecionar(true)
+                        }}>
+                        <View style={style.item}>
+                            <View style={style.containerImg}>
+                                <Image resizeMode='contain'
+                                    source={sanduiche}
+                                    style={style.imgCardapio} />
+                            </View>
+                            <View style={style.containerTxt}>
+                                <Text style={style.nome}>{props.nome}</Text>
+                                <Text style={style.descricao}>{props.descricao}</Text>
+                                <Text style={style.valor}>{props.valor}</Text>
+                            </View>
+                        </View>
+                        <View style={style.detalhePedido}>
+                            <TextInput
+                                style={style.observacao}
+                                value={observacao}
+                                onChangeText={observacao => onChangeObservacao(observacao)}
+                                placeholder="Adicione uma observação ao pedido"
+                                placeholderTextColor="#606060" />
+
+                            {/* <TextInput style={style.quantidade}
+                                value={quantidade}
+                                onChangeText={quantidade => onChangeQuantidade(quantidade)}
+                                keyboardType='numeric'
+                                placeholder="QTDE"
+                                placeholderTextColor="#606060" /> */}
+                        </View>
+                        <View style={style.detalhePedidoBotao}>
+
+                            <View style={style.detalhePedido}>
+                                <TouchableOpacity style={style.botaoQuantidade}>
+                                    <Text style={style.quantidadeItem}
+                                        onPress={dec}>
+                                        -
+                                    </Text>
+
+                                </TouchableOpacity>
+                                <Text style={[style.botaoQuantidade, style.quantidadeItem]}>
+                                    {quantidade}
+                                </Text>
+                                <TouchableOpacity style={style.botaoQuantidade}
+                                    onPress={inc}>
+                                    <Text style={style.quantidadeItem}>
+                                        +
+                                    </Text>
+
+                                </TouchableOpacity>
+                            </View>
+
+                            <TouchableOpacity
+                                onPress={
+                                    () => { organizaPedido() }
+                                }>
+                                <Text style={style.botaoIncluir}>
+                                    Incluir no pedido
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+
+                    </Pressable>
+                    :
+                    <Pressable style={style.container}
+                        onLongPress={() => {
+                            selecao ?
+                                selecionar(false)
+                                :
+                                selecionar(true)
+                        }}>
+                        <View style={style.containerImg}>
+                            <Image resizeMode='contain'
+                                source={sanduiche}
+                                style={style.imgCardapio} />
+                        </View>
+                        <View style={style.containerTxt}>
+                            <Text style={style.nome}>{props.nome}</Text>
+                            <Text style={style.descricao}>{props.descricao}</Text>
+                            <Text style={style.valor}>{props.valor}</Text>
+                        </View>
+                    </Pressable>
+            }
 
         </Fragment>
     )
@@ -34,6 +159,18 @@ const style = StyleSheet.create({
         width: 360,
         borderBottomWidth: 1,
         borderBottomColor: '#FF6300',
+    },
+    containerSelecionado: {
+        marginTop: 10,
+        paddingBottom: 10,
+        width: 360,
+        backgroundColor: 'rgba(255,99,0,0.1)',
+        borderBottomWidth: 1,
+        borderBottomColor: '#FF6300',
+    },
+    item: {
+        flexDirection: 'row',
+        marginBottom: 5
     },
     imgCardapio: {
         width: 85,
@@ -65,60 +202,49 @@ const style = StyleSheet.create({
         fontSize: 18,
         marginTop: 10,
     },
-
-
-
-
-
-
-
-
-
-
-    container1: {
-        backgroundColor: '#ccc',
-        width: 380,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 10,
-        // marginTop: 15,
-    },
-
-
-
-
-
-    containerBtn: {
+    detalhePedido: {
         flexDirection: 'row',
-        backgroundColor: '#FF6300',
-        justifyContent: 'flex-end',
+        // width: 360,
+    },
+    detalhePedidoBotao: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
         alignItems: 'center',
-        paddingLeft: 10,
-        paddingRight: 10,
-        borderBottomLeftRadius: 5,
-        borderBottomRightRadius: 5,
+        width: 360,
+        marginTop: 5,
     },
-
-    textNome: {
-        fontSize: 24,
-    },
-    textIngredientes: {
-        textAlign: 'center',
-        fontSize: 16,
+    botaoIncluir: {
         color: '#FFF',
+        fontWeight: 'bold',
+        backgroundColor: '#FF6300',
+        padding: 5
     },
-    buttonQtde: {
+    observacao: {
+        width: 350,
+        height: 30,
+        fontSize: 14,
         textAlign: 'center',
-        fontSize: 20,
-        color: '#FF6300',
-        backgroundColor: '#000',
-        borderRadius: 50,
-        // height: 25,
-        width: 25,
+        marginLeft: 5,
+        padding: 0,
+        backgroundColor: 'rgba(255,255,255,0.8)',
+
     },
-    qtde: {
-        fontSize: 28,
+    quantidade: {
+        width: 50,
+        height: 30,
+        fontSize: 14,
+        textAlign: 'center',
+        marginLeft: 5,
+        padding: 0,
+        backgroundColor: 'rgba(255,255,255,0.8)',
+    },
+    botaoQuantidade: {
         marginLeft: 10,
         marginRight: 10,
-    }
+    },
+    quantidadeItem: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: '#FFF',
+    },
 })

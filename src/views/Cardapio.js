@@ -31,6 +31,38 @@ export default props => {
             alert(error)
         }
     }, [])
+
+
+    let listaPedidos = []
+    function montarPedido(listaDoComponente) {
+        listaPedidos.push(listaDoComponente)
+        return listaPedidos
+    }
+
+    function pushFire(listaPedidos) {
+        try {
+            // console.warn(listaPedidos)
+            var pedidoListRef = firebase.database().ref('/Pedidos');
+            var newPostRef = pedidoListRef.push();
+            newPostRef.set({
+                nome: listaPedidos.nome,
+                descricao: listaPedidos.descricao,
+                status: "em andamento",
+                valor: listaPedidos.valorTotal,
+                observacao: listaPedidos.obs
+            })
+            // firebase.database().ref('/Pedidos').push({
+            //     nome: listaPedidos.nome,
+            //     descricao: listaPedidos.descricao,
+            //     status: "em andamento",
+            //     valor: listaPedidos.valorTotal,
+            //     observacao: listaPedidos.obs
+            // })
+        } catch (error) {
+            alert(error)
+        }
+    }
+
     return (
         <Background>
             <Header />
@@ -51,6 +83,7 @@ export default props => {
                                 nome={item.nome}
                                 valor={item.valor}
                                 descricao={item.descricao}
+                                montarPedido={montarPedido}
                             />
 
                         } />
@@ -60,13 +93,14 @@ export default props => {
                 <View style={StyleIndex.footerContainer}>
                     <TouchableOpacity
                         style={style.btnPedir}
-                        onPress={goToPedidos}>
+                        onPress={
+                            pushFire
+                        }>
                         <Text style={style.txtPedir}>
                             Pedir
                         </Text>
                     </TouchableOpacity>
                 </View>
-
             </View>
 
         </Background>
