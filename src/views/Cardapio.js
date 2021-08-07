@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
 import firebase from 'firebase'
 
 import Background from '../components/Background'
 import Header from '../components/Header'
-import Slogan from '../../assets/images/slogan.png'
 import StyleIndex from '../styles/index'
 import ItemCardapio from '../components/ItemCardapio'
 

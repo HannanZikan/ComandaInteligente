@@ -12,6 +12,19 @@ export default StyleSheet.create({
         alignItems: 'center',
         // backgroundColor: '#ccc',
     },
+    contentCenter: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: '#ccc',
+    },
+    contentRow: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: '#ccc',
+    },
     titleContainer: {
         alignItems: 'center',
         padding: 10,

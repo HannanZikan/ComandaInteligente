@@ -1,14 +1,12 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 
-import StylePerfil from '../styles/perfil'
-
-import SetaDireita from '../../assets/images/right-arrow.png'
 import IconeCartao from '../../assets/images/icon-mastercard.png'
-import IconeEditar from '../../assets/images/icon-edit.png'
 import IconeExcluir from '../../assets/images/icon-delete.png'
 
+
 export default props => {
+
     return (
         <View style={style.container}>
             <Image resizeMode='contain'
@@ -17,20 +15,18 @@ export default props => {
             />
             <View>
                 <Text style={style.titulo}>
-                    {props.bandeira + " - "  + props.tipo}
+                    {props.bandeira + " - " + props.tipo}
                 </Text>
                 <Text style={style.informacao}>
                     {props.numero}
                 </Text>
             </View>
             <View style={style.avancar}>
-                <TouchableOpacity>
-                    <Image resizeMode='contain'
-                        source={IconeEditar}
-                        style={style.iconeEditarExcluir}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={
+                    () => {
+                        props.apagaCartao(props.keyCartao)
+                    }
+                }>
                     <Image resizeMode='contain'
                         source={IconeExcluir}
                         style={style.iconeEditarExcluir}
@@ -45,7 +41,7 @@ export default props => {
 const style = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        marginTop: 20,
+        // marginTop: 20,
         marginLeft: 10,
         paddingBottom: 5,
         width: 360,

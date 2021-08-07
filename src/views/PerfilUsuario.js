@@ -13,12 +13,13 @@ import SetaEsquerda from '../../assets/images/left-arrow.png'
 
 export default props => {
     const goToFormasPagamento = () => { props.navigation.navigate("FormasPagamento") }
+    const goToDadosUsuario = () => { props.navigation.navigate("DadosUsuario") }
 
     return (
         <Background>
             <Header />
             <View style={StyleIndex.mainContainer}>
-                <TouchableOpacity style={StylePerfil.containerNavegarSup}>
+                {/* <TouchableOpacity style={StylePerfil.containerNavegarSup}>
                     <Image resizeMode='contain'
                         source={SetaEsquerda}
                         style={StylePerfil.setaVoltar}
@@ -26,11 +27,14 @@ export default props => {
                     <Text style={StylePerfil.txtNagevarSup}>
                         Voltar para o check-in
                     </Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
 
                 <View style={StylePerfil.content}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={
+                            goToDadosUsuario
+                        }>
                         <ItemPerfil
                             titulo="Meus dados"
                             informacao="Minhas informações da conta"

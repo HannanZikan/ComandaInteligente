@@ -13,6 +13,7 @@ import CadastrarUsuario from '../views/CadastrarUsuario'
 import PerfilUsuario from '../views/PerfilUsuario'
 import FormasPagamento from '../views/FormasPagamento'
 import CadastrarCartao from '../views/CadastrarCartao'
+import DadosUsuario from '../views/DadosUsuario'
 
 import iconCardapio from '../../assets/images/cardapio.png'
 import iconPerfil from '../../assets/images/icone-perfil.png'
@@ -39,6 +40,7 @@ function PerfilTabStack() {
             <CardapioStack.Screen name="PerfilUsuario" component={PerfilUsuario} />
             <CardapioStack.Screen name="FormasPagamento" component={FormasPagamento} />
             <CardapioStack.Screen name="CadastrarCartao" component={CadastrarCartao} />
+            <CardapioStack.Screen name="DadosUsuario" component={DadosUsuario} />
         </CardapioStack.Navigator>
     );
 }
@@ -105,7 +107,7 @@ function TabMenu() {
 const Stack = createStackNavigator()
 export default function Routes() {
     return (
-        <Stack.Navigator initialRouteName="CheckIn"
+        <Stack.Navigator initialRouteName="LoginRapido"
             screenOptions={{ headerShown: false }}>
             <Stack.Screen name='LoginRapido' component={LoginRapido} />
             <Stack.Screen name='Login' component={Login} />

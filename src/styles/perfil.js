@@ -7,6 +7,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         marginLeft: 15,
         marginTop: 5,
+        marginBottom: 20,
         // backgroundColor: '#CCC'
     },
     setaVoltar: {
@@ -21,5 +22,9 @@ export default StyleSheet.create({
     },
     content: {
         flex: 1,
+    },
+    contentCentroSup: {
+        flex: 1,
+        alignItems: 'center',
     },
 })

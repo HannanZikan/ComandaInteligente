@@ -1,5 +1,6 @@
-import React from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity, TextPropTypes } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import firebase from 'firebase'
 
 import Background from '../components/Background'
 import Header from '../components/HeaderPerfil'
@@ -14,6 +15,35 @@ import SetaEsquerda from '../../assets/images/left-arrow.png'
 export default props => {
     const goToCadastrarCartao = () => { props.navigation.navigate("CadastrarCartao") }
     const goToPerfilUsuario = () => { props.navigation.goBack() }
+
+    const [listFire, setListFire] = useState('')
+    useEffect(() => {
+        try {
+            firebase.database().ref('/Cartoes').on('value', (snapshot) => {
+                const list = []
+                snapshot.forEach((childItem) => {
+                    list.push({
+                        key: childItem.key,
+                        bandeira: childItem.val().bandeira,
+                        tipo: childItem.val().tipo,
+                        numeroCartao: childItem.val().numeroCartao
+                    })
+                })
+                setListFire(list)
+            })
+        } catch (error) {
+            alert(error)
+        }
+    }, [])
+
+    function delFire(key) {
+        try {
+            firebase.database().ref('/Cartoes/' + key).remove()
+        } catch (error) {
+            alert(error)
+        }
+
+    }
 
     return (
         <Background>
@@ -31,22 +61,24 @@ export default props => {
                 </TouchableOpacity>
 
                 <View style={StylePerfil.content}>
-                    <Cartoes
-                        bandeira="Mastercard"
-                        tipo="Crédito"
-                        numero="**** 9999"
-                    />
-                    <Cartoes
-                        bandeira="Mastercard"
-                        tipo="Débito"
-                        numero="**** 8888"
-                    />
+
+                    <FlatList data={listFire}
+                        keyExtractor={(item) => item.key}
+                        renderItem={({ item }) =>
+                            <Cartoes
+                                keyCartao={item.key}
+                                apagaCartao={delFire}
+                                bandeira={item.bandeira}
+                                tipo={item.tipo}
+                                numero={item.numeroCartao}
+                            />
+                        } />
                 </View>
 
             </View>
             <View style={StyleIndex.footerContainer}>
                 <TouchableOpacity style={style.btnAdicionarCartao}
-                onPress={goToCadastrarCartao}>
+                    onPress={goToCadastrarCartao}>
                     <Text style={style.txtAdicionarCartao}>
                         Adicionar novo cartão
                     </Text>

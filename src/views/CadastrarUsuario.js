@@ -8,29 +8,85 @@ import StyleIndex from '../styles/index'
 
 export default props => {
     const goToLogIn = () => { props.navigation.navigate("Login") }
+    const goToCheckIn = () => { props.navigation.navigate("CheckIn") }
 
-    const [nome, setNome] = useState()
+    const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
     const [confirmarSenha, setConfirmarSenha] = useState('')
 
     function criarConta() {
-        if (/*nome &&*/ email && senha /*&& confirmarSenha && senha === confirmarSenha*/) {
-            firebase.auth().createUserWithEmailAndPassword(email, senha)
-                .then(() => {
-                    goToLogIn()
-                })
-                .catch((error) => {
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    console.warn(error.message)
-                })
+        if (nome) {
+            if (email) {
+                if (senha && confirmarSenha) {
+                    if (senha === confirmarSenha) {
+                        firebase.auth().createUserWithEmailAndPassword(email, senha)
+                            .then(() => {
+                                cadastrarPerfil()
+                            })
+                            .catch((error) => {
+                                var errorCode = error.code;
+                                var errorMessage = error.message;
+                                // console.warn(error.message)
+                                alert(errorCode + ' - ' + errorMessage)
+                            })
+                    } else {
+                        alert('Os campos "Senha" e "Confirmar Senha" devem ser iguais!')
+                    }
+
+                } else {
+                    alert('Os campos "Senha" e "Confirmar Senha" são obrigatórios!')
+                }
+            } else {
+                alert('O campo "Email" é obrigatório!')
+            }
+        } else {
+            alert('O campo "Nome" é obrigatório!')
         }
     }
 
+    function cadastrarPerfil() {
+        //const user = firebase.auth().currentUser;
+        const logar = firebase.auth().signInWithEmailAndPassword(email, senha)
+            .then(() => {
+                const user = firebase.auth().currentUser
+                user.updateProfile({
+                    displayName: nome
+                }).then(() => {
+                    setNome('')
+                    setEmail('')
+                    setSenha('')
+                    setConfirmarSenha('')
+                    goToCheckIn()
+                }).catch((error) => {
+                    alert(error)
+                });
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.warn(error.message)
+            });
+
+        // try {
+        //     firebase.database().ref('/Usuarios').push({
+        //         nome: nome,
+        //         email: email
+        //     })
+        // } catch (error) {
+        //     alert(error)
+        // } finally {
+        //     setNome('')
+        //     setEmail('')
+        //     setSenha('')
+        //     setConfirmarSenha('')
+        //     goToLogIn()
+        // }
+
+    }
     return (
         <Background>
-            <View style={StyleIndex.container}>
+            <View style={[StyleIndex.mainContainer, StyleIndex.contentCenter]}>
 
                 <Image
                     resizeMode='contain'

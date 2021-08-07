@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 
 import Background from '../components/Background' // imagem de background estilizada para a tela inteira
@@ -9,12 +9,11 @@ import StyleIndex from '../styles/index'
 
 
 export default props => {
-    const [text, onChangeText] = useState()
     const goToLogin = () => {props.navigation.navigate("Login")} 
 
     return (
         <Background>
-            <View style={StyleIndex.container}>
+            <View style={[StyleIndex.mainContainer, StyleIndex.contentCenter]}>
 
                 <Image
                     resizeMode='contain'
@@ -27,7 +26,7 @@ export default props => {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={style.buttonFacebook}>
-                    <View style={StyleIndex.containerRow}>
+                    <View style={StyleIndex.contentRow}>
                         <Image
                             resizeMode='contain'
                             source={FacebookIcon}
@@ -38,7 +37,7 @@ export default props => {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={style.buttonGmail}>
-                <View style={StyleIndex.containerRow}>
+                <View style={StyleIndex.contentRow}>
                         <Image
                             resizeMode='contain'
                             source={GoogleIcon}
