@@ -32,25 +32,77 @@ export default props => {
         }
     }, [])
 
-
-    let listaPedidos = []
-    function montarPedido(listaDoComponente) {
-        listaPedidos.push(listaDoComponente)
-        return listaPedidos
+    let modelo = { // apenas para ter uma clareza de como os dados serão cadastrados no banco
+        "IdPedidox": {
+            "item1": {
+                "nome": "teste",
+                "descricao": "descricao",
+                "valorTotal": 15,
+                "observacao": "obs",
+                "qtde": "2",
+                "status": "em andamento"
+            },
+            "item2": {
+                "nome": "teste",
+                "descricao": "descricao",
+                "valorTotal": 15,
+                "observacao": "obs",
+                "qtde": "2",
+                "status": "em andamento"
+            }
+        },
+        "pedidoz": {
+            "item1": {
+                "nome": "teste",
+                "descricao": "descricao",
+                "valorTotal": 15,
+                "observacao": "obs",
+                "qtde": "2",
+                "status": "em andamento"
+            },
+        },
     }
 
-    function pushFire(listaPedidos) {
+    const [listaPedidos, setListaPedidos] = useState([])
+    const [pedidoMontado, setPedidoMontado] = useState({})
+
+    function montarPedido(objDoComponente) {
+        console.warn('montar pedido ', objDoComponente)
+
+        
+
+    }
+
+    function convertArrayToObject(array) {
+        let result = {}
+        for (const element of array) {
+            result[element[0]] = element[0]
+        }
+        return result
+    }
+
+
+    function writeUserData(listaPedidos) {
+        firebase.database().ref('/Pedidos').push({
+            nome: listaPedidos.nome,
+            descricao: listaPedidos.descricao,
+            status: "em andamento",
+            valor: listaPedidos.valorTotal,
+            observacao: listaPedidos.obs,
+            quantidade: listaPedidos.qtde
+        })
+    }
+
+
+    function pushFire() {
         try {
+            var pedidoListRef = firebase.database().ref('/Pedidos')
+            var newPedidoRef = pedidoListRef.push()
             // console.warn(listaPedidos)
-            var pedidoListRef = firebase.database().ref('/Pedidos');
-            var newPostRef = pedidoListRef.push();
-            newPostRef.set({
-                nome: listaPedidos.nome,
-                descricao: listaPedidos.descricao,
-                status: "em andamento",
-                valor: listaPedidos.valorTotal,
-                observacao: listaPedidos.obs
-            })
+            // newPedidoRef.set({
+            //     listaPedidos
+            // })
+
             // firebase.database().ref('/Pedidos').push({
             //     nome: listaPedidos.nome,
             //     descricao: listaPedidos.descricao,
@@ -60,6 +112,8 @@ export default props => {
             // })
         } catch (error) {
             alert(error)
+        } finally {
+            setListaPedidos([])
         }
     }
 
@@ -122,7 +176,4 @@ const style = StyleSheet.create({
         fontWeight: 'bold',
         color: '#FFF',
     },
-    teste: {
-        backgroundColor: '#FFF',
-    }
 })

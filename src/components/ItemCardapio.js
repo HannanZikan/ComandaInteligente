@@ -46,12 +46,15 @@ export default props => {
         let nome = props.nome
         let descricao = props.descricao
         let itemDoPedido = []
-        itemDoPedido.push(
-            nome,
-            descricao,
-            valorTotal,
-            obs
-        )
+        itemDoPedido.push = [{
+            "nome": nome,
+            "descricao": descricao,
+            "valorTotal": valorTotal,
+            "observacao": obs,
+            "qtde": qtde,
+            "status": "em andamento"
+        }]
+        console.warn("item do pedido ", itemDoPedido)
         return props.montarPedido(itemDoPedido)
     }
 

@@ -10,6 +10,9 @@ import Cardapio from '../views/Cardapio'
 import Pedidos from '../views/Pedidos'
 import EscolherPagamento from '../views/EscolherPagamento'
 import CadastrarUsuario from '../views/CadastrarUsuario'
+import PerfilUsuario from '../views/PerfilUsuario'
+import FormasPagamento from '../views/FormasPagamento'
+import CadastrarCartao from '../views/CadastrarCartao'
 
 import iconCardapio from '../../assets/images/cardapio.png'
 import iconPerfil from '../../assets/images/icone-perfil.png'
@@ -25,6 +28,17 @@ function CardapioTabStack() {
             <CardapioStack.Screen name="Pedidos" component={Pedidos} />
             <CardapioStack.Screen name="EscolherPagamento" component={EscolherPagamento} />
             <CardapioStack.Screen name="CheckIn" component={CheckIn} />
+        </CardapioStack.Navigator>
+    );
+}
+
+function PerfilTabStack() {
+    return (
+        <CardapioStack.Navigator initialRouteName="PerfilUsuario"
+            screenOptions={{ headerShown: false }}>
+            <CardapioStack.Screen name="PerfilUsuario" component={PerfilUsuario} />
+            <CardapioStack.Screen name="FormasPagamento" component={FormasPagamento} />
+            <CardapioStack.Screen name="CadastrarCartao" component={CadastrarCartao} />
         </CardapioStack.Navigator>
     );
 }
@@ -58,7 +72,7 @@ function TabMenu() {
                         />
                     )
                 }} />
-            <Tab.Screen name='Perfil' component={CheckIn}
+            <Tab.Screen name='Perfil' component={PerfilTabStack}
                 options={{
                     tabBarIcon: () => (
                         <Image
@@ -98,8 +112,6 @@ export default function Routes() {
             <Stack.Screen name='CadastrarUsuario' component={CadastrarUsuario} />
             <Stack.Screen name='CheckIn' component={CheckIn} />
             <Stack.Screen name='Cardapio' component={TabMenu} />
-            {/* <Stack.Screen name='Pedido' component={Pedido} />
-            <Stack.Screen name='EscolherMetodosPagamento' component={EscolherMetodosPagamento} /> */}
         </Stack.Navigator>
     )
 }
