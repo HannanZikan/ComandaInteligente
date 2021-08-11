@@ -8,9 +8,10 @@ import StyleIndex from '../styles/index'
 
 
 export default props => {
-    const [text, onChangeText] = useState()
+    // const [text, onChangeText] = useState()
     const goToCheckIn = () => { props.navigation.navigate("CheckIn") }
     const goToCadastrar = () => { props.navigation.navigate("CadastrarUsuario") }
+    const goToEsqueciMinhaSenha = () => { props.navigation.navigate("EsqueciMinhaSenha") }
 
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
@@ -37,7 +38,7 @@ export default props => {
     }
     return (
         <Background>
-            <View style={StyleIndex.container}>
+            <View style={StyleIndex.contentCenter}>
 
                 <Image
                     resizeMode='contain'
@@ -64,12 +65,13 @@ export default props => {
                     <Text style={style.buttonText}>Entrar</Text>
                 </TouchableOpacity>
 
-                <View style={StyleIndex.containerRow}>
+                <View style={style.contentbuttonRow}>
                     <TouchableOpacity
                         onPress={goToCadastrar}>
                         <Text style={style.buttonRow}>Cadastrar-se</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={goToEsqueciMinhaSenha}>
                         <Text style={style.buttonRow}>Esqueci minha senha</Text>
                     </TouchableOpacity>
                 </View>
@@ -145,12 +147,18 @@ const style = StyleSheet.create({
         height: 25,
         marginEnd: 10,
     },
+    contentbuttonRow: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: '#ccc',
+    },
     buttonRow: {
         textAlign: 'center',
         fontSize: 16,
         fontWeight: 'bold',
         color: '#FFF',
-        margin: 15
+        marginLeft: 15,
+        marginRight: 15,
     },
-
 })

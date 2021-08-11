@@ -67,23 +67,8 @@ export default props => {
                 var errorMessage = error.message;
                 console.warn(error.message)
             });
-
-        // try {
-        //     firebase.database().ref('/Usuarios').push({
-        //         nome: nome,
-        //         email: email
-        //     })
-        // } catch (error) {
-        //     alert(error)
-        // } finally {
-        //     setNome('')
-        //     setEmail('')
-        //     setSenha('')
-        //     setConfirmarSenha('')
-        //     goToLogIn()
-        // }
-
     }
+    
     return (
         <Background>
             <View style={[StyleIndex.mainContainer, StyleIndex.contentCenter]}>

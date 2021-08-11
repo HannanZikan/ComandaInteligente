@@ -14,6 +14,9 @@ import PerfilUsuario from '../views/PerfilUsuario'
 import FormasPagamento from '../views/FormasPagamento'
 import CadastrarCartao from '../views/CadastrarCartao'
 import DadosUsuario from '../views/DadosUsuario'
+import EsqueciMinhaSenha from '../views/EsqueciMinhaSenha'
+import EsqueciMinhaSenha2 from '../views/EsqueciMinhaSenha2'
+import EsqueciMinhaSenha3 from '../views/EsqueciMinhaSenha3'
 
 import iconCardapio from '../../assets/images/cardapio.png'
 import iconPerfil from '../../assets/images/icone-perfil.png'
@@ -107,10 +110,13 @@ function TabMenu() {
 const Stack = createStackNavigator()
 export default function Routes() {
     return (
-        <Stack.Navigator initialRouteName="LoginRapido"
+        <Stack.Navigator initialRouteName="Login"
             screenOptions={{ headerShown: false }}>
             <Stack.Screen name='LoginRapido' component={LoginRapido} />
             <Stack.Screen name='Login' component={Login} />
+            <Stack.Screen name='EsqueciMinhaSenha' component={EsqueciMinhaSenha} />
+            <Stack.Screen name='EsqueciMinhaSenha2' component={EsqueciMinhaSenha2} />
+            <Stack.Screen name='EsqueciMinhaSenha3' component={EsqueciMinhaSenha3} />
             <Stack.Screen name='CadastrarUsuario' component={CadastrarUsuario} />
             <Stack.Screen name='CheckIn' component={CheckIn} />
             <Stack.Screen name='Cardapio' component={TabMenu} />
