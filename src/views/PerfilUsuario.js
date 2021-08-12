@@ -19,15 +19,6 @@ export default props => {
         <Background>
             <Header />
             <View style={StyleIndex.mainContainer}>
-                {/* <TouchableOpacity style={StylePerfil.containerNavegarSup}>
-                    <Image resizeMode='contain'
-                        source={SetaEsquerda}
-                        style={StylePerfil.setaVoltar}
-                    />
-                    <Text style={StylePerfil.txtNagevarSup}>
-                        Voltar para o check-in
-                    </Text>
-                </TouchableOpacity> */}
 
 
                 <View style={StylePerfil.content}>

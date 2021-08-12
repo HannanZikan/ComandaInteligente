@@ -24,17 +24,6 @@ export default props => {
                 </Text>
 
             </View>
-
-            {/* <View style={Style.headerConteinerText}>
-                <Text style={Style.headerText}>
-                   {"{nome_estabelecimento}"}
-                </Text>
-
-                <Text style={Style.headerText}>
-                    {"{id_comanda}"}
-                </Text>
-            </View> */}
-
             {props.children}
         </View>
     )

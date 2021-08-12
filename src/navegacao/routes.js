@@ -15,8 +15,8 @@ import FormasPagamento from '../views/FormasPagamento'
 import CadastrarCartao from '../views/CadastrarCartao'
 import DadosUsuario from '../views/DadosUsuario'
 import EsqueciMinhaSenha from '../views/EsqueciMinhaSenha'
-import EsqueciMinhaSenha2 from '../views/EsqueciMinhaSenha2'
-import EsqueciMinhaSenha3 from '../views/EsqueciMinhaSenha3'
+import ConfirmarSenha from '../views/ConfirmarSenha'
+import AtualizarSenha from '../views/AtualizarSenha'
 
 import iconCardapio from '../../assets/images/cardapio.png'
 import iconPerfil from '../../assets/images/icone-perfil.png'
@@ -41,9 +41,9 @@ function PerfilTabStack() {
         <CardapioStack.Navigator initialRouteName="PerfilUsuario"
             screenOptions={{ headerShown: false }}>
             <CardapioStack.Screen name="PerfilUsuario" component={PerfilUsuario} />
-            <CardapioStack.Screen name="FormasPagamento" component={FormasPagamento} />
-            <CardapioStack.Screen name="CadastrarCartao" component={CadastrarCartao} />
             <CardapioStack.Screen name="DadosUsuario" component={DadosUsuario} />
+            <CardapioStack.Screen name="ConfirmarSenha" component={ConfirmarSenha} />
+            <CardapioStack.Screen name="AtualizarSenha" component={AtualizarSenha} />
         </CardapioStack.Navigator>
     );
 }
