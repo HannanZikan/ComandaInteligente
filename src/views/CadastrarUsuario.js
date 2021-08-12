@@ -7,14 +7,22 @@ import Logo from '../../assets/images/logo.png'
 import StyleIndex from '../styles/index'
 
 export default props => {
-    const goToLogIn = () => { props.navigation.navigate("Login") }
-    const goToCheckIn = () => { props.navigation.navigate("CheckIn") }
+    const goToLogin = () => {
+        props.navigation.goBack()
+        zerarCampos()
+    }
 
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
     const [confirmarSenha, setConfirmarSenha] = useState('')
 
+    function zerarCampos() {
+        setNome('')
+        setEmail('')
+        setSenha('')
+        setConfirmarSenha('')
+    }
     function criarConta() {
         if (nome) {
             if (email) {
@@ -27,8 +35,7 @@ export default props => {
                             .catch((error) => {
                                 var errorCode = error.code;
                                 var errorMessage = error.message;
-                                // console.warn(error.message)
-                                alert(errorCode + ' - ' + errorMessage)
+                                Alert.alert(errorMessage)
                             })
                     } else {
                         alert('Os campos "Senha" e "Confirmar Senha" devem ser iguais!')
@@ -46,29 +53,26 @@ export default props => {
     }
 
     function cadastrarPerfil() {
-        //const user = firebase.auth().currentUser;
         const logar = firebase.auth().signInWithEmailAndPassword(email, senha)
             .then(() => {
                 const user = firebase.auth().currentUser
                 user.updateProfile({
                     displayName: nome
                 }).then(() => {
-                    setNome('')
-                    setEmail('')
-                    setSenha('')
-                    setConfirmarSenha('')
-                    goToCheckIn()
+                    zerarCampos()
+                    Alert.alert("Sucesso", "Usuário cadastrado com sucesso!")
+                    goToLogin()
                 }).catch((error) => {
-                    alert(error)
+                    Alert.alert(error)
                 });
             })
             .catch((error) => {
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                console.warn(error.message)
+                Alert.alert(errorMessage)
             });
     }
-    
+
     return (
         <Background>
             <View style={[StyleIndex.mainContainer, StyleIndex.contentCenter]}>

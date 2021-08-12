@@ -1,6 +1,8 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 
+import firebase from 'firebase'
+
 import Background from '../components/Background' // imagem de background estilizada para a tela inteira
 import Logo from '../../assets/images/logo.png'
 import FacebookIcon from '../../assets/images/facebookicon.png'
@@ -9,7 +11,17 @@ import StyleIndex from '../styles/index'
 
 
 export default props => {
-    const goToLogin = () => {props.navigation.navigate("Login")} 
+    const goToLogin = () => { props.navigation.navigate("Login") }
+
+    // function entrarComFacebook() {
+    //     var provider = new firebase.auth.FacebookAuthProvider()
+    //     firebase.auth().signInWithRedirect(provider);
+
+    // }
+    // function entrarComGmail() {
+    //     var provider = new firebase.auth.GoogleAuthProvider();
+    //     firebase.auth().signInWithRedirect(provider);
+    // }
 
     return (
         <Background>
@@ -37,7 +49,7 @@ export default props => {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={style.buttonGmail}>
-                <View style={StyleIndex.contentRow}>
+                    <View style={StyleIndex.contentRow}>
                         <Image
                             resizeMode='contain'
                             source={GoogleIcon}
@@ -45,7 +57,7 @@ export default props => {
                         />
                         <Text style={style.buttonTextGmail}>Entrar com Gmail</Text>
                     </View>
-                    
+
                 </TouchableOpacity>
 
             </View>

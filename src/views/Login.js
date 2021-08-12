@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native'
 import firebase from '../../firebaseConfig'
 
 import Background from '../components/Background' // imagem de background estilizada para a tela inteira
@@ -8,10 +8,18 @@ import StyleIndex from '../styles/index'
 
 
 export default props => {
-    // const [text, onChangeText] = useState()
-    const goToCheckIn = () => { props.navigation.navigate("CheckIn") }
-    const goToCadastrar = () => { props.navigation.navigate("CadastrarUsuario") }
-    const goToEsqueciMinhaSenha = () => { props.navigation.navigate("EsqueciMinhaSenha") }
+    const goToCheckIn = () => {
+        props.navigation.navigate("CheckIn")
+        zerarCampos()
+    }
+    const goToCadastrar = () => {
+        props.navigation.navigate("CadastrarUsuario")
+        zerarCampos()
+    }
+    const goToEsqueciMinhaSenha = () => {
+        props.navigation.navigate("EsqueciMinhaSenha")
+        zerarCampos()
+    }
 
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
@@ -23,16 +31,22 @@ export default props => {
         setSenha(senha)
     }
 
+    function zerarCampos() {
+        setEmail('')
+        setSenha('')
+    }
+    
     function login() {
         if (email && senha) {
             firebase.auth().signInWithEmailAndPassword(email, senha)
                 .then(() => {
+                    zerarCampos()
                     goToCheckIn()
                 })
                 .catch((error) => {
                     var errorCode = error.code;
                     var errorMessage = error.message;
-                    console.warn(error.message)
+                    Alert.alert(errorMessage)
                 });
         }
     }

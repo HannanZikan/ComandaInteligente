@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native'
 import firebase from '../../firebaseConfig'
 
 import Background from '../components/Background' // imagem de background estilizada para a tela inteira
@@ -8,9 +8,27 @@ import StyleIndex from '../styles/index'
 
 
 export default props => {
-    const goToEsqueciMinhaSenha2 = () => { props.navigation.navigate("EsqueciMinhaSenha2") }
 
     const [email, setEmail] = useState('')
+
+    function enviarEmail() {
+        if (email) {
+            firebase.auth().sendPasswordResetEmail(email)
+                .then(() => {
+                    Alert.alert("", "Por favor verifique seu email para acessar o link de redefinição de senha!")
+                    setEmail('')
+                    props.navigation.goBack()
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    Alert.alert(errorCode, errorMessage)
+                })
+
+        } else {
+            Alert.alert("Aviso","Informe um email válido!")
+        }
+    }
 
     return (
         <Background>
@@ -29,7 +47,7 @@ export default props => {
                     </Text>
                     <Text style={style.textMessage}>
                         Por favor, informe o seu e-mail que enviaremos um
-                        código para redefinir sua senha.
+                        link para redefinir sua senha.
                     </Text>
 
                     <TextInput
@@ -40,7 +58,7 @@ export default props => {
                         placeholderTextColor="#606060" />
 
                     <TouchableOpacity style={style.button}
-                        onPress={goToEsqueciMinhaSenha2}>
+                        onPress={enviarEmail}>
                         <Text style={style.buttonText}>Enviar</Text>
                     </TouchableOpacity>
 
