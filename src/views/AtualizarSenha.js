@@ -12,25 +12,23 @@ import SetaEsquerda from '../../assets/images/left-arrow.png'
 
 export default props => {
     const goToPerfilUsuario = () => { props.navigation.goBack() }
-    const goToConfirmarSenha = () => { props.navigation.navigate("ConfirmarSenha") }
 
     const user = firebase.auth().currentUser;
-    const [nome, setNome] = useState(user.displayName)
-    const [email, setEmail] = useState(user.email)
-    const [cpf, setCPF] = useState(user.cpf)
+    const [novaSenha, setNovaSenha] = useState('')
+    const [ConfirmarNovaSenha, setConfirmarNovaSenha] = useState('')
 
-    function atualizarDados() {
-        user.updateProfile({
-            displayName: nome,
-            email: email,
-            cpf: cpf
-        }).then(() => {
-            goToDadosUsuario()
+    function atualizarSenha() {
+        const newPassword = getASecureRandomPassword();
+
+        user.updatePassword(newPassword).then(() => {
+            Alert.alert("Sucesso", "Senha alterada com sucesso!")
+            goToPerfilUsuario()
         }).catch((error) => {
             let errorMessage = error.message;
             Alert.alert("Erro", errorMessage)
         })
     }
+
     return (
         <Background>
             <Header />
@@ -42,51 +40,31 @@ export default props => {
                         style={StylePerfil.setaVoltar}
                     />
                     <Text style={StylePerfil.txtNagevarSup}>
-                        Voltar para meus dados
+                        Voltar perfil de usuário
                     </Text>
                 </TouchableOpacity>
 
                 <View style={StylePerfil.contentCentroSup}>
                     <TextInput
                         style={style.input}
-                        value={nome}
-                        onChangeText={nome => setNome(nome)}
-                        placeholder="Nome"
+                        value={novaSenha}
+                        onChangeText={novaSenha => novaSenha(novaSenha)}
+                        placeholder="Insira a sua nova senha"
                         placeholderTextColor="#606060" />
-
                     <TextInput
                         style={style.input}
-                        value={email}
-                        onChangeText={email => setEmail(email)}
-                        placeholder="E-mail"
+                        value={ConfirmarNovaSenha}
+                        onChangeText={ConfirmarNovaSenha => setConfirmarNovaSenha(ConfirmarNovaSenha)}
+                        placeholder="Confirme a sua nova senha"
                         placeholderTextColor="#606060" />
 
-                    <TextInput
-                        style={style.input}
-                        value={cpf}
-                        keyboardType="numeric"
-                        onChangeText={cpf => setCPF(cpf)}
-                        placeholder="CPF"
-                        placeholderTextColor="#606060" />
 
                 </View>
 
-                <View style={StyleIndex.footerContaineSpace}>
+                <View style={StyleIndex.footerContainer}>
                     <TouchableOpacity style={style.btnAtualizar}>
-                        <Text style={style.txtAtualizar}
-                            onPress={
-                                goToConfirmarSenha
-                            }>
-                            Trocar Senha
-                        </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={style.btnAtualizar}
-                        onPress={
-                            atualizarDados
-                        }>
                         <Text style={style.txtAtualizar}>
-                            Atualizar dados
+                            Atualizar
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -103,7 +81,7 @@ const style = StyleSheet.create({
         height: 45,
         backgroundColor: '#FF6300',
         padding: 0,
-        // marginRight: 30,
+        marginRight: 30,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 5

@@ -44,4 +44,12 @@ export default StyleSheet.create({
         height: 80,
         // backgroundColor: '#ccc',
     },
+    footerContaineSpace: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        height: 80,
+        width: '100%',
+        // backgroundColor: '#ccc',
+    },
 })

@@ -12,24 +12,26 @@ import SetaEsquerda from '../../assets/images/left-arrow.png'
 
 export default props => {
     const goToPerfilUsuario = () => { props.navigation.goBack() }
-    const goToConfirmarSenha = () => { props.navigation.navigate("ConfirmarSenha") }
+    const goToAtualizarSenha = () => { props.navigation.navigate("AtualizarSenha") }
 
     const user = firebase.auth().currentUser;
-    const [nome, setNome] = useState(user.displayName)
-    const [email, setEmail] = useState(user.email)
-    const [cpf, setCPF] = useState(user.cpf)
+    const [senha, setSenha] = useState('')
 
-    function atualizarDados() {
-        user.updateProfile({
-            displayName: nome,
-            email: email,
-            cpf: cpf
-        }).then(() => {
-            goToDadosUsuario()
-        }).catch((error) => {
-            let errorMessage = error.message;
-            Alert.alert("Erro", errorMessage)
-        })
+    // parei aqui
+    // falta validar se a senha digitada é realmente a senha do usuário e encaminhar para a próxima tela
+    function validarSenhaAtual() {
+        const credential = promptForCredentials();
+        if (credential == senha) {
+            user.reauthenticateWithCredential(credential).then(() => {
+                goToAtualizarSenha()
+            }).catch((error) => {
+                let errorMessage = error.message;
+                Alert.alert("Erro", errorMessage)
+            })
+
+        }
+
+        console.warn(user.displayName)
     }
     return (
         <Background>
@@ -42,51 +44,26 @@ export default props => {
                         style={StylePerfil.setaVoltar}
                     />
                     <Text style={StylePerfil.txtNagevarSup}>
-                        Voltar para meus dados
+                        Voltar perfil de usuário
                     </Text>
                 </TouchableOpacity>
 
                 <View style={StylePerfil.contentCentroSup}>
                     <TextInput
                         style={style.input}
-                        value={nome}
-                        onChangeText={nome => setNome(nome)}
-                        placeholder="Nome"
+                        value={senha}
+                        onChangeText={senha => setSenha(senha)}
+                        placeholder="Insira a sua senha atual"
                         placeholderTextColor="#606060" />
 
-                    <TextInput
-                        style={style.input}
-                        value={email}
-                        onChangeText={email => setEmail(email)}
-                        placeholder="E-mail"
-                        placeholderTextColor="#606060" />
-
-                    <TextInput
-                        style={style.input}
-                        value={cpf}
-                        keyboardType="numeric"
-                        onChangeText={cpf => setCPF(cpf)}
-                        placeholder="CPF"
-                        placeholderTextColor="#606060" />
 
                 </View>
 
-                <View style={StyleIndex.footerContaineSpace}>
-                    <TouchableOpacity style={style.btnAtualizar}>
-                        <Text style={style.txtAtualizar}
-                            onPress={
-                                goToConfirmarSenha
-                            }>
-                            Trocar Senha
-                        </Text>
-                    </TouchableOpacity>
-
+                <View style={StyleIndex.footerContainer}>
                     <TouchableOpacity style={style.btnAtualizar}
-                        onPress={
-                            atualizarDados
-                        }>
+                        onPress={validarSenhaAtual}>
                         <Text style={style.txtAtualizar}>
-                            Atualizar dados
+                            Avançar
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -103,7 +80,7 @@ const style = StyleSheet.create({
         height: 45,
         backgroundColor: '#FF6300',
         padding: 0,
-        // marginRight: 30,
+        marginRight: 30,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 5
