@@ -1,11 +1,12 @@
 import React from 'react'
-import { Image } from 'react-native'
+import { Image, StyleSheet } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import LoginRapido from '../views/LoginRapido'
 import Login from '../views/Login'
 import CheckIn from '../views/CheckIn'
+import MenuAtendimento from '../views/MenuAtendimento'
 import Cardapio from '../views/Cardapio'
 import Pedidos from '../views/Pedidos'
 import EscolherPagamento from '../views/EscolherPagamento'
@@ -15,6 +16,7 @@ import DadosUsuario from '../views/DadosUsuario'
 import EsqueciMinhaSenha from '../views/EsqueciMinhaSenha'
 import AtualizarSenha from '../views/AtualizarSenha'
 
+import iconMenu from '../../assets/images/icon-menu.png'
 import iconCardapio from '../../assets/images/cardapio.png'
 import iconPerfil from '../../assets/images/icone-perfil.png'
 import iconPedidos from '../../assets/images/pedidos.png'
@@ -33,14 +35,31 @@ function CardapioTabStack() {
     );
 }
 
+const MenuStack = createStackNavigator();
+
+function MenuTabStack() {
+    return (
+        <MenuStack.Navigator initialRouteName="Menu"
+            screenOptions={{ headerShown: false }}>
+            <MenuStack.Screen name="Menu" component={MenuAtendimento} />
+            <MenuStack.Screen name="Cardapio" component={Cardapio} />
+            <MenuStack.Screen name="Pedidos" component={Pedidos} />
+            <MenuStack.Screen name="EscolherPagamento" component={EscolherPagamento} />
+            <MenuStack.Screen name="CheckIn" component={CheckIn} />
+        </MenuStack.Navigator>
+    );
+}
+
+const PerfilStack = createStackNavigator();
+
 function PerfilTabStack() {
     return (
-        <CardapioStack.Navigator initialRouteName="PerfilUsuario"
+        <PerfilStack.Navigator initialRouteName="PerfilUsuario"
             screenOptions={{ headerShown: false }}>
-            <CardapioStack.Screen name="PerfilUsuario" component={PerfilUsuario} />
-            <CardapioStack.Screen name="DadosUsuario" component={DadosUsuario} />
-            <CardapioStack.Screen name="AtualizarSenha" component={AtualizarSenha} />
-        </CardapioStack.Navigator>
+            <PerfilStack.Screen name="PerfilUsuario" component={PerfilUsuario} />
+            <PerfilStack.Screen name="DadosUsuario" component={DadosUsuario} />
+            <PerfilStack.Screen name="AtualizarSenha" component={AtualizarSenha} />
+        </PerfilStack.Navigator>
     );
 }
 
@@ -60,16 +79,23 @@ function TabMenu() {
                     paddingTop: 5,
                 }
             }}>
+            <Tab.Screen name='Menu' component={MenuTabStack}
+                options={{
+                    tabBarIcon: () => (
+                        <Image
+                            source={iconMenu}
+                            resizeMode='contain'
+                            style={style.icone}
+                        />
+                    )
+                }} />
             <Tab.Screen name='Cardápio' component={CardapioTabStack}
                 options={{
                     tabBarIcon: () => (
                         <Image
                             source={iconCardapio}
                             resizeMode='contain'
-                            style={{
-                                width: 30,
-                                height: 30,
-                            }}
+                            style={style.icone}
                         />
                     )
                 }} />
@@ -79,10 +105,7 @@ function TabMenu() {
                         <Image
                             source={iconPerfil}
                             resizeMode='contain'
-                            style={{
-                                width: 30,
-                                height: 30,
-                            }}
+                            style={style.iconeMaior}
                         />
                     )
                 }} />
@@ -92,10 +115,7 @@ function TabMenu() {
                         <Image
                             source={iconPedidos}
                             resizeMode='contain'
-                            style={{
-                                width: 35,
-                                height: 35,
-                            }}
+                            style={style.iconeMaior}
                         />
                     )
                 }} />
@@ -106,14 +126,32 @@ function TabMenu() {
 const Stack = createStackNavigator()
 export default function Routes() {
     return (
-        <Stack.Navigator initialRouteName="LoginRapido"
+        <Stack.Navigator initialRouteName="CheckIn"
             screenOptions={{ headerShown: false }}>
             <Stack.Screen name='LoginRapido' component={LoginRapido} />
             <Stack.Screen name='Login' component={Login} />
             <Stack.Screen name='EsqueciMinhaSenha' component={EsqueciMinhaSenha} />
             <Stack.Screen name='CadastrarUsuario' component={CadastrarUsuario} />
             <Stack.Screen name='CheckIn' component={CheckIn} />
+            <Stack.Screen name='Menu' component={TabMenu} />
             <Stack.Screen name='Cardapio' component={TabMenu} />
         </Stack.Navigator>
     )
 }
+
+
+const style = StyleSheet.create({
+    icone: {
+        width: 30,
+        height: 30,
+    },
+    iconeMaior: {
+        width: 35,
+        height: 35,
+    },
+    txtPedir: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#FFF',
+    },
+})

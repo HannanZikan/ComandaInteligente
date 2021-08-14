@@ -19,7 +19,6 @@ export default StyleSheet.create({
         // backgroundColor: '#ccc',
     },
     contentRow: {
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',

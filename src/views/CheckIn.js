@@ -9,7 +9,8 @@ import Mira from '../../assets/images/mira.png'
 import StyleIndex from '../styles/index'
 
 export default props => {
-    const goToCardapio = () => { props.navigation.navigate("Cardapio") }
+    const goToMenu = () => { props.navigation.navigate("Menu") }
+
     return (
         <Background>
             <Header />
@@ -25,7 +26,7 @@ export default props => {
                 <View style={StyleIndex.contentCenter}>
                     <View style={style.quadro}>
                         <TouchableOpacity
-                            onPress={goToCardapio}>
+                            onPress={goToMenu}>
                             <Image
                                 resizeMode='contain'
                                 source={Mira}
