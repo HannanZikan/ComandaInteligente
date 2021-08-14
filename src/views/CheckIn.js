@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, VirtualizedList } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import Background from '../components/Background'
-import Header from '../components/HeaderCheckIn'
+import Header from '../components/Header'
 
 import Mira from '../../assets/images/mira.png'
 import StyleIndex from '../styles/index'
@@ -15,7 +15,14 @@ export default props => {
             <Header />
 
             <View style={StyleIndex.mainContainer}>
-                <View style={style.meio}>
+
+                <View style={style.titleContainer}>
+                    <Text style={style.titleText}>
+                        Escaneie o QR-Code para fazer o Check-In
+                    </Text>
+                </View>
+
+                <View style={StyleIndex.contentCenter}>
                     <View style={style.quadro}>
                         <TouchableOpacity
                             onPress={goToCardapio}>
@@ -40,23 +47,25 @@ const style = StyleSheet.create({
         height: 130,
     },
     quadro: {
-        width: 300,
-        height: 400,
+        width: 350,
+        height: 500,
         backgroundColor: '#474747',
         borderRadius: 5,
         justifyContent: 'center',
-        alignItems: 'center'
-    },
-    slogan: {
-        height: 120,
-        margin: 20,
+        alignItems: 'center',
     },
     mira: {
-        width: 150,
+        width: 200,
     },
-    meio:{
-        flex: 1,
-        justifyContent: 'center',
+    titleContainer: {
         alignItems: 'center',
-    }
+        padding: 10,
+        marginTop: 20,
+        width: '100%',
+    },
+    titleText: {
+        color: '#FFF',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
 })

@@ -15,15 +15,12 @@ export default props => {
                 source={Logo}
                 style={Style.Logo} />
 
-            <View style={Style.headerConteinerText}>
+            {/* <View style={Style.headerConteinerText}> */}
                 <Text style={Style.headerText}>
                     Bem vindo, {user.displayName}!
                 </Text>
-                <Text style={Style.headerText}>
-                    Faça aqui seu pedido do {"{estabelecimento_nome}"}
-                </Text>
 
-            </View>
+            {/* </View> */}
             {props.children}
         </View>
     )

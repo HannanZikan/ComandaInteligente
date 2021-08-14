@@ -11,16 +11,13 @@ import Pedidos from '../views/Pedidos'
 import EscolherPagamento from '../views/EscolherPagamento'
 import CadastrarUsuario from '../views/CadastrarUsuario'
 import PerfilUsuario from '../views/PerfilUsuario'
-import FormasPagamento from '../views/FormasPagamento'
-import CadastrarCartao from '../views/CadastrarCartao'
 import DadosUsuario from '../views/DadosUsuario'
 import EsqueciMinhaSenha from '../views/EsqueciMinhaSenha'
-import ConfirmarSenha from '../views/ConfirmarSenha'
 import AtualizarSenha from '../views/AtualizarSenha'
 
 import iconCardapio from '../../assets/images/cardapio.png'
 import iconPerfil from '../../assets/images/icone-perfil.png'
-import iconExit from '../../assets/images/icon-exit.png'
+import iconPedidos from '../../assets/images/pedidos.png'
 
 const CardapioStack = createStackNavigator();
 
@@ -42,7 +39,6 @@ function PerfilTabStack() {
             screenOptions={{ headerShown: false }}>
             <CardapioStack.Screen name="PerfilUsuario" component={PerfilUsuario} />
             <CardapioStack.Screen name="DadosUsuario" component={DadosUsuario} />
-            <CardapioStack.Screen name="ConfirmarSenha" component={ConfirmarSenha} />
             <CardapioStack.Screen name="AtualizarSenha" component={AtualizarSenha} />
         </CardapioStack.Navigator>
     );
@@ -94,11 +90,11 @@ function TabMenu() {
                 options={{
                     tabBarIcon: () => (
                         <Image
-                            source={iconExit}
+                            source={iconPedidos}
                             resizeMode='contain'
                             style={{
-                                width: 30,
-                                height: 30,
+                                width: 35,
+                                height: 35,
                             }}
                         />
                     )

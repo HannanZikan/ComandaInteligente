@@ -4,7 +4,7 @@ import { Picker } from '@react-native-picker/picker'
 import firebase from 'firebase'
 
 import Background from '../components/Background'
-import Header from '../components/HeaderPerfil'
+import Header from '../components/Header'
 
 import StyleIndex from '../styles/index'
 import StylePerfil from '../styles/perfil'

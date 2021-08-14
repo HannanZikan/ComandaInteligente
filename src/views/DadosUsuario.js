@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, Alert } fro
 import firebase from 'firebase'
 
 import Background from '../components/Background'
-import Header from '../components/HeaderPerfil'
+import Header from '../components/Header'
 
 import StyleIndex from '../styles/index'
 import StylePerfil from '../styles/perfil'
@@ -12,7 +12,7 @@ import SetaEsquerda from '../../assets/images/left-arrow.png'
 
 export default props => {
     const goToPerfilUsuario = () => { props.navigation.goBack() }
-    const goToConfirmarSenha = () => { props.navigation.navigate("ConfirmarSenha") }
+    const goToAtualizar = () => { props.navigation.navigate("AtualizarSenha") }
 
     const user = firebase.auth().currentUser;
     const [nome, setNome] = useState(user.displayName)
@@ -75,7 +75,7 @@ export default props => {
                     <TouchableOpacity style={style.btnAtualizar}>
                         <Text style={style.txtAtualizar}
                             onPress={
-                                goToConfirmarSenha
+                                goToAtualizar
                             }>
                             Trocar Senha
                         </Text>
@@ -121,7 +121,8 @@ const style = StyleSheet.create({
         borderBottomWidth: 2,
         borderColor: '#FF6300',
         textAlign: 'left',
-        fontSize: 24,
+        fontSize: 18,
+        fontFamily: 'roboto',
         fontWeight: 'bold',
         color: '#FFF',
     },

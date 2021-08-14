@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, Alert } fro
 import firebase from 'firebase'
 
 import Background from '../components/Background'
-import Header from '../components/HeaderPerfil'
+import Header from '../components/Header'
 
 import StyleIndex from '../styles/index'
 import StylePerfil from '../styles/perfil'
@@ -13,21 +13,40 @@ import SetaEsquerda from '../../assets/images/left-arrow.png'
 export default props => {
     const goToPerfilUsuario = () => { props.navigation.goBack() }
 
-    const user = firebase.auth().currentUser;
-    const [novaSenha, setNovaSenha] = useState('')
-    const [ConfirmarNovaSenha, setConfirmarNovaSenha] = useState('')
+    // const user = firebase.auth().currentUser
+    const [senhaAtual, setSenhaAtual] = useState('')
+    const [senhaNova, setSenhaNova] = useState('')
+    const [confirmarSenhaNova, setConfirmarSenhaNova] = useState('')
 
-    function atualizarSenha() {
-        const newPassword = getASecureRandomPassword();
+    function zerarCampos() {
+        setSenhaAtual('')
+        setSenhaNova('')
+        setConfirmarSenhaNova('')
+    }
 
-        user.updatePassword(newPassword).then(() => {
-            Alert.alert("Sucesso", "Senha alterada com sucesso!")
-            goToPerfilUsuario()
+    function reautenticar(senhaAtual) {
+        // reautenticar = (senhaAtual) => {
+        var user = firebase.auth().currentUser
+        var cred = firebase.auth.EmailAuthProvider.credential(user.email, senhaAtual)
+
+        return user.reauthenticateWithCredential(cred)
+    }
+
+    function alterarSenha() {
+        // alterarSenha = () => {
+        var user = firebase.auth().currentUser
+        reautenticar(senhaAtual).then(() => {
+            user.updatePassword(senhaNova).then(() => {
+                Alert.alert("Sucesso", "Sua senha foi alterada com sucesso!")
+                zerarCampos()
+            }).catch((error) => {
+                Alert.alert("Erro!", error.message)
+            });
         }).catch((error) => {
-            let errorMessage = error.message;
-            Alert.alert("Erro", errorMessage)
+            Alert.alert("Erro!", error.message)
         })
     }
+
 
     return (
         <Background>
@@ -47,14 +66,25 @@ export default props => {
                 <View style={StylePerfil.contentCentroSup}>
                     <TextInput
                         style={style.input}
-                        value={novaSenha}
-                        onChangeText={novaSenha => novaSenha(novaSenha)}
-                        placeholder="Insira a sua nova senha"
+                        value={senhaAtual}
+                        onChangeText={senhaAtual => setSenhaAtual(senhaAtual)}
+                        secureTextEntry={true}
+                        placeholder="Insira a sua senha atual"
                         placeholderTextColor="#606060" />
+
                     <TextInput
                         style={style.input}
-                        value={ConfirmarNovaSenha}
-                        onChangeText={ConfirmarNovaSenha => setConfirmarNovaSenha(ConfirmarNovaSenha)}
+                        value={senhaNova}
+                        onChangeText={senhaNova => setSenhaNova(senhaNova)}
+                        secureTextEntry={true}
+                        placeholder="Insira a sua nova senha"
+                        placeholderTextColor="#606060" />
+
+                    <TextInput
+                        style={style.input}
+                        value={confirmarSenhaNova}
+                        onChangeText={confirmarSenhaNova => setConfirmarSenhaNova(confirmarSenhaNova)}
+                        secureTextEntry={true}
                         placeholder="Confirme a sua nova senha"
                         placeholderTextColor="#606060" />
 
@@ -62,9 +92,11 @@ export default props => {
                 </View>
 
                 <View style={StyleIndex.footerContainer}>
-                    <TouchableOpacity style={style.btnAtualizar}>
+                    <TouchableOpacity style={style.btnAtualizar}
+                        onPress={alterarSenha}
+                    >
                         <Text style={style.txtAtualizar}>
-                            Atualizar
+                            Trocar Senha
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -99,7 +131,8 @@ const style = StyleSheet.create({
         borderBottomWidth: 2,
         borderColor: '#FF6300',
         textAlign: 'left',
-        fontSize: 24,
+        fontSize: 18,
+        fontFamily: 'roboto',
         fontWeight: 'bold',
         color: '#FFF',
     },

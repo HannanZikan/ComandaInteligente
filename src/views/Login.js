@@ -44,12 +44,12 @@ export default props => {
                     goToCheckIn()
                 })
                 .catch((error) => {
-                    var errorCode = error.code;
                     var errorMessage = error.message;
                     Alert.alert(errorMessage)
-                });
+                })
         }
     }
+
     return (
         <Background>
             <View style={StyleIndex.contentCenter}>
