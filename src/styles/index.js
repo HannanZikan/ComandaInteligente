@@ -26,14 +26,16 @@ export default StyleSheet.create({
     },
     titleContainer: {
         alignItems: 'center',
-        padding: 10,
+        // padding: 10,
+        paddingTop: 10,
+        paddingBottom: 10,
         // marginBottom: 10,
         width: '100%',
         // backgroundColor: '#ccc',
     },
     titleText: {
         color: '#FFF',
-        fontSize: 36,
+        fontSize: 32,
         fontWeight: 'bold',
     },
     footerContainer: {

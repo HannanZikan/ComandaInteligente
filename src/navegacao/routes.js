@@ -2,12 +2,14 @@ import React from 'react'
 import { Image, StyleSheet } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
 import LoginRapido from '../views/LoginRapido'
 import Login from '../views/Login'
 import CheckIn from '../views/CheckIn'
 import MenuAtendimento from '../views/MenuAtendimento'
 import Cardapio from '../views/Cardapio'
+import CardapioSimples from '../views/CardapioSimples'
 import Pedidos from '../views/Pedidos'
 import EscolherPagamento from '../views/EscolherPagamento'
 import CadastrarUsuario from '../views/CadastrarUsuario'
@@ -27,7 +29,7 @@ function CardapioTabStack() {
     return (
         <CardapioStack.Navigator initialRouteName="Cardapio"
             screenOptions={{ headerShown: false }}>
-            <CardapioStack.Screen name="Cardapio" component={Cardapio} />
+            <CardapioStack.Screen name="Cardapio" component={CardapioSimples} />
             <CardapioStack.Screen name="Pedidos" component={Pedidos} />
             <CardapioStack.Screen name="EscolherPagamento" component={EscolherPagamento} />
             <CardapioStack.Screen name="CheckIn" component={CheckIn} />
@@ -42,7 +44,7 @@ function MenuTabStack() {
         <MenuStack.Navigator initialRouteName="Menu"
             screenOptions={{ headerShown: false }}>
             <MenuStack.Screen name="Menu" component={MenuAtendimento} />
-            <MenuStack.Screen name="Cardapio" component={Cardapio} />
+            <MenuStack.Screen name="Cardapio" component={CardapioSimples} />
             <MenuStack.Screen name="Pedidos" component={Pedidos} />
             <MenuStack.Screen name="EscolherPagamento" component={EscolherPagamento} />
             <MenuStack.Screen name="CheckIn" component={CheckIn} />
@@ -139,6 +141,16 @@ export default function Routes() {
     )
 }
 
+const TopTab = createMaterialTopTabNavigator()
+
+function MyTabs() {
+  return (
+    <TopTab.Navigator>
+      <TopTab.Screen name="Home" component={HomeScreen} />
+      <TopTab.Screen name="Settings" component={SettingsScreen} />
+    </TopTab.Navigator>
+  );
+}
 
 const style = StyleSheet.create({
     icone: {

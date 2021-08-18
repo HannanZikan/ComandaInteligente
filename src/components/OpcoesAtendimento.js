@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 
 export default props => {
     return (
-        <TouchableOpacity style={style.main}>
+        <View style={style.main}>
             <View style={style.container}>
                 <View style={props.opcao == "Chamar o garçom"
                     ? style.containerImage
@@ -22,7 +22,8 @@ export default props => {
                 </Text>
 
             </View>
-        </TouchableOpacity >
+
+        </View>
     )
 }
 
@@ -30,6 +31,7 @@ const style = StyleSheet.create({
     main: {
         alignItems: 'center',
         marginBottom: 10,
+        marginTop: 10,
     },
     iconePagamento: {
         width: 100,
