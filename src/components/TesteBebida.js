@@ -2,79 +2,12 @@ import React, { Fragment, useState } from 'react'
 import { View, Text, Image, StyleSheet, Pressable, Alert, TouchableOpacity, TextInput, TouchableOpacityBase } from 'react-native'
 import StyleIndex from '../styles/index'
 
-// imagem apenas ilustrativa, retirar depois
-import sanduiche from '../../assets/images/sanduiche.png'
-
 export default props => {
 
-    const [selecao, setSelecao] = useState(false)
-
-    const [observacao, setObservacao] = useState('')
-
-    const onChangeObservacao = (observacao) => {
-        setObservacao(observacao)
-    }
-
-    const [quantidade, setQuantidade] = useState(1)
-    const inc = () => setQuantidade(quantidade + 1)
-    function dec() {
-        if (quantidade < 1) {
-            setQuantidade(1)
-            setSelecao(false)
-        } else if (quantidade >= 1) {
-            setQuantidade(quantidade - 1)
-        }
-    }
-
-    function selecionar(valor) {
-        setSelecao(valor)
-        valor ?
-            setSelecao(true)
-            : (
-                setSelecao(false),
-                setObservacao(''),
-                setQuantidade(1)
-            )
-    }
-
-
-    function organizaPedido() {
-        var valor = props.valor
-        var qtde = quantidade
-        var valorTotal = (valor * qtde)
-        let obs = observacao
-        let nome = props.nome
-        let descricao = props.descricao
-        let itemDoPedido = []
-        itemDoPedido.push = [{
-            "nome": nome,
-            "descricao": descricao,
-            "valorTotal": valorTotal,
-            "observacao": obs,
-            "qtde": qtde,
-            "status": "em andamento"
-        }]
-        console.warn("item do pedido ", itemDoPedido)
-        return props.montarPedido(itemDoPedido)
-    }
-
     return (
-        <Fragment>
-
-            <View style={style.container}>
-                <View style={style.containerImg}>
-                    <Image resizeMode='contain'
-                        source={sanduiche}
-                        style={style.imgCardapio} />
-                </View>
-                <View style={style.containerTxt}>
-                    <Text style={style.nome}>{props.nome}</Text>
-                    <Text style={style.descricao}>{props.descricao}</Text>
-                    <Text style={style.valor}>R$ {props.valor}</Text>
-                </View>
-            </View>
-
-        </Fragment>
+        <View style={StyleIndex.titleContainer}>
+            <Text style={StyleIndex.titleText}>Bebidas</Text>
+        </View>
     )
 }
 

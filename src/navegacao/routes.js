@@ -2,7 +2,6 @@ import React from 'react'
 import { Image, StyleSheet } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
 import LoginRapido from '../views/LoginRapido'
 import Login from '../views/Login'
@@ -139,17 +138,6 @@ export default function Routes() {
             <Stack.Screen name='Cardapio' component={TabMenu} />
         </Stack.Navigator>
     )
-}
-
-const TopTab = createMaterialTopTabNavigator()
-
-function MyTabs() {
-  return (
-    <TopTab.Navigator>
-      <TopTab.Screen name="Home" component={HomeScreen} />
-      <TopTab.Screen name="Settings" component={SettingsScreen} />
-    </TopTab.Navigator>
-  );
 }
 
 const style = StyleSheet.create({
