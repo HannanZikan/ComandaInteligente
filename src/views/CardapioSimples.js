@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native'
 import firebase from 'firebase'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-
 import Background from '../components/Background'
 import Header from '../components/Header'
 import StyleIndex from '../styles/index'
