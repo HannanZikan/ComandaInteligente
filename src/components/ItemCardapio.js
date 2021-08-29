@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { View, Text, Image, StyleSheet, Pressable, Alert, TouchableOpacity, TextInput, TouchableOpacityBase } from 'react-native'
+import { View, Text, Image, StyleSheet } from 'react-native'
 import StyleIndex from '../styles/index'
 
 // imagem apenas ilustrativa, retirar depois
@@ -7,148 +7,22 @@ import sanduiche from '../../assets/images/sanduiche.png'
 
 export default props => {
 
-    const [selecao, setSelecao] = useState(false)
-
-    const [observacao, setObservacao] = useState('')
-
-    const onChangeObservacao = (observacao) => {
-        setObservacao(observacao)
-    }
-
-    const [quantidade, setQuantidade] = useState(1)
-    const inc = () => setQuantidade(quantidade + 1)
-    function dec() {
-        if (quantidade < 1) {
-            setQuantidade(1)
-            setSelecao(false)
-        } else if (quantidade >= 1) {
-            setQuantidade(quantidade - 1)
-        }
-    }
-
-    function selecionar(valor) {
-        setSelecao(valor)
-        valor ?
-            setSelecao(true)
-            : (
-                setSelecao(false),
-                setObservacao(''),
-                setQuantidade(1)
-            )
-    }
-
-
-    function organizaPedido() {
-        var valor = props.valor
-        var qtde = quantidade
-        var valorTotal = (valor * qtde)
-        let obs = observacao
-        let nome = props.nome
-        let descricao = props.descricao
-        let itemDoPedido = []
-        itemDoPedido.push = [{
-            "nome": nome,
-            "descricao": descricao,
-            "valorTotal": valorTotal,
-            "observacao": obs,
-            "qtde": qtde,
-            "status": "em andamento"
-        }]
-        console.warn("item do pedido ", itemDoPedido)
-        return props.montarPedido(itemDoPedido)
-    }
-
     return (
         <Fragment>
-            {
-                selecao ?
-                    <Pressable style={style.containerSelecionado}
-                        onLongPress={() => {
-                            selecao ?
-                                selecionar(false)
-                                :
-                                selecionar(true)
-                        }}>
-                        <View style={style.item}>
-                            <View style={style.containerImg}>
-                                <Image resizeMode='contain'
-                                    source={sanduiche}
-                                    style={style.imgCardapio} />
-                            </View>
-                            <View style={style.containerTxt}>
-                                <Text style={style.nome}>{props.nome}</Text>
-                                <Text style={style.descricao}>{props.descricao}</Text>
-                                <Text style={style.valor}>{props.valor}</Text>
-                            </View>
-                        </View>
-                        <View style={style.detalhePedido}>
-                            <TextInput
-                                style={style.observacao}
-                                value={observacao}
-                                onChangeText={observacao => onChangeObservacao(observacao)}
-                                placeholder="Adicione uma observação ao pedido"
-                                placeholderTextColor="#606060" />
 
-                            {/* <TextInput style={style.quantidade}
-                                value={quantidade}
-                                onChangeText={quantidade => onChangeQuantidade(quantidade)}
-                                keyboardType='numeric'
-                                placeholder="QTDE"
-                                placeholderTextColor="#606060" /> */}
-                        </View>
-                        <View style={style.detalhePedidoBotao}>
+            <View style={style.container}>
+                <View style={style.containerImg}>
+                    <Image resizeMode='contain'
+                        source={sanduiche}
+                        style={style.imgCardapio} />
+                </View>
+                <View style={style.containerTxt}>
+                    <Text style={style.nome}>{props.nome}</Text>
+                    <Text style={style.descricao}>{props.descricao}</Text>
+                    <Text style={style.valor}>R$ {props.valor}</Text>
+                </View>
+            </View>
 
-                            <View style={style.detalhePedido}>
-                                <TouchableOpacity style={style.botaoQuantidade}>
-                                    <Text style={style.quantidadeItem}
-                                        onPress={dec}>
-                                        -
-                                    </Text>
-
-                                </TouchableOpacity>
-                                <Text style={[style.botaoQuantidade, style.quantidadeItem]}>
-                                    {quantidade}
-                                </Text>
-                                <TouchableOpacity style={style.botaoQuantidade}
-                                    onPress={inc}>
-                                    <Text style={style.quantidadeItem}>
-                                        +
-                                    </Text>
-
-                                </TouchableOpacity>
-                            </View>
-
-                            <TouchableOpacity
-                                onPress={
-                                    () => { organizaPedido() }
-                                }>
-                                <Text style={style.botaoIncluir}>
-                                    Incluir no pedido
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-
-                    </Pressable>
-                    :
-                    <Pressable style={style.container}
-                        onLongPress={() => {
-                            selecao ?
-                                selecionar(false)
-                                :
-                                selecionar(true)
-                        }}>
-                        <View style={style.containerImg}>
-                            <Image resizeMode='contain'
-                                source={sanduiche}
-                                style={style.imgCardapio} />
-                        </View>
-                        <View style={style.containerTxt}>
-                            <Text style={style.nome}>{props.nome}</Text>
-                            <Text style={style.descricao}>{props.descricao}</Text>
-                            <Text style={style.valor}>{props.valor}</Text>
-                        </View>
-                    </Pressable>
-            }
 
         </Fragment>
     )
@@ -230,7 +104,6 @@ const style = StyleSheet.create({
         marginLeft: 5,
         padding: 0,
         backgroundColor: 'rgba(255,255,255,0.8)',
-
     },
     quantidade: {
         width: 50,

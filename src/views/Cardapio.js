@@ -8,6 +8,8 @@ import StyleIndex from '../styles/index'
 import ItemCardapio from '../components/ItemCardapio'
 
 export default props => {
+    const goToInformacoesPedidos = () => { props.navigation.navigate("InformacoesPedidos") }
+
     const [listFire, setListFire] = useState('')
     const [listBebidas, setListBebidas] = useState('')
     const [listLanches, setListLanches] = useState('')
@@ -148,22 +150,19 @@ export default props => {
                             </Text>
                         )}
                         renderItem={({ item }) =>
-                            <ItemCardapio
+                            <TouchableOpacity
+                                onPress={goToInformacoesPedidos}
                                 nome={item.nome}
                                 valor={item.valor}
-                                descricao={item.descricao} />
+                                descricao={item.descricao}>
+                                <ItemCardapio
+                                    nome={item.nome}
+                                    valor={item.valor}
+                                    descricao={item.descricao} />
+                            </TouchableOpacity>
                         }
                     />
 
-                </View>
-
-                <View style={StyleIndex.footerContainer}>
-                    <TouchableOpacity
-                        style={style.btnPedir}>
-                        <Text style={style.txtPedir}>
-                            Pedir
-                        </Text>
-                    </TouchableOpacity>
                 </View>
             </View>
 
