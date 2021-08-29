@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, SectionList } from 'react-native'
 import firebase from 'firebase'
 
 import Background from '../components/Background'
@@ -8,147 +8,158 @@ import StyleIndex from '../styles/index'
 import ItemCardapio from '../components/ItemCardapio'
 
 export default props => {
-    const goToPedidos = () => { props.navigation.navigate("Pedidos") }
     const [listFire, setListFire] = useState('')
+    const [listBebidas, setListBebidas] = useState('')
+    const [listLanches, setListLanches] = useState('')
+    const [listPizzas, setListPizzas] = useState('')
+    const [listPorcoes, setListPorcoes] = useState('')
+    const [listRefeicoes, setListRefeicoes] = useState('')
+    const [listSobremesas, setListSobremesas] = useState('')
+    const [listOutros, setListOutros] = useState('')
 
     useEffect(() => {
         try {
-            firebase.database().ref('/Cardapio').once('value', (snapshot) => {
-                const list = []
-                snapshot.forEach((childItem) => {
-                    list.push({
-                        key: childItem.key,
-                        nome: childItem.val().nome,
-                        descricao: childItem.val().descricao,
-                        valor: childItem.val().valor,
-                        status: childItem.val().status,
+            firebase.database().ref('/Cardapio')
+                .orderByChild('categoria').equalTo('bebida')
+                .on('value', (snapshot) => {
+                    const list = []
+                    snapshot.forEach((childItem) => {
+                        list.push({
+                            key: childItem.key,
+                            nome: childItem.val().nome,
+                            descricao: childItem.val().descricao,
+                            valor: childItem.val().valor,
+                            status: childItem.val().status,
+                        })
                     })
+                    setListBebidas(list)
                 })
-                setListFire(list)
-            })
+            firebase.database().ref('/Cardapio')
+                .orderByChild('categoria').equalTo('lanche')
+                .on('value', (snapshot) => {
+                    const list = []
+                    snapshot.forEach((childItem) => {
+                        list.push({
+                            key: childItem.key,
+                            nome: childItem.val().nome,
+                            descricao: childItem.val().descricao,
+                            valor: childItem.val().valor,
+                            status: childItem.val().status,
+                        })
+                    })
+                    setListLanches(list)
+                })
+            firebase.database().ref('/Cardapio')
+                .orderByChild('categoria').equalTo('pizza')
+                .on('value', (snapshot) => {
+                    const list = []
+                    snapshot.forEach((childItem) => {
+                        list.push({
+                            key: childItem.key,
+                            nome: childItem.val().nome,
+                            descricao: childItem.val().descricao,
+                            valor: childItem.val().valor,
+                            status: childItem.val().status,
+                        })
+                    })
+                    setListPizzas(list)
+                })
+            firebase.database().ref('/Cardapio')
+                .orderByChild('categoria').equalTo('porcao')
+                .on('value', (snapshot) => {
+                    const list = []
+                    snapshot.forEach((childItem) => {
+                        list.push({
+                            key: childItem.key,
+                            nome: childItem.val().nome,
+                            descricao: childItem.val().descricao,
+                            valor: childItem.val().valor,
+                            status: childItem.val().status,
+                        })
+                    })
+                    setListPorcoes(list)
+                })
+            firebase.database().ref('/Cardapio')
+                .orderByChild('categoria').equalTo('refeicao')
+                .on('value', (snapshot) => {
+                    const list = []
+                    snapshot.forEach((childItem) => {
+                        list.push({
+                            key: childItem.key,
+                            nome: childItem.val().nome,
+                            descricao: childItem.val().descricao,
+                            valor: childItem.val().valor,
+                            status: childItem.val().status,
+                        })
+                    })
+                    setListRefeicoes(list)
+                })
+            firebase.database().ref('/Cardapio')
+                .orderByChild('categoria').equalTo('sobremesa')
+                .on('value', (snapshot) => {
+                    const list = []
+                    snapshot.forEach((childItem) => {
+                        list.push({
+                            key: childItem.key,
+                            nome: childItem.val().nome,
+                            descricao: childItem.val().descricao,
+                            valor: childItem.val().valor,
+                            status: childItem.val().status,
+                        })
+                    })
+                    setListSobremesas(list)
+                })
+            firebase.database().ref('/Cardapio')
+                .orderByChild('categoria').equalTo('outro')
+                .on('value', (snapshot) => {
+                    const list = []
+                    snapshot.forEach((childItem) => {
+                        list.push({
+                            key: childItem.key,
+                            nome: childItem.val().nome,
+                            descricao: childItem.val().descricao,
+                            valor: childItem.val().valor,
+                            status: childItem.val().status,
+                        })
+                    })
+                    setListOutros(list)
+                })
         } catch (error) {
-            alert(error)
+            Alert.alert(error)
         }
     }, [])
-
-    let modelo = { // apenas para ter uma clareza de como os dados serão cadastrados no banco
-        "IdPedidox": {
-            "item1": {
-                "nome": "teste",
-                "descricao": "descricao",
-                "valorTotal": 15,
-                "observacao": "obs",
-                "qtde": "2",
-                "status": "em andamento"
-            },
-            "item2": {
-                "nome": "teste",
-                "descricao": "descricao",
-                "valorTotal": 15,
-                "observacao": "obs",
-                "qtde": "2",
-                "status": "em andamento"
-            }
-        },
-        "pedidoz": {
-            "item1": {
-                "nome": "teste",
-                "descricao": "descricao",
-                "valorTotal": 15,
-                "observacao": "obs",
-                "qtde": "2",
-                "status": "em andamento"
-            },
-        },
-    }
-
-    const [listaPedidos, setListaPedidos] = useState([])
-    const [pedidoMontado, setPedidoMontado] = useState({})
-
-    function montarPedido(objDoComponente) {
-        console.warn('montar pedido ', objDoComponente)
-
-        
-
-    }
-
-    function convertArrayToObject(array) {
-        let result = {}
-        for (const element of array) {
-            result[element[0]] = element[0]
-        }
-        return result
-    }
-
-
-    function writeUserData(listaPedidos) {
-        firebase.database().ref('/Pedidos').push({
-            nome: listaPedidos.nome,
-            descricao: listaPedidos.descricao,
-            status: "em andamento",
-            valor: listaPedidos.valorTotal,
-            observacao: listaPedidos.obs,
-            quantidade: listaPedidos.qtde
-        })
-    }
-
-
-    function pushFire() {
-        try {
-            var pedidoListRef = firebase.database().ref('/Pedidos')
-            var newPedidoRef = pedidoListRef.push()
-            // console.warn(listaPedidos)
-            // newPedidoRef.set({
-            //     listaPedidos
-            // })
-
-            // firebase.database().ref('/Pedidos').push({
-            //     nome: listaPedidos.nome,
-            //     descricao: listaPedidos.descricao,
-            //     status: "em andamento",
-            //     valor: listaPedidos.valorTotal,
-            //     observacao: listaPedidos.obs
-            // })
-        } catch (error) {
-            alert(error)
-        } finally {
-            setListaPedidos([])
-        }
-    }
 
     return (
         <Background>
             <Header />
             <View style={StyleIndex.mainContainer}>
-                <View style={StyleIndex.titleContainer}>
-                    <Text style={StyleIndex.titleText}>
-                        Cardápio
-                    </Text>
-                </View>
-
                 <View style={StyleIndex.content}>
 
-
-                    <FlatList data={listFire}
+                    <SectionList
+                        sections={[
+                            { title: "Drinks", data: listBebidas },
+                            { title: "Lanches", data: listLanches },
+                            { title: "Pizzas", data: listPizzas },
+                        ]}
                         keyExtractor={(item) => item.key}
+                        renderSectionHeader={({ section: { title } }) => (
+                            <Text style={StyleIndex.titleText}>
+                                {title}
+                            </Text>
+                        )}
                         renderItem={({ item }) =>
                             <ItemCardapio
                                 nome={item.nome}
                                 valor={item.valor}
-                                descricao={item.descricao}
-                                montarPedido={montarPedido}
-                            />
-
-                        } />
+                                descricao={item.descricao} />
+                        }
+                    />
 
                 </View>
 
                 <View style={StyleIndex.footerContainer}>
                     <TouchableOpacity
-                        style={style.btnPedir}
-                        onPress={
-                            pushFire
-                        }>
+                        style={style.btnPedir}>
                         <Text style={style.txtPedir}>
                             Pedir
                         </Text>

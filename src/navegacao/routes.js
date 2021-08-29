@@ -28,7 +28,8 @@ function CardapioTabStack() {
     return (
         <CardapioStack.Navigator initialRouteName="Cardapio"
             screenOptions={{ headerShown: false }}>
-            <CardapioStack.Screen name="Cardapio" component={CardapioSimples} />
+            <CardapioStack.Screen name="Cardapio" component={Cardapio} />
+            <CardapioStack.Screen name="CardapioSimples" component={CardapioSimples} />
             <CardapioStack.Screen name="Pedidos" component={Pedidos} />
             <CardapioStack.Screen name="EscolherPagamento" component={EscolherPagamento} />
             <CardapioStack.Screen name="CheckIn" component={CheckIn} />
@@ -43,7 +44,8 @@ function MenuTabStack() {
         <MenuStack.Navigator initialRouteName="Menu"
             screenOptions={{ headerShown: false }}>
             <MenuStack.Screen name="Menu" component={MenuAtendimento} />
-            <MenuStack.Screen name="Cardapio" component={CardapioSimples} />
+            <MenuStack.Screen name="CardapioSimples" component={CardapioSimples} />
+            <MenuStack.Screen name="Cardapio" component={Cardapio} />
             <MenuStack.Screen name="Pedidos" component={Pedidos} />
             <MenuStack.Screen name="EscolherPagamento" component={EscolherPagamento} />
             <MenuStack.Screen name="CheckIn" component={CheckIn} />
@@ -90,7 +92,7 @@ function TabMenu() {
                         />
                     )
                 }} />
-            <Tab.Screen name='Cardápio' component={CardapioTabStack}
+            <Tab.Screen name='Cardápio' component={CardapioSimples}
                 options={{
                     tabBarIcon: () => (
                         <Image

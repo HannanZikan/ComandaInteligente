@@ -11,7 +11,8 @@ import PedirOnline from '../../assets/images/pedirOnline.png'
 
 export default props => {
     // const goToPedidos = () => { props.navigation.navigate("Pedidos") }
-    const goToChamarGarcom = () => { props.navigation.navigate("Cardapio") }
+    const goToChamarGarcom = () => { props.navigation.navigate("CardapioSimples") }
+    const goToPedirOnline = () => { props.navigation.navigate("Cardapio") }
 
     return (
         <Background>
@@ -26,14 +27,15 @@ export default props => {
                 <View style={StyleIndex.content}>
 
                     <TouchableOpacity
-                    onPress={goToChamarGarcom}>
+                        onPress={goToChamarGarcom}>
                         <OpcoesAtendimento
                             imagem={Garcom}
                             opcao='Chamar o garçom' />
 
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={goToPedirOnline}>
                         <OpcoesAtendimento
                             imagem={PedirOnline}
                             opcao='Pedir Online' />
