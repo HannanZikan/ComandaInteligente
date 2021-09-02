@@ -8,8 +8,6 @@ import StyleIndex from '../styles/index'
 import ItemCardapio from '../components/ItemCardapio'
 
 export default props => {
-    const goToInformacoesPedidos = () => { props.navigation.navigate("InformacoesPedidos") }
-
     const [listFire, setListFire] = useState('')
     const [listBebidas, setListBebidas] = useState('')
     const [listLanches, setListLanches] = useState('')
@@ -151,7 +149,11 @@ export default props => {
                         )}
                         renderItem={({ item }) =>
                             <TouchableOpacity
-                                onPress={goToInformacoesPedidos}
+                                onPress={
+                                    () => {
+                                        props.navigation.navigate("InformacoesPedidos", item)
+                                    }
+                                }
                                 nome={item.nome}
                                 valor={item.valor}
                                 descricao={item.descricao}>

@@ -10,6 +10,7 @@ import MenuAtendimento from '../views/MenuAtendimento'
 import Cardapio from '../views/Cardapio'
 import CardapioSimples from '../views/CardapioSimples'
 import InformacoesPedidos from '../views/InformacoesPedidos'
+import FazerPedido from '../views/FazerPedido'
 import Pedidos from '../views/Pedidos'
 import EscolherPagamento from '../views/EscolherPagamento'
 import CadastrarUsuario from '../views/CadastrarUsuario'
@@ -48,6 +49,7 @@ function MenuTabStack() {
             <MenuStack.Screen name="CardapioSimples" component={CardapioSimples} />
             <MenuStack.Screen name="Cardapio" component={Cardapio} />
             <MenuStack.Screen name="InformacoesPedidos" component={InformacoesPedidos} />
+            <MenuStack.Screen name="FazerPedido" component={FazerPedido} />
             <MenuStack.Screen name="Pedidos" component={Pedidos} />
             <MenuStack.Screen name="EscolherPagamento" component={EscolherPagamento} />
             <MenuStack.Screen name="CheckIn" component={CheckIn} />

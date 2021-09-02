@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
 import Background from '../components/Background'
 import Header from '../components/Header'
 import Globais from '../components/Globais'
+import ItemFazerPedido from '../components/ItemFazerPedido'
 
 import StyleIndex from '../styles/index'
 
@@ -11,42 +12,17 @@ import SetaEsquerda from '../../assets/images/left-arrow.png'
 
 
 export default props => {
-    const goToFazerPedido = () => { props.navigation.navigate("FazerPedido") }
-
+    // const goToEscolherPagamento = () => { props.navigation.navigate("EscolherPagamento") }
 
     const antTela = () => { props.navigation.goBack() }
-    const key = props.route.params.key
-    const nome = props.route.params.nome
-    const descricao = props.route.params.descricao
-    const valor = props.route.params.valor
+    const itensPedido = Globais.itemMontarPedido
 
-    const [observacao, setObservacao] = useState('')
-
-    const [quantidade, setQuantidade] = useState(1)
-    const inc = () => setQuantidade(quantidade + 1)
-    function dec() {
-        if (quantidade > 1) {
-            setQuantidade(quantidade - 1)
+    function arrayToObject(array) {
+        let result = {}
+        for (const element of array) {
+            result[element[0]] = element[1]
         }
-    }
-
-    function adicionarAoPedido() {
-        let valorTotal = quantidade * valor
-
-
-        Globais.itemMontarPedido.push(
-            [ key, nome, descricao, observacao, quantidade, valorTotal]
-            // [
-            //     ["key", key]
-            //     ["nome", nome],
-            //     ["descricao", descricao],
-            //     ["observacao", observacao],
-            //     ["quantidade", quantidade],
-            //     ["valorTotal", valorTotal]
-            // ]
-        )
-        console.warn(Globais.itemMontarPedido)
-        goToFazerPedido()
+        return result
     }
 
     return (
@@ -65,65 +41,42 @@ export default props => {
                     </Text>
                 </TouchableOpacity>
 
+                <View style={StyleIndex.titleContainer}>
+                    <Text style={StyleIndex.titleText}>
+                        Pedido
+                    </Text>
+                </View>
+
                 <View style={StyleIndex.content}>
 
-                    <View style={style.informacoes}>
-                        <Text style={style.txtNome}>
-                            {nome}
-                        </Text>
-                        <Text style={style.txtDescricao}>
-                            {descricao}
-                        </Text>
-                        <Text style={style.txtValor}>
-                            R$ {valor}
-                        </Text>
-                        <Text style={style.txtobservacao}>
-                            Alguma observação?
-                        </Text>
-                        <TextInput
-                            style={style.input}
-                            value={observacao}
-                            onChangeText={observacao => setObservacao(observacao)}
-                            placeholder="Ex: Tirar o picles, carne mal passada"
-                            placeholderTextColor="#606060" />
+                    <FlatList data={itensPedido}
+                        // o array Global.itemMontarPedido sempre seguirá esta ordem:
+                        // key, nome, descricao, observação, quantidade, valor total
+                        // achei mais fácil que transformar em JSON só pra renderizar na tela :P
+                        keyExtractor={(item) => item[0]}
+                        renderItem={({ item }) =>
+                            <ItemFazerPedido
+                                nome={item[1]}
+                                descricao={item[2]}
+                                observacao={item[3]}
+                                quantidade={item[4]}
+                                valorTotal={item[5]}
+                            />
+                        } />
 
-                    </View>
 
                 </View>
 
                 <View style={StyleIndex.footerContainer}>
-                    {/* <Text style={[style.txtFecharComanda, style.txtTotal]}>
-                        Total: R${"{total}"}
-                    </Text> */}
-
-                    <View style={style.containerQtde}>
-                        <TouchableOpacity
-                            onPress={dec}>
-                            <Text style={style.txtBtnQtde}>
-                                -
-                            </Text>
-
-                        </TouchableOpacity>
-
-                        <Text style={style.txtBtnQtde}>
-                            {quantidade}
-                        </Text>
-
-                        <TouchableOpacity
-                            onPress={inc}>
-                            <Text style={style.txtBtnQtde}>
-                                +
-                            </Text>
-                        </TouchableOpacity>
-
-                    </View>
 
                     <TouchableOpacity
                         style={style.btnAdicionar}
-                        onPress={adicionarAoPedido}
+                        onPress={() => {
+                            console.warn(itensPedido)
+                        }}
                     >
                         <Text style={style.txtAdicionar}>
-                            Adicionar R$ {quantidade * valor}
+                            Pedir
                         </Text>
                     </TouchableOpacity>
                 </View>

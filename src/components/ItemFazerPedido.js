@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { View, Text, Image, StyleSheet, Pressable, Alert, TouchableOpacity, TextInput, TouchableOpacityBase } from 'react-native'
+import { View, Text, Image, StyleSheet } from 'react-native'
 import StyleIndex from '../styles/index'
 
 // imagem apenas ilustrativa, retirar depois
@@ -19,9 +19,11 @@ export default props => {
                 <View style={style.containerTxt}>
                     <Text style={style.nome}>{props.nome}</Text>
                     <Text style={style.descricao}>{props.descricao}</Text>
-                    <Text style={style.valor}>R$ {props.valor}</Text>
+                    <Text style={style.valor}>R$ {props.valorTotal}</Text>
+                    <Text style={style.valor}>{props.quantidade}</Text>
                 </View>
             </View>
+
 
         </Fragment>
     )
@@ -103,7 +105,6 @@ const style = StyleSheet.create({
         marginLeft: 5,
         padding: 0,
         backgroundColor: 'rgba(255,255,255,0.8)',
-
     },
     quantidade: {
         width: 50,
