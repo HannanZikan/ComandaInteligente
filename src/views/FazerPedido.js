@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import firebase from 'firebase'
+
 import Background from '../components/Background'
 import Header from '../components/Header'
 import Globais from '../components/Globais'
@@ -15,7 +17,9 @@ export default props => {
     // const goToEscolherPagamento = () => { props.navigation.navigate("EscolherPagamento") }
 
     const antTela = () => { props.navigation.goBack() }
+    const goToCardapio = () => { props.navigation.navigate("Cardapio") }
     const itensPedido = Globais.itemMontarPedido
+    const user = firebase.auth().currentUser
 
     function arrayToObject(array) {
         let result = {}
@@ -25,12 +29,45 @@ export default props => {
         return result
     }
 
+    const [listaPedidos, setListaPedidos] = useState('')
+    useEffect(() => {
+        try {
+            firebase.database().ref('/Pedidos')
+            .orderByChild('email').equalTo(user.email)
+            .on('value', (snapshot) => {
+                const list = []
+                snapshot.forEach((childItem) => {
+                    list.push({
+                        key: childItem.key,
+                        descricao: childItem.val().descricao,
+                        nome: childItem.val().nome,
+                        quantidade: childItem.val().quantidade,
+                        valorTotal: childItem.val().valorTotal,
+                        status: childItem.val().status
+                    })
+                })
+                setListaPedidos(list)
+            })
+        } catch (error) {
+            alert(error)
+        }
+    }, [])
+
+    function cancelarItem(key) {
+        try {
+            firebase.database().ref('/Pedidos/' + key).remove()
+        } catch (error) {
+            alert(error)
+        }
+
+    }
+
     return (
         <Background>
             <Header />
             <View style={StyleIndex.mainContainer}>
                 <TouchableOpacity style={style.containerNavegarSup}
-                    onPress={antTela}
+                    onPress={goToCardapio}
                 >
                     <Image resizeMode='contain'
                         source={SetaEsquerda}
@@ -43,24 +80,24 @@ export default props => {
 
                 <View style={StyleIndex.titleContainer}>
                     <Text style={StyleIndex.titleText}>
-                        Pedido
+                        Comanda
                     </Text>
                 </View>
 
                 <View style={StyleIndex.content}>
 
-                    <FlatList data={itensPedido}
-                        // o array Global.itemMontarPedido sempre seguirá esta ordem:
-                        // key, nome, descricao, observação, quantidade, valor total
-                        // achei mais fácil que transformar em JSON só pra renderizar na tela :P
-                        keyExtractor={(item) => item[0]}
+                    <FlatList data={listaPedidos}
+                        keyExtractor={(item) => item.key}
                         renderItem={({ item }) =>
                             <ItemFazerPedido
-                                nome={item[1]}
-                                descricao={item[2]}
-                                observacao={item[3]}
-                                quantidade={item[4]}
-                                valorTotal={item[5]}
+                                keyPedido={item.key}
+                                nome={item.nome}
+                                descricao={item.descricao}
+                                observacao={item.observacao}
+                                quantidade={item.quantidade}
+                                valorTotal={item.valorTotal}
+                                status={item.status}
+                                // removerItem={removerItem}
                             />
                         } />
 
@@ -68,19 +105,17 @@ export default props => {
                 </View>
 
                 <View style={StyleIndex.footerContainer}>
-
                     <TouchableOpacity
                         style={style.btnAdicionar}
                         onPress={() => {
-                            console.warn(itensPedido)
+                            console.warn(listaPedidos)
                         }}
                     >
                         <Text style={style.txtAdicionar}>
-                            Pedir
+                            Fechar Comanda
                         </Text>
                     </TouchableOpacity>
                 </View>
-
             </View>
 
         </Background>

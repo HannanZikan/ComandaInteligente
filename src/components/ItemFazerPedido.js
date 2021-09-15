@@ -1,11 +1,15 @@
 import React, { Fragment, useState } from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import StyleIndex from '../styles/index'
 
 // imagem apenas ilustrativa, retirar depois
 import sanduiche from '../../assets/images/sanduiche.png'
 
 export default props => {
+
+    // function removerItem(item){
+    //     return item
+    // }
 
     return (
         <Fragment>
@@ -18,9 +22,22 @@ export default props => {
                 </View>
                 <View style={style.containerTxt}>
                     <Text style={style.nome}>{props.nome}</Text>
-                    <Text style={style.descricao}>{props.descricao}</Text>
-                    <Text style={style.valor}>R$ {props.valorTotal}</Text>
-                    <Text style={style.valor}>{props.quantidade}</Text>
+                    <Text style={style.descricao}>{props.observacao ? props.observacao : "Sem observações."}</Text>
+                    <View style={style.detalhePedido}>
+                        <View>
+                            <Text style={style.valor}>Qtde. {props.quantidade}</Text>
+                            <Text style={style.valor}>Total R$ {props.valorTotal}</Text>
+                            <Text style={style.valor}>Status: {props.status}</Text>
+                        </View>
+
+                        <View style={style.containerBtnCancelar}>
+                            <TouchableOpacity 
+                            // onPress={() => {props.removerItem(props.keyPedido)}}
+                            style={style.btnCancelar}>
+                                <Text style={style.valor}>Cancelar</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
             </View>
 
@@ -35,14 +52,6 @@ const style = StyleSheet.create({
         marginTop: 10,
         paddingBottom: 10,
         width: 360,
-        borderBottomWidth: 1,
-        borderBottomColor: '#FF6300',
-    },
-    containerSelecionado: {
-        marginTop: 10,
-        paddingBottom: 10,
-        width: 360,
-        backgroundColor: 'rgba(255,99,0,0.1)',
         borderBottomWidth: 1,
         borderBottomColor: '#FF6300',
     },
@@ -73,12 +82,25 @@ const style = StyleSheet.create({
         color: '#606060',
         fontWeight: 'bold',
         fontSize: 14,
+        marginBottom: 10
     },
     valor: {
         color: '#FFF',
         fontWeight: 'bold',
-        fontSize: 18,
-        marginTop: 10,
+        fontSize: 14,
+        // marginTop: 10,
+    },
+    containerBtnCancelar: {
+        flexDirection: 'row-reverse',
+        alignItems: 'flex-end',
+        flex: 1,
+        // backgroundColor: '#ccc'
+    },
+    btnCancelar: {
+        backgroundColor: '#FF6300',
+        height: 20,
+        width: 70,
+        alignItems: 'center'
     },
     detalhePedido: {
         flexDirection: 'row',
@@ -96,32 +118,5 @@ const style = StyleSheet.create({
         fontWeight: 'bold',
         backgroundColor: '#FF6300',
         padding: 5
-    },
-    observacao: {
-        width: 350,
-        height: 30,
-        fontSize: 14,
-        textAlign: 'center',
-        marginLeft: 5,
-        padding: 0,
-        backgroundColor: 'rgba(255,255,255,0.8)',
-    },
-    quantidade: {
-        width: 50,
-        height: 30,
-        fontSize: 14,
-        textAlign: 'center',
-        marginLeft: 5,
-        padding: 0,
-        backgroundColor: 'rgba(255,255,255,0.8)',
-    },
-    botaoQuantidade: {
-        marginLeft: 10,
-        marginRight: 10,
-    },
-    quantidadeItem: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        color: '#FFF',
     },
 })

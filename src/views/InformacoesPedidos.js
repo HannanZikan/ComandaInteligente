@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
+import firebase from 'firebase'
 import Background from '../components/Background'
 import Header from '../components/Header'
 import Globais from '../components/Globais'
@@ -12,13 +13,15 @@ import SetaEsquerda from '../../assets/images/left-arrow.png'
 
 export default props => {
     const goToFazerPedido = () => { props.navigation.navigate("FazerPedido") }
-
-
     const antTela = () => { props.navigation.goBack() }
+
     const key = props.route.params.key
     const nome = props.route.params.nome
     const descricao = props.route.params.descricao
     const valor = props.route.params.valor
+    const user = firebase.auth().currentUser
+    const userName = user.displayName
+    const userEmail = user.email
 
     const [observacao, setObservacao] = useState('')
 
@@ -30,24 +33,45 @@ export default props => {
         }
     }
 
+    function fazerPedido() {
+        let valorTotal = quantidade * valor
+
+        try {
+            firebase.database().ref('/Pedidos').push({
+                usuario: userName,
+                email: userEmail,
+                nome: nome,
+                descricao: descricao,
+                quantidade: quantidade,
+                valorTotal: valorTotal,
+                status: "em andamento",
+            })
+        } catch (error) {
+            alert(error)
+        } finally {
+            goToFazerPedido()
+        }
+    }
+
     function adicionarAoPedido() {
         let valorTotal = quantidade * valor
 
-
         Globais.itemMontarPedido.push(
-            [ key, nome, descricao, observacao, quantidade, valorTotal]
-            // [
-            //     ["key", key]
-            //     ["nome", nome],
-            //     ["descricao", descricao],
-            //     ["observacao", observacao],
-            //     ["quantidade", quantidade],
-            //     ["valorTotal", valorTotal]
-            // ]
+            [
+                key,
+                nome,
+                descricao,
+                observacao,
+                quantidade,
+                valorTotal
+            ]
         )
-        console.warn(Globais.itemMontarPedido)
+        // console.warn(Globais.itemMontarPedido)
         goToFazerPedido()
     }
+
+
+
 
     return (
         <Background>
@@ -119,11 +143,11 @@ export default props => {
                     </View>
 
                     <TouchableOpacity
-                        style={style.btnAdicionar}
-                        onPress={adicionarAoPedido}
+                        style={style.btnPedir}
+                        onPress={fazerPedido}
                     >
-                        <Text style={style.txtAdicionar}>
-                            Adicionar R$ {quantidade * valor}
+                        <Text style={style.txtPedir}>
+                            Pedir R$ {quantidade * valor},00
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -195,8 +219,9 @@ const style = StyleSheet.create({
         paddingTop: 0,
         backgroundColor: 'rgba(255,255,255,0.8)',
     },
-    btnAdicionar: {
-        width: 180,
+    btnPedir: {
+        // width: 180,
+        width: 150,
         height: 45,
         backgroundColor: '#FF6300',
         padding: 5,
@@ -204,7 +229,7 @@ const style = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    txtAdicionar: {
+    txtPedir: {
         fontSize: 18,
         fontWeight: 'bold',
         color: '#FFF',
@@ -214,11 +239,11 @@ const style = StyleSheet.create({
     },
     containerQtde: {
         flexDirection: 'row',
-        width: 120,
+        width: 110,
         height: 45,
         backgroundColor: '#FF6300',
         padding: 5,
-        marginRight: 30,
+        marginRight: 80,
         justifyContent: 'center',
     },
     txtBtnQtde: {
