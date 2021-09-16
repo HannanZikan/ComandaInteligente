@@ -21,7 +21,7 @@ export default StyleSheet.create({
     },
     titleContainer: {
         alignItems: 'center',
-        paddingTop: 10,
+        paddingTop: 1,
         paddingBottom: 10,
         width: '100%',
     },

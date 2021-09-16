@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import firebase from 'firebase'
 import StyleIndex from '../styles/index'
 
 // imagem apenas ilustrativa, retirar depois
@@ -7,9 +8,21 @@ import sanduiche from '../../assets/images/sanduiche.png'
 
 export default props => {
 
-    // function removerItem(item){
-    //     return item
-    // }
+    function cancelarItem() {
+        try {
+            firebase.database().ref('/Pedidos/' + props.keyPedido).update({
+                descricao: props.descricao,
+                email: props.email,
+                nome: props.nome,
+                quantidade: props.quantidade,
+                status: "cancelado",
+                usuario: props.usuario,
+                valorTotal: props.valorTotal
+            })
+        } catch(error){
+            alert(error)
+        }
+    }
 
     return (
         <Fragment>
@@ -31,9 +44,9 @@ export default props => {
                         </View>
 
                         <View style={style.containerBtnCancelar}>
-                            <TouchableOpacity 
-                            // onPress={() => {props.removerItem(props.keyPedido)}}
-                            style={style.btnCancelar}>
+                            <TouchableOpacity
+                                onPress={() => cancelarItem()}
+                                style={style.btnCancelar}>
                                 <Text style={style.valor}>Cancelar</Text>
                             </TouchableOpacity>
                         </View>

@@ -12,7 +12,7 @@ import SetaEsquerda from '../../assets/images/left-arrow.png'
 
 
 export default props => {
-    const goToFazerPedido = () => { props.navigation.navigate("FazerPedido") }
+    const goToFazerPedido = () => { props.navigation.navigate("Comanda") }
     const antTela = () => { props.navigation.goBack() }
 
     const key = props.route.params.key
@@ -45,6 +45,7 @@ export default props => {
                 quantidade: quantidade,
                 valorTotal: valorTotal,
                 status: "em andamento",
+                observacao: observacao
             })
         } catch (error) {
             alert(error)

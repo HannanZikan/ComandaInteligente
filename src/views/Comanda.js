@@ -4,7 +4,6 @@ import firebase from 'firebase'
 
 import Background from '../components/Background'
 import Header from '../components/Header'
-import Globais from '../components/Globais'
 import ItemFazerPedido from '../components/ItemFazerPedido'
 
 import StyleIndex from '../styles/index'
@@ -18,7 +17,6 @@ export default props => {
 
     const antTela = () => { props.navigation.goBack() }
     const goToCardapio = () => { props.navigation.navigate("Cardapio") }
-    const itensPedido = Globais.itemMontarPedido
     const user = firebase.auth().currentUser
 
     function arrayToObject(array) {
@@ -33,34 +31,28 @@ export default props => {
     useEffect(() => {
         try {
             firebase.database().ref('/Pedidos')
-            .orderByChild('email').equalTo(user.email)
-            .on('value', (snapshot) => {
-                const list = []
-                snapshot.forEach((childItem) => {
-                    list.push({
-                        key: childItem.key,
-                        descricao: childItem.val().descricao,
-                        nome: childItem.val().nome,
-                        quantidade: childItem.val().quantidade,
-                        valorTotal: childItem.val().valorTotal,
-                        status: childItem.val().status
+                .orderByChild('email').equalTo(user.email)
+                .on('value', (snapshot) => {
+                    const list = []
+                    snapshot.forEach((childItem) => {
+                        list.push({
+                            key: childItem.key,
+                            descricao: childItem.val().descricao,
+                            nome: childItem.val().nome,
+                            quantidade: childItem.val().quantidade,
+                            observacao: childItem.val().observacao,
+                            valorTotal: childItem.val().valorTotal,
+                            status: childItem.val().status,
+                            email: childItem.val().email,
+                            usuario: childItem.val().usuario,
+                        })
                     })
+                    setListaPedidos(list)
                 })
-                setListaPedidos(list)
-            })
         } catch (error) {
             alert(error)
         }
     }, [])
-
-    function cancelarItem(key) {
-        try {
-            firebase.database().ref('/Pedidos/' + key).remove()
-        } catch (error) {
-            alert(error)
-        }
-
-    }
 
     return (
         <Background>
@@ -96,8 +88,9 @@ export default props => {
                                 observacao={item.observacao}
                                 quantidade={item.quantidade}
                                 valorTotal={item.valorTotal}
+                                email={item.email}
+                                usuario={item.usuario}
                                 status={item.status}
-                                // removerItem={removerItem}
                             />
                         } />
 
@@ -105,6 +98,11 @@ export default props => {
                 </View>
 
                 <View style={StyleIndex.footerContainer}>
+
+                    <Text style={[style.txtFecharComanda, style.txtTotal]}>
+                        Total: R${"{total}"}
+                    </Text>
+
                     <TouchableOpacity
                         style={style.btnAdicionar}
                         onPress={() => {
@@ -129,7 +127,7 @@ const style = StyleSheet.create({
         alignItems: 'center',
         marginLeft: 15,
         marginTop: 5,
-        marginBottom: 20,
+        marginBottom: 5,
     },
     setaVoltar: {
         width: 20,
@@ -217,4 +215,12 @@ const style = StyleSheet.create({
         color: '#FFF',
         // backgroundColor: '#ccc',
     },
+    txtFecharComanda: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#FFF',
+    },
+    txtTotal: {
+        marginRight: 30,
+    }
 })
