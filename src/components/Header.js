@@ -6,7 +6,7 @@ import Logo from '../../assets/images/logo.png'
 import Style from '../styles/header'
 
 export default props => {
-    // const user = firebase.auth().currentUser;
+    const user = firebase.auth().currentUser;
 
     return (
         <View style={Style.header}>
@@ -16,8 +16,8 @@ export default props => {
                 style={Style.Logo} />
 
                 <Text style={Style.headerText}>
-                    {/* Bem vindo, {user.displayName}! */}
-                    Bem Vindo,
+                    Bem vindo, {user.displayName}!
+                    {/* Bem Vindo, */}
                 </Text>
 
             {props.children}

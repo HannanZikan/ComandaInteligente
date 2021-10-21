@@ -10,10 +10,9 @@ export default props => {
 
     function cancelarItem() {
         try {
-            firebase.database().ref('/Pedidos/' + props.keyPedido).update({
-                descricao: props.descricao,
-                email: props.email,
+            firebase.database().ref('/Comandas/' + props.comanda + '/itens/' + props.keyPedido).update({
                 nome: props.nome,
+                observacao: props.observacao,
                 quantidade: props.quantidade,
                 status: "cancelado",
                 usuario: props.usuario,
@@ -35,7 +34,7 @@ export default props => {
                 </View>
                 <View style={style.containerTxt}>
                     <Text style={style.nome}>{props.nome}</Text>
-                    <Text style={style.descricao}>{props.observacao ? props.observacao : "Sem observações."}</Text>
+                    <Text style={style.observacao}>{props.observacao ? props.observacao : "Sem observações."}</Text>
                     <View style={style.detalhePedido}>
                         <View>
                             <Text style={style.valor}>Qtde. {props.quantidade}</Text>
@@ -91,7 +90,7 @@ const style = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 24,
     },
-    descricao: {
+    observacao: {
         color: '#606060',
         fontWeight: 'bold',
         fontSize: 14,

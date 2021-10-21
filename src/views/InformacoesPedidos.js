@@ -1,15 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 import firebase from 'firebase'
 import Background from '../components/Background'
 import Header from '../components/Header'
-import Globais from '../components/Globais'
 
 import StyleIndex from '../styles/index'
 
 import SetaEsquerda from '../../assets/images/left-arrow.png'
-
-
 
 export default props => {
     const goToFazerPedido = () => { props.navigation.navigate("Comanda") }
@@ -20,8 +17,6 @@ export default props => {
     const descricao = props.route.params.descricao
     const valor = props.route.params.valor
     const user = firebase.auth().currentUser
-    const userName = user.displayName
-    const userEmail = user.email
 
     const [observacao, setObservacao] = useState('')
 
@@ -32,47 +27,88 @@ export default props => {
             setQuantidade(quantidade - 1)
         }
     }
-
-    function fazerPedido() {
-        let valorTotal = quantidade * valor
-
+    const [comanda, setComanda] = useState('')
+    useEffect(() => {
         try {
-            firebase.database().ref('/Pedidos').push({
-                usuario: userName,
-                email: userEmail,
-                nome: nome,
-                descricao: descricao,
-                quantidade: quantidade,
-                valorTotal: valorTotal,
-                status: "em andamento",
-                observacao: observacao
+            firebase.database().ref('/Comandas')
+                .orderByChild('usuario').equalTo(user.uid)
+                .on('value', (snapshot) => {
+                    const list = []
+                    snapshot.forEach((childItem) => {
+                        list.push({
+                            key: childItem.key,
+                            data: childItem.val().data,
+                            usuario: childItem.val().usuario,
+                        })
+                    })
+                    setComanda(list)
+                })
+        } catch (error) {
+            alert(error)
+        }
+    }, [])
+
+    function criarComanda(usuario, data) {
+        try {
+            firebase.database().ref('/Comandas').push({
+                usuario: usuario,
+                data: data,
             })
         } catch (error) {
             alert(error)
         } finally {
-            goToFazerPedido()
+            firebase.database().ref('/Comandas')
+                .orderByChild('usuario').equalTo(user.uid)
+                .on('value', (snapshot) => {
+                    const list = []
+                    snapshot.forEach((childItem) => {
+                        list.push({
+                            key: childItem.key,
+                            data: childItem.val().data,
+                            usuario: childItem.val().usuario,
+                        })
+                    })
+                    setComanda(list)
+                })
+            // console.log(comanda)
+        }
+
+    }
+
+    function adicionarItem(nome, observacao, quantidade, valorTotal) {
+        try {
+            firebase.database().ref('/Comandas/' + comanda[0]['key'] + '/itens').push({
+                nome: nome,
+                observacao: observacao,
+                quantidade: quantidade,
+                status: 'em andamento',
+                valorTotal: valorTotal
+            })
+        } catch (error) {
+            alert(error)
         }
     }
 
-    function adicionarAoPedido() {
+    function fazerPedido() {
         let valorTotal = quantidade * valor
+        let dia = new Date()
+        dia = dia.getDate()
+        let mes = new Date()
+        mes = mes.getMonth() + 1
+        let ano = new Date()
+        ano = ano.getFullYear()
 
-        Globais.itemMontarPedido.push(
-            [
-                key,
-                nome,
-                descricao,
-                observacao,
-                quantidade,
-                valorTotal
-            ]
-        )
-        // console.warn(Globais.itemMontarPedido)
-        goToFazerPedido()
+        let data = dia + "/" + mes + "/" + ano
+
+        if (comanda == '') {
+            criarComanda(user.uid, data)
+            adicionarItem(nome, observacao, quantidade, valorTotal)
+            goToFazerPedido()
+        } else {
+            adicionarItem(nome, observacao, quantidade, valorTotal)
+            goToFazerPedido()
+        }
     }
-
-
-
 
     return (
         <Background>

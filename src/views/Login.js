@@ -4,6 +4,7 @@ import firebase from '../../firebaseConfig'
 
 import Background from '../components/Background' // imagem de background estilizada para a tela inteira
 import Logo from '../../assets/images/logo.png'
+import Dedo from '../../assets/images/dedo.png'
 import StyleIndex from '../styles/index'
 
 

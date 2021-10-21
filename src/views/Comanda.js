@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native';
 import firebase from 'firebase'
 
 import Background from '../components/Background'
@@ -9,6 +10,7 @@ import ItemFazerPedido from '../components/ItemFazerPedido'
 import StyleIndex from '../styles/index'
 
 import SetaEsquerda from '../../assets/images/left-arrow.png'
+import { get } from 'react-native/Libraries/Utilities/PixelRatio'
 
 
 
@@ -27,32 +29,71 @@ export default props => {
         return result
     }
 
-    const [listaPedidos, setListaPedidos] = useState('')
+    // useFocusEffect()
+
+
+    const [listaPedidos, setListaPedidos] = useState([])
+    const [comanda, setComanda] = useState([])
+    const [soma, setSoma] = useState('')
     useEffect(() => {
         try {
-            firebase.database().ref('/Pedidos')
-                .orderByChild('email').equalTo(user.email)
+            const list = []
+            firebase.database().ref('/Comandas')
+                .orderByChild('usuario').equalTo(user.uid)
                 .on('value', (snapshot) => {
-                    const list = []
                     snapshot.forEach((childItem) => {
                         list.push({
                             key: childItem.key,
-                            descricao: childItem.val().descricao,
+                            data: childItem.val().data,
+                            usuario: childItem.val().usuario,
+                        })
+                    })
+                    setComanda(list)
+                })
+
+            firebase.database().ref('/Comandas/' + list[0]['key'] + '/itens')
+                .on('value', (snapshot) => {
+                    const pedidos = []
+                    snapshot.forEach((childItem) => {
+                        pedidos.push({
+                            key: childItem.key,
                             nome: childItem.val().nome,
                             quantidade: childItem.val().quantidade,
                             observacao: childItem.val().observacao,
                             valorTotal: childItem.val().valorTotal,
                             status: childItem.val().status,
-                            email: childItem.val().email,
-                            usuario: childItem.val().usuario,
                         })
                     })
-                    setListaPedidos(list)
+                    setListaPedidos(pedidos)
                 })
+
+            firebase.database().ref('/Comandas/' + list[0]['key'] + '/itens')
+                .orderByChild('status').equalTo('em andamento')
+                .on('value', (snapshot) => {
+                    const total = []
+                    snapshot.forEach((childItem) => {
+                        total.push({
+                            valorTotal: childItem.val().valorTotal
+                        })
+                    })
+                    setSoma(total)
+                })
+
         } catch (error) {
             alert(error)
         }
     }, [])
+
+    function somaTotal() {
+        let total = 0
+
+        for (let i = 0; i < soma.length; i++) {
+            total = total + soma[i]['valorTotal']
+        }
+
+        return total
+    }
+
 
     return (
         <Background>
@@ -84,33 +125,35 @@ export default props => {
                             <ItemFazerPedido
                                 keyPedido={item.key}
                                 nome={item.nome}
-                                descricao={item.descricao}
                                 observacao={item.observacao}
                                 quantidade={item.quantidade}
                                 valorTotal={item.valorTotal}
-                                email={item.email}
-                                usuario={item.usuario}
                                 status={item.status}
+                                comanda={comanda[0]['key']}
                             />
                         } />
-
 
                 </View>
 
                 <View style={StyleIndex.footerContainer}>
 
                     <Text style={[style.txtFecharComanda, style.txtTotal]}>
-                        Total: R${"{total}"}
+                        Total: R${somaTotal()}
                     </Text>
 
                     <TouchableOpacity
                         style={style.btnAdicionar}
                         onPress={() => {
-                            console.warn(listaPedidos)
+                            // console.warn(listaPedidos)
+                            somaTotal(soma)
+                            // console.log(comanda[0]['key'])
+                            console.log(comanda)
+                            // console.log(listaPedidos)
                         }}
                     >
                         <Text style={style.txtAdicionar}>
                             Fechar Comanda
+
                         </Text>
                     </TouchableOpacity>
                 </View>

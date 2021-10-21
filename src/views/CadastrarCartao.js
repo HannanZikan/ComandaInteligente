@@ -67,8 +67,6 @@ export default props => {
                 </TouchableOpacity>
 
                 <ScrollView>
-
-
                     <View style={StyleIndex.content}>
                         <View style={style.containerSelecionarTipo}>
                             <Picker
