@@ -18,6 +18,7 @@ import PerfilUsuario from '../views/PerfilUsuario'
 import DadosUsuario from '../views/DadosUsuario'
 import EsqueciMinhaSenha from '../views/EsqueciMinhaSenha'
 import AtualizarSenha from '../views/AtualizarSenha'
+import PagarNoCaixa from '../views/PagarNoCaixa'
 
 import iconMenu from '../../assets/images/icon-menu.png'
 import iconCardapio from '../../assets/images/cardapio.png'
@@ -50,9 +51,9 @@ function MenuTabStack() {
             <MenuStack.Screen name="Cardapio" component={Cardapio} />
             <MenuStack.Screen name="InformacoesPedidos" component={InformacoesPedidos} />
             <MenuStack.Screen name="Comanda" component={Comanda} />
-            <MenuStack.Screen name="Pedidos" component={Pedidos} />
             <MenuStack.Screen name="EscolherPagamento" component={EscolherPagamento} />
             <MenuStack.Screen name="CheckIn" component={CheckIn} />
+            <MenuStack.Screen name="PagarNoCaixa" component={PagarNoCaixa} />
         </MenuStack.Navigator>
     );
 }
@@ -96,7 +97,7 @@ function TabMenu() {
                         />
                     )
                 }} />
-            <Tab.Screen name='Cardápio' component={CardapioSimples}
+            <Tab.Screen name='Cardápio' component={Cardapio}
                 options={{
                     tabBarIcon: () => (
                         <Image

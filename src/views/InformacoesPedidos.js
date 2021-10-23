@@ -69,6 +69,8 @@ export default props => {
                         })
                     })
                     setComanda(list)
+                    // console.log("list: " + list)
+                    // console.log("comanda: " + comanda)
                 })
             // console.log(comanda)
         }
@@ -81,7 +83,7 @@ export default props => {
                 nome: nome,
                 observacao: observacao,
                 quantidade: quantidade,
-                status: 'em andamento',
+                status: '1',
                 valorTotal: valorTotal
             })
         } catch (error) {
@@ -101,6 +103,9 @@ export default props => {
         let data = dia + "/" + mes + "/" + ano
 
         if (comanda == '') {
+
+
+
             criarComanda(user.uid, data)
             adicionarItem(nome, observacao, quantidade, valorTotal)
             goToFazerPedido()

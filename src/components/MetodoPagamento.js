@@ -3,7 +3,10 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 
 export default props => {
     return (
-        <TouchableOpacity style={style.main}>
+        <TouchableOpacity style={style.main}
+        onPress={
+            props.navegacao
+        }>
             <View style={style.container}>
                 <Image
                     resizeMode='contain'

@@ -15,12 +15,27 @@ export default props => {
                 observacao: props.observacao,
                 quantidade: props.quantidade,
                 status: "cancelado",
-                usuario: props.usuario,
                 valorTotal: props.valorTotal
             })
-        } catch(error){
+        } catch (error) {
             alert(error)
         }
+    }
+
+    function getStatus(status) {
+        if(status == 1){
+            status = "aguardando"
+        }
+        if(status == 2){
+            status = "em andamento"
+        }
+        if(status == 3){
+            status = "entregue"
+        }
+        if(status == 4){
+            status = "cancelado"
+        }
+        return status
     }
 
     return (
@@ -39,16 +54,29 @@ export default props => {
                         <View>
                             <Text style={style.valor}>Qtde. {props.quantidade}</Text>
                             <Text style={style.valor}>Total R$ {props.valorTotal}</Text>
-                            <Text style={style.valor}>Status: {props.status}</Text>
+                            <Text style={style.valor}>Status: {getStatus(props.status)
+                            }</Text>
                         </View>
 
-                        <View style={style.containerBtnCancelar}>
-                            <TouchableOpacity
-                                onPress={() => cancelarItem()}
-                                style={style.btnCancelar}>
-                                <Text style={style.valor}>Cancelar</Text>
-                            </TouchableOpacity>
-                        </View>
+                        {
+                            props.status < 3 ?
+                                <View style={style.containerBtnCancelar}>
+                                    <TouchableOpacity
+                                        onPress={() => cancelarItem()}
+                                        style={style.btnCancelar}>
+                                        <Text style={style.valor}>Cancelar</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                :
+                                <View style={style.containerBtnCancelar}>
+                                    {/* <TouchableOpacity
+                                        // onPress={() => cancelarItem()}
+                                        style={style.btnCancelar}>
+                                        <Text style={style.valor}>Entregue</Text>
+                                    </TouchableOpacity> */}
+                                </View>
+
+                        }
                     </View>
                 </View>
             </View>

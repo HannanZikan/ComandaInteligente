@@ -10,27 +10,13 @@ import ItemFazerPedido from '../components/ItemFazerPedido'
 import StyleIndex from '../styles/index'
 
 import SetaEsquerda from '../../assets/images/left-arrow.png'
-import { get } from 'react-native/Libraries/Utilities/PixelRatio'
-
-
 
 export default props => {
-    // const goToEscolherPagamento = () => { props.navigation.navigate("EscolherPagamento") }
+    const goToEscolherPagamento = () => { props.navigation.navigate("EscolherPagamento") }
 
     const antTela = () => { props.navigation.goBack() }
     const goToCardapio = () => { props.navigation.navigate("Cardapio") }
     const user = firebase.auth().currentUser
-
-    function arrayToObject(array) {
-        let result = {}
-        for (const element of array) {
-            result[element[0]] = element[1]
-        }
-        return result
-    }
-
-    // useFocusEffect()
-
 
     const [listaPedidos, setListaPedidos] = useState([])
     const [comanda, setComanda] = useState([])
@@ -38,7 +24,7 @@ export default props => {
     useEffect(() => {
         try {
             const list = []
-            firebase.database().ref('/Comandas')
+            const getComanda = firebase.database().ref('/Comandas')
                 .orderByChild('usuario').equalTo(user.uid)
                 .on('value', (snapshot) => {
                     snapshot.forEach((childItem) => {
@@ -51,7 +37,7 @@ export default props => {
                     setComanda(list)
                 })
 
-            firebase.database().ref('/Comandas/' + list[0]['key'] + '/itens')
+            const getItensComanda = firebase.database().ref('/Comandas/' + list[0]['key'] + '/itens')
                 .on('value', (snapshot) => {
                     const pedidos = []
                     snapshot.forEach((childItem) => {
@@ -67,8 +53,8 @@ export default props => {
                     setListaPedidos(pedidos)
                 })
 
-            firebase.database().ref('/Comandas/' + list[0]['key'] + '/itens')
-                .orderByChild('status').equalTo('em andamento')
+            const getSoma = firebase.database().ref('/Comandas/' + list[0]['key'] + '/itens')
+                .orderByChild('status').startAt('1').endAt('3')
                 .on('value', (snapshot) => {
                     const total = []
                     snapshot.forEach((childItem) => {
@@ -93,6 +79,28 @@ export default props => {
 
         return total
     }
+
+    function fecharComanda() {
+
+        const setComandaFechada = firebase.database()
+            .ref('/ComandasFechadas/' + user.uid + '/' + comanda[0]['key']).set({
+                usuario: comanda[0]['usuario'],
+                data: comanda[0]['data'],
+            })
+
+        for (let i = 0; i < listaPedidos.length; i++) {
+            firebase.database().ref('/ComandasFechadas/' + user.uid + '/' + comanda[0]['key'] + '/itens').push({
+                nome: listaPedidos[i]['nome'],
+                quantidade: listaPedidos[i]['quantidade'],
+                observacao: listaPedidos[i]['observacao'],
+                valorTotal: listaPedidos[i]['valorTotal'],
+                status: listaPedidos[i]['status'],
+            })
+        }
+
+        goToEscolherPagamento()
+    }
+
 
 
     return (
@@ -144,11 +152,12 @@ export default props => {
                     <TouchableOpacity
                         style={style.btnAdicionar}
                         onPress={() => {
-                            // console.warn(listaPedidos)
                             somaTotal(soma)
                             // console.log(comanda[0]['key'])
-                            console.log(comanda)
+                            // console.log(comanda)
                             // console.log(listaPedidos)
+                            // goToEscolherPagamento()
+                            fecharComanda()
                         }}
                     >
                         <Text style={style.txtAdicionar}>

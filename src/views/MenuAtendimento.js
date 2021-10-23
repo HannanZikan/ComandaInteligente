@@ -6,12 +6,9 @@ import Header from '../components/Header'
 import StyleIndex from '../styles/index'
 import OpcoesAtendimento from '../components/OpcoesAtendimento'
 
-import Garcom from '../../assets/images/garçom.png'
 import PedirOnline from '../../assets/images/pedirOnline.png'
 
 export default props => {
-    // const goToPedidos = () => { props.navigation.navigate("Pedidos") }
-    const goToChamarGarcom = () => { props.navigation.navigate("CardapioSimples") }
     const goToPedirOnline = () => { props.navigation.navigate("Cardapio") }
 
     return (
@@ -25,14 +22,6 @@ export default props => {
                 </View>
 
                 <View style={StyleIndex.content}>
-
-                    <TouchableOpacity
-                        onPress={goToChamarGarcom}>
-                        <OpcoesAtendimento
-                            imagem={Garcom}
-                            opcao='Chamar o garçom' />
-
-                    </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={goToPedirOnline}>

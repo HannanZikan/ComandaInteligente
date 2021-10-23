@@ -13,7 +13,8 @@ import PagarNoCaixa from '../../assets/images/pagarnocaixa.png'
 
 
 export default props => {
-    const goToPedidos = () => { props.navigation.navigate("Pedidos") }
+    const goToComanda = () => { props.navigation.navigate("Comanda") }
+    const goToPagarNoCaixa = () => { props.navigation.navigate("PagarNoCaixa") }
 
     return (
         <Background>
@@ -27,9 +28,6 @@ export default props => {
                 </View>
 
                 <View style={StyleIndex.content}>
-                    <MetodoPagamento
-                        imagem={Pix}
-                        metodo='PIX' />
 
                     <MetodoPagamento
                         imagem={GPay}
@@ -37,13 +35,14 @@ export default props => {
 
                     <MetodoPagamento
                         imagem={PagarNoCaixa}
-                        metodo='Pagar no Caixa' />
+                        metodo='Pagar no Caixa'
+                        navegacao={goToPagarNoCaixa} />
                 </View>
 
                 <View style={StyleIndex.footerContainer}>
                     <TouchableOpacity
                         style={style.btnVoltarComanda}
-                        onPress={goToPedidos}>
+                        onPress={goToComanda}>
                         <Text style={style.txtVoltarComanda}>
                             Voltar à Comanda
                         </Text>
