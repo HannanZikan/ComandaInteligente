@@ -16,6 +16,7 @@ export default props => {
     const nome = props.route.params.nome
     const descricao = props.route.params.descricao
     const valor = props.route.params.valor
+    const imagem = props.route.params.imagem
     const user = firebase.auth().currentUser
 
     const [observacao, setObservacao] = useState('')
@@ -50,17 +51,16 @@ export default props => {
 
     function criarComanda(usuario, data) {
         try {
-            firebase.database().ref('/Comandas').push({
+
+            const abrirComanda = firebase.database().ref('/Comandas').push({
                 usuario: usuario,
                 data: data,
             })
-        } catch (error) {
-            alert(error)
-        } finally {
-            firebase.database().ref('/Comandas')
+
+            const list = []
+            const definirComanda = firebase.database().ref('/Comandas')
                 .orderByChild('usuario').equalTo(user.uid)
                 .on('value', (snapshot) => {
-                    const list = []
                     snapshot.forEach((childItem) => {
                         list.push({
                             key: childItem.key,
@@ -69,48 +69,61 @@ export default props => {
                         })
                     })
                     setComanda(list)
-                    // console.log("list: " + list)
-                    // console.log("comanda: " + comanda)
+                    // console.log(list)
                 })
-            // console.log(comanda)
-        }
 
-    }
-
-    function adicionarItem(nome, observacao, quantidade, valorTotal) {
-        try {
-            firebase.database().ref('/Comandas/' + comanda[0]['key'] + '/itens').push({
+            const adicionarItem = firebase.database().ref('/Comandas/' + list[0]['key'] + '/itens').push({
                 nome: nome,
                 observacao: observacao,
                 quantidade: quantidade,
                 status: '1',
-                valorTotal: valorTotal
+                valorTotal: getValorTotal(),
+                imagem: imagem
+            })
+
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    function adicionarItem(valorTotal) {
+        try {
+            // console.log(imagem)
+            const adicionarItem = firebase.database().ref('/Comandas/' + comanda[0]['key'] + '/itens').push({
+                nome: nome,
+                observacao: observacao,
+                quantidade: quantidade,
+                status: '1',
+                valorTotal: valorTotal,
+                imagem: imagem
             })
         } catch (error) {
             alert(error)
         }
     }
 
-    function fazerPedido() {
+    function getValorTotal() {
         let valorTotal = quantidade * valor
+        return valorTotal
+    }
+
+    function getDataComanda() {
         let dia = new Date()
         dia = dia.getDate()
         let mes = new Date()
+        // como é um array, janeiro = 0 e assim por diante
         mes = mes.getMonth() + 1
         let ano = new Date()
         ano = ano.getFullYear()
-
         let data = dia + "/" + mes + "/" + ano
-
+        return data
+    }
+    function fazerPedido() {
         if (comanda == '') {
-
-
-
-            criarComanda(user.uid, data)
-            adicionarItem(nome, observacao, quantidade, valorTotal)
+            criarComanda(user.uid, getDataComanda())
             goToFazerPedido()
         } else {
-            adicionarItem(nome, observacao, quantidade, valorTotal)
+            adicionarItem(getValorTotal())
             goToFazerPedido()
         }
     }

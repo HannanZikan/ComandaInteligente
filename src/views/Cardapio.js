@@ -30,6 +30,7 @@ export default props => {
                             descricao: childItem.val().descricao,
                             valor: childItem.val().valor,
                             status: childItem.val().status,
+                            imagem: childItem.val().imagem
                         })
                     })
                     setListBebidas(list)
@@ -45,6 +46,7 @@ export default props => {
                             descricao: childItem.val().descricao,
                             valor: childItem.val().valor,
                             status: childItem.val().status,
+                            imagem: childItem.val().imagem
                         })
                     })
                     setListLanches(list)
@@ -60,6 +62,7 @@ export default props => {
                             descricao: childItem.val().descricao,
                             valor: childItem.val().valor,
                             status: childItem.val().status,
+                            imagem: childItem.val().imagem
                         })
                     })
                     setListPizzas(list)
@@ -75,6 +78,7 @@ export default props => {
                             descricao: childItem.val().descricao,
                             valor: childItem.val().valor,
                             status: childItem.val().status,
+                            imagem: childItem.val().imagem
                         })
                     })
                     setListPorcoes(list)
@@ -90,6 +94,7 @@ export default props => {
                             descricao: childItem.val().descricao,
                             valor: childItem.val().valor,
                             status: childItem.val().status,
+                            imagem: childItem.val().imagem
                         })
                     })
                     setListRefeicoes(list)
@@ -105,6 +110,7 @@ export default props => {
                             descricao: childItem.val().descricao,
                             valor: childItem.val().valor,
                             status: childItem.val().status,
+                            imagem: childItem.val().imagem
                         })
                     })
                     setListSobremesas(list)
@@ -120,6 +126,7 @@ export default props => {
                             descricao: childItem.val().descricao,
                             valor: childItem.val().valor,
                             status: childItem.val().status,
+                            imagem: childItem.val().imagem
                         })
                     })
                     setListOutros(list)
@@ -156,11 +163,13 @@ export default props => {
                                 }
                                 nome={item.nome}
                                 valor={item.valor}
-                                descricao={item.descricao}>
+                                descricao={item.descricao}
+                                imagem={item.imagem}>
                                 <ItemCardapio
                                     nome={item.nome}
                                     valor={item.valor}
-                                    descricao={item.descricao} />
+                                    descricao={item.descricao}
+                                    imagem={item.imagem} />
                             </TouchableOpacity>
                         }
                     />

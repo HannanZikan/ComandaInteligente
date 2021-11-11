@@ -134,7 +134,7 @@ function TabMenu() {
 const Stack = createStackNavigator()
 export default function Routes() {
     return (
-        <Stack.Navigator initialRouteName="LoginRapido"
+        <Stack.Navigator initialRouteName="Login"
             screenOptions={{ headerShown: false }}>
             <Stack.Screen name='LoginRapido' component={LoginRapido} />
             <Stack.Screen name='Login' component={Login} />

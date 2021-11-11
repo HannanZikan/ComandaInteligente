@@ -1,6 +1,7 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { View, Text, Image, StyleSheet } from 'react-native'
 import StyleIndex from '../styles/index'
+import firebase from 'firebase'
 
 // imagem apenas ilustrativa, retirar depois
 import sanduiche from '../../assets/images/sanduiche.png'
@@ -12,8 +13,9 @@ export default props => {
 
             <View style={style.container}>
                 <View style={style.containerImg}>
+
                     <Image resizeMode='contain'
-                        source={sanduiche}
+                        source={{uri: props.imagem}}
                         style={style.imgCardapio} />
                 </View>
                 <View style={style.containerTxt}>

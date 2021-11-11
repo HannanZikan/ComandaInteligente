@@ -15,7 +15,8 @@ export default props => {
                 observacao: props.observacao,
                 quantidade: props.quantidade,
                 status: "cancelado",
-                valorTotal: props.valorTotal
+                valorTotal: props.valorTotal,
+                imagem: props.imagem
             })
         } catch (error) {
             alert(error)
@@ -44,7 +45,7 @@ export default props => {
             <View style={style.container}>
                 <View style={style.containerImg}>
                     <Image resizeMode='contain'
-                        source={sanduiche}
+                        source={{uri: props.imagem}}
                         style={style.imgCardapio} />
                 </View>
                 <View style={style.containerTxt}>

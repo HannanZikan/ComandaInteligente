@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
-import { useFocusEffect } from '@react-navigation/native';
 import firebase from 'firebase'
 
 import Background from '../components/Background'
 import Header from '../components/Header'
-import ItemFazerPedido from '../components/ItemFazerPedido'
+import ItemFazerPedido from '../components/ItemComanda'
 
 import StyleIndex from '../styles/index'
 
@@ -35,6 +34,7 @@ export default props => {
                         })
                     })
                     setComanda(list)
+                    // console.log(list[0]['key'])
                 })
 
             const getItensComanda = firebase.database().ref('/Comandas/' + list[0]['key'] + '/itens')
@@ -48,6 +48,7 @@ export default props => {
                             observacao: childItem.val().observacao,
                             valorTotal: childItem.val().valorTotal,
                             status: childItem.val().status,
+                            imagem: childItem.val().imagem
                         })
                     })
                     setListaPedidos(pedidos)
@@ -98,10 +99,10 @@ export default props => {
             })
         }
 
+        const excluirComandaAberta = firebase.database().ref('/Comandas/' + comanda[0]['key']).remove()
+
         goToEscolherPagamento()
     }
-
-
 
     return (
         <Background>
@@ -137,6 +138,7 @@ export default props => {
                                 quantidade={item.quantidade}
                                 valorTotal={item.valorTotal}
                                 status={item.status}
+                                imagem={item.imagem}
                                 comanda={comanda[0]['key']}
                             />
                         } />
@@ -152,11 +154,6 @@ export default props => {
                     <TouchableOpacity
                         style={style.btnAdicionar}
                         onPress={() => {
-                            somaTotal(soma)
-                            // console.log(comanda[0]['key'])
-                            // console.log(comanda)
-                            // console.log(listaPedidos)
-                            // goToEscolherPagamento()
                             fecharComanda()
                         }}
                     >

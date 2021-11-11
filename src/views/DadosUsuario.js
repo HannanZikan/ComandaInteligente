@@ -12,14 +12,77 @@ import SetaEsquerda from '../../assets/images/left-arrow.png'
 
 export default props => {
     const goToPerfilUsuario = () => { props.navigation.goBack() }
-    const goToAtualizar = () => { props.navigation.navigate("AtualizarSenha") }
+    const goToAtualizarSenha = () => { props.navigation.navigate("AtualizarSenha") }
 
     const user = firebase.auth().currentUser;
+    const uid = user.uid
     const [nome, setNome] = useState(user.displayName)
     const [email, setEmail] = useState(user.email)
-    const [cpf, setCPF] = useState(user.cpf)
+    const [cpf, setCPF] = useState([])
 
-    function atualizarDados() {
+    useEffect(() => {
+        try {
+            firebase.database().ref('Usuarios/' + uid)
+                .on('value', (snapshot) => {
+                    // const list = []
+                    snapshot.forEach((childItem) => {
+                        setCPF({
+                            cpf: childItem.val().cpf,
+                        })
+                    })
+                    // setCPF(list)
+                    // console.log(list)
+                })
+        } catch (error) {
+            alert(error)
+        }
+    }, [])
+
+    function getCpf(){
+        const list = []
+        try {
+            firebase.database().ref('Usuarios/' + uid)
+                .on('value', (snapshot) => {
+                    // const list = []
+                    snapshot.forEach((childItem) => {
+                        list.push({
+                            cpf: childItem.val().cpf,
+                        })
+                    })
+                    // setCPF(list)
+                    // console.log(list)
+                })
+            return list
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    function criarCadastroUsuario() {
+        try {
+            firebase.database().ref('Usuarios/' + uid).set({
+                nome: nome,
+                email: email,
+                cpf: cpf
+            })
+        } catch (error) {
+            alert(error);
+        }
+    }
+
+    function atualizarCadastroUsuario(uid, nome, email, cpf) {
+        try {
+            firebase.database().ref('Usuarios/' + uid).set({
+                nome: this.nome,
+                email: this.email,
+                cpf: this.cpf
+            })
+        } catch (error) {
+            alert(error);
+        }
+    }
+
+    function atualizarFirebasePerfil() {
         user.updateProfile({
             displayName: nome,
             email: email,
@@ -31,6 +94,7 @@ export default props => {
             Alert.alert("Erro", errorMessage)
         })
     }
+
     return (
         <Background>
             <Header />
@@ -75,16 +139,20 @@ export default props => {
                     <TouchableOpacity style={style.btnAtualizar}>
                         <Text style={style.txtAtualizar}
                             onPress={
-                                goToAtualizar
+                                goToAtualizarSenha
                             }>
+
                             Trocar Senha
                         </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={style.btnAtualizar}
                         onPress={
-                            atualizarDados
+                            atualizarCadastroUsuario
+                            // criarCadastroUsuario
+                            // console.log("nada")
                         }>
+                        {/* > */}
                         <Text style={style.txtAtualizar}>
                             Atualizar dados
                         </Text>
