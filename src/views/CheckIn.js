@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, VirtualizedList } from 'react-native'
+import { View, Text, Image, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import Background from '../components/Background'
@@ -48,8 +48,8 @@ const style = StyleSheet.create({
         height: 130,
     },
     quadro: {
-        width: 350,
-        height: 500,
+        width: 325,
+        height: 450,
         backgroundColor: '#474747',
         borderRadius: 5,
         justifyContent: 'center',
@@ -61,12 +61,14 @@ const style = StyleSheet.create({
     titleContainer: {
         alignItems: 'center',
         padding: 10,
-        marginTop: 20,
+        // marginTop: 10,
         width: '100%',
+        // backgroundColor: '#ccc'
     },
     titleText: {
         color: '#FFF',
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: 'bold',
+        textAlign: 'center',
     },
 })
