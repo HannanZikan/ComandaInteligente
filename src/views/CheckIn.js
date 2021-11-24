@@ -1,6 +1,10 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import QRCodeScanner from 'react-native-qrcode-scanner'
+import { RNCamera } from 'react-native-camera'
+import PropTypes from 'prop-types'
+
 
 import Background from '../components/Background'
 import Header from '../components/Header'
@@ -10,6 +14,12 @@ import StyleIndex from '../styles/index'
 
 export default props => {
     const goToMenu = () => { props.navigation.navigate("Menu") }
+
+    const onSuccess = e => {
+        Linking.openURL(e.data).catch(err =>
+            console.error('An error occured', err)
+        )
+    }
 
     return (
         <Background>
@@ -24,7 +34,22 @@ export default props => {
                 </View>
 
                 <View style={StyleIndex.contentCenter}>
-                    <View style={style.quadro}>
+                    
+                        <QRCodeScanner
+                            onRead={onSuccess}
+                            showMarker
+                            containerStyle
+
+                            // topContent={
+                            //     <Text style={style.centerText}>
+                            //         Go to{' '}
+                            //         <Text style={style.textBold}>wikipedia.org/wiki/QR_code</Text> on
+                            //         your computer and scan the QR code.
+                            //     </Text>
+                            // }
+                        />
+
+                    {/* <View style={style.quadro}>
                         <TouchableOpacity
                             onPress={goToMenu}>
                             <Image
@@ -33,7 +58,7 @@ export default props => {
                                 style={style.mira}
                             />
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
                 </View>
 
             </View>
@@ -57,18 +82,35 @@ const style = StyleSheet.create({
     },
     mira: {
         width: 200,
+        backgroundColor: '#ccc'
     },
     titleContainer: {
         alignItems: 'center',
         padding: 10,
-        // marginTop: 10,
         width: '100%',
         // backgroundColor: '#ccc'
     },
     titleText: {
         color: '#FFF',
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
     },
+    centerText: {
+        flex: 1,
+        fontSize: 18,
+        padding: 32,
+        color: '#777'
+    },
+    textBold: {
+        fontWeight: '500',
+        color: '#000'
+    },
+    buttonText: {
+        fontSize: 21,
+        color: 'rgb(0,122,255)'
+    },
+    buttonTouchable: {
+        padding: 16
+    }
 })
