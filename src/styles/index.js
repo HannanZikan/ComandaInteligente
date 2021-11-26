@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
     mainContainer: {
         flex: 1,
-        width: '100%',
+        // width: '100%',
     },
     content: {
         flex: 1,
@@ -29,12 +29,14 @@ export default StyleSheet.create({
         color: '#FFF',
         fontSize: 32,
         fontWeight: 'bold',
+        paddingLeft: 10,
     },
     footerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-end',
         height: 80,
+        // backgroundColor: '#ccc'
     },
     footerContaineSpace: {
         flexDirection: 'row',

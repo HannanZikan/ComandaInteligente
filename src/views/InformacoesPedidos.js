@@ -69,7 +69,6 @@ export default props => {
                         })
                     })
                     setComanda(list)
-                    // console.log(list)
                 })
 
             const adicionarItem = firebase.database().ref('/Comandas/' + list[0]['key'] + '/itens').push({
@@ -170,11 +169,7 @@ export default props => {
 
                 </View>
 
-                <View style={StyleIndex.footerContainer}>
-                    {/* <Text style={[style.txtFecharComanda, style.txtTotal]}>
-                        Total: R${"{total}"}
-                    </Text> */}
-
+                <View style={style.footerContainer}>
                     <View style={style.containerQtde}>
                         <TouchableOpacity
                             onPress={dec}>
@@ -218,7 +213,7 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         height: 30,
         alignItems: 'center',
-        marginLeft: 15,
+        marginLeft: 10,
         marginTop: 5,
         marginBottom: 20,
     },
@@ -236,6 +231,8 @@ const style = StyleSheet.create({
     },
     informacoes: {
         width: 350,
+        paddingLeft: 15,
+        // backgroundColor: '#ccc'
     },
     txtNome: {
         color: '#FFF',
@@ -264,7 +261,7 @@ const style = StyleSheet.create({
         marginBottom: 10,
     },
     input: {
-        width: 350,
+        width: 320,
         height: 40,
         fontSize: 18,
         // textAlign: 'center',
@@ -280,7 +277,7 @@ const style = StyleSheet.create({
         height: 45,
         backgroundColor: '#FF6300',
         padding: 5,
-        marginRight: 30,
+        // marginRight: 30,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -298,8 +295,9 @@ const style = StyleSheet.create({
         height: 45,
         backgroundColor: '#FF6300',
         padding: 5,
-        marginRight: 80,
+        // marginRight: 40,
         justifyContent: 'center',
+        // marginLeft: 50
     },
     txtBtnQtde: {
         width: 40,
@@ -308,5 +306,12 @@ const style = StyleSheet.create({
         fontWeight: 'bold',
         color: '#FFF',
         // backgroundColor: '#ccc',
+    },
+    footerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        height: 80,
+        // backgroundColor: '#ccc'
     },
 })

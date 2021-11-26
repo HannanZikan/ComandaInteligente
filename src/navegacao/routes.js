@@ -34,10 +34,12 @@ function CardapioTabStack() {
         <CardapioStack.Navigator initialRouteName="Cardapio"
             screenOptions={{ headerShown: false }}>
             <CardapioStack.Screen name="Cardapio" component={Cardapio} />
-            <CardapioStack.Screen name="CardapioSimples" component={CardapioSimples} />
             <CardapioStack.Screen name="Pedidos" component={Pedidos} />
+            <CardapioStack.Screen name="InformacoesPedidos" component={InformacoesPedidos} />
+            <CardapioStack.Screen name="Comanda" component={Comanda} />
             <CardapioStack.Screen name="EscolherPagamento" component={EscolherPagamento} />
             <CardapioStack.Screen name="CheckIn" component={CheckIn} />
+            <CardapioStack.Screen name="PagarNoCaixa" component={PagarNoCaixa} />
         </CardapioStack.Navigator>
     );
 }
@@ -48,8 +50,7 @@ function MenuTabStack() {
     return (
         <MenuStack.Navigator initialRouteName="Menu"
             screenOptions={{ headerShown: false }}>
-            <MenuStack.Screen name="Menu" component={MenuAtendimento} />
-            <MenuStack.Screen name="CardapioSimples" component={CardapioSimples} />
+            {/* <MenuStack.Screen name="Menu" component={MenuAtendimento} /> */}
             <MenuStack.Screen name="Cardapio" component={Cardapio} />
             <MenuStack.Screen name="InformacoesPedidos" component={InformacoesPedidos} />
             <MenuStack.Screen name="Comanda" component={Comanda} />
@@ -91,7 +92,7 @@ function TabMenu() {
                     paddingTop: 5,
                 }
             }}>
-            <Tab.Screen name='Menu' component={MenuTabStack}
+            {/* <Tab.Screen name='Menu' component={MenuTabStack}
                 options={{
                     tabBarIcon: () => (
                         <Image
@@ -100,8 +101,8 @@ function TabMenu() {
                             style={style.icone}
                         />
                     )
-                }} />
-            <Tab.Screen name='Cardápio' component={Cardapio}
+                }} /> */}
+            <Tab.Screen name='Cardápio' component={CardapioTabStack}
                 options={{
                     tabBarIcon: () => (
                         <Image

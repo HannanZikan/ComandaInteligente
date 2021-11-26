@@ -1,9 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, Image, StyleSheet } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import QRCodeScanner from 'react-native-qrcode-scanner'
-import { RNCamera } from 'react-native-camera'
-import PropTypes from 'prop-types'
 
 
 import Background from '../components/Background'
@@ -20,6 +17,18 @@ export default props => {
             console.error('An error occured', err)
         )
     }
+    const [qrcode, setQrcode] = useState('')
+
+    const onRead = e => {
+        setQrcode(e.data)
+        let data = e.data.split(".")
+        let mesa = data[2]
+        if (mesa == '0001'){
+            setQrcode('')
+            console.log(qrcode)
+            goToMenu()
+        }
+    }
 
     return (
         <Background>
@@ -31,38 +40,19 @@ export default props => {
                     <Text style={style.titleText}>
                         Escaneie o QR-Code para fazer o Check-In
                     </Text>
+                    <Text style={style.titleText}>
+                        resultado: {qrcode.data}
+                    </Text>
                 </View>
 
                 <View style={StyleIndex.contentCenter}>
-                    
                         <QRCodeScanner
-                            onRead={onSuccess}
+                            onRead={onRead}
                             showMarker
                             containerStyle
-
-                            // topContent={
-                            //     <Text style={style.centerText}>
-                            //         Go to{' '}
-                            //         <Text style={style.textBold}>wikipedia.org/wiki/QR_code</Text> on
-                            //         your computer and scan the QR code.
-                            //     </Text>
-                            // }
                         />
-
-                    {/* <View style={style.quadro}>
-                        <TouchableOpacity
-                            onPress={goToMenu}>
-                            <Image
-                                resizeMode='contain'
-                                source={Mira}
-                                style={style.mira}
-                            />
-                        </TouchableOpacity>
-                    </View> */}
                 </View>
-
             </View>
-
         </Background>
     )
 }
