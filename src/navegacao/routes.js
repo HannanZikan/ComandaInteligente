@@ -20,7 +20,7 @@ import EsqueciMinhaSenha from '../views/EsqueciMinhaSenha'
 import AtualizarSenha from '../views/AtualizarSenha'
 import PagarNoCaixa from '../views/PagarNoCaixa'
 import HistoricoComandas from '../views/HistoricoComandas'
-import ComandaFechada from '../views/DetalheComandaFechada'
+import DetalheComandaFechada from '../views/DetalheComandaFechada'
 
 import iconMenu from '../../assets/images/icon-menu.png'
 import iconCardapio from '../../assets/images/cardapio.png'
@@ -71,7 +71,7 @@ function PerfilTabStack() {
             <PerfilStack.Screen name="DadosUsuario" component={DadosUsuario} />
             <PerfilStack.Screen name="AtualizarSenha" component={AtualizarSenha} />
             <PerfilStack.Screen name="HistoricoComandas" component={HistoricoComandas} />
-            <PerfilStack.Screen name="ComandaFechada" component={ComandaFechada} />
+            <PerfilStack.Screen name="DetalheComandaFechada" component={DetalheComandaFechada} />
         </PerfilStack.Navigator>
     );
 }

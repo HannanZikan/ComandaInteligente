@@ -13,7 +13,7 @@ export default props => {
         <View style={style.container}>
             <View>
                 <Text style={style.titulo}>
-                    {estabelecimento} {shortId}
+                    {estabelecimento} #{shortId}
                 </Text>
                 <Text style={style.detalhes}>
                     {data} - {pagamento}

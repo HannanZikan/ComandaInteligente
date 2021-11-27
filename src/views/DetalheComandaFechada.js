@@ -1,94 +1,69 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList, ViewPropTypes } from 'react-native'
 import firebase from 'firebase'
 
 import Background from '../components/Background'
 import Header from '../components/Header'
-import ItemFazerPedido from '../components/ItemComanda'
+import ItemComandaFechada from '../components/ItemComandaFechada'
 
 import StyleIndex from '../styles/index'
 
 import SetaEsquerda from '../../assets/images/left-arrow.png'
 
 export default props => {
-    const goToEscolherPagamento = () => { props.navigation.navigate("EscolherPagamento") }
-
     const antTela = () => { props.navigation.goBack() }
-    const goToCardapio = () => { props.navigation.navigate("Cardapio") }
     const user = firebase.auth().currentUser
 
-    const estabelecimento = props.estabelecimento
-    const shortId = props.shortId
+    const shortId = props.route.params.shortId
+    const keyComanda = props.route.params.key
     const [listaPedidos, setListaPedidos] = useState([])
     const [comanda, setComanda] = useState([])
     const [soma, setSoma] = useState('')
-    // useEffect(() => {
-    //     try {
-    //         const list = []
-    //         const getComanda = firebase.database().ref('/ComandasFechadas')
-    //             .orderByChild('usuario').equalTo(user.uid)
-    //             .on('value', (snapshot) => {
-    //                 snapshot.forEach((childItem) => {
-    //                     list.push({
-    //                         key: childItem.key,
-    //                         data: childItem.val().data,
-    //                         usuario: childItem.val().usuario,
-    //                     })
-    //                 })
-    //                 setComanda(list)
-    //                 // console.log(list[0]['key'])
-    //             })
+    useEffect(() => {
+        try {
+            const list = []
+            const getComanda = firebase.database().ref('/ComandasFechadas/' + user.uid + '/' + keyComanda)
+                // .orderByChild('shortId').equalTo(shortId)
+                .on('value', (snapshot) => {
+                    snapshot.forEach((childItem) => {
+                        list.push({
+                            key: childItem.key,
+                            data: childItem.val().data,
+                            valorTotal: childItem.val().valorTotal,
+                            estabelecimento: childItem.val().estabelecimento,
+                        })
+                    })
+                    setComanda(list)
+                    console.log(list)
+                })
 
-    //         const getItensComanda = firebase.database().ref('/ComandasFechadas/' + list[0]['key'] + '/itens')
-    //             .on('value', (snapshot) => {
-    //                 const pedidos = []
-    //                 snapshot.forEach((childItem) => {
-    //                     pedidos.push({
-    //                         key: childItem.key,
-    //                         nome: childItem.val().nome,
-    //                         quantidade: childItem.val().quantidade,
-    //                         observacao: childItem.val().observacao,
-    //                         valorTotal: childItem.val().valorTotal,
-    //                         status: childItem.val().status,
-    //                         imagem: childItem.val().imagem
-    //                     })
-    //                 })
-    //                 setListaPedidos(pedidos)
-    //             })
-
-    //         const getSoma = firebase.database().ref('/ComandasFechadas/' + list[0]['key'] + '/itens')
-    //             .orderByChild('status').startAt('1').endAt('3')
-    //             .on('value', (snapshot) => {
-    //                 const total = []
-    //                 snapshot.forEach((childItem) => {
-    //                     total.push({
-    //                         valorTotal: childItem.val().valorTotal
-    //                     })
-    //                 })
-    //                 setSoma(total)
-    //             })
-
-    //     } catch (error) {
-    //         alert(error)
-    //     }
-    // }, [])
-
-    function somaTotal() {
-        let total = 0
-
-        for (let i = 0; i < soma.length; i++) {
-            total = total + soma[i]['valorTotal']
+            const getItensComanda = firebase.database().ref('/ComandasFechadas/' + user.uid + '/' + keyComanda + '/itens')
+                .on('value', (snapshot) => {
+                    const itens = []
+                    snapshot.forEach((childItem) => {
+                        itens.push({
+                            key: childItem.key,
+                            nome: childItem.val().nome,
+                            quantidade: childItem.val().quantidade,
+                            observacao: childItem.val().observacao,
+                            valorTotal: childItem.val().valorTotal,
+                            status: childItem.val().status,
+                            imagem: childItem.val().imagem
+                        })
+                    })
+                    setListaPedidos(itens)
+                })
+        } catch (error) {
+            alert(error)
         }
-
-        return total
-    }
+    }, [])
 
     return (
         <Background>
             <Header />
             <View style={StyleIndex.mainContainer}>
                 <TouchableOpacity style={style.containerNavegarSup}
-                    onPress={goToCardapio}
+                    onPress={antTela}
                 >
                     <Image resizeMode='contain'
                         source={SetaEsquerda}
@@ -101,16 +76,32 @@ export default props => {
 
                 <View style={StyleIndex.titleContainer}>
                     <Text style={StyleIndex.titleText}>
-                        Comanda
+                        Comanda #{shortId}
                     </Text>
+                    <View style={style.informacoes}>
+                        {/* <Text style={[style.containerinformacoesEsquerda, style.informacoestext]}>
+                            {comanda[0]['estabelecimento']}
+                        </Text> */}
+                        {/* <Text style={[style.containerinformacoesDireita, style.informacoestext]}>
+                            {comanda[0].data}
+                        </Text>
+                    </View>
+                    <View style={style.informacoes}>
+                        <Text style={[style.containerinformacoesEsquerda, style.informacoestext]}>
+                            R$ {comanda[0].valorTotal},00
+                        </Text> */}
+                        <Text style={[style.containerinformacoesDireita, style.informacoestext]}>
+                            Débito/MasterCard
+                        </Text>
+                    </View>
                 </View>
 
                 <View style={StyleIndex.content}>
 
-                    {/* <FlatList data={listaPedidos}
+                    <FlatList data={listaPedidos}
                         keyExtractor={(item) => item.key}
                         renderItem={({ item }) =>
-                            <ItemFazerPedido
+                            <ItemComandaFechada
                                 keyPedido={item.key}
                                 nome={item.nome}
                                 observacao={item.observacao}
@@ -118,26 +109,24 @@ export default props => {
                                 valorTotal={item.valorTotal}
                                 status={item.status}
                                 imagem={item.imagem}
-                                comanda={comanda[0]['key']}
+                                // comanda={comanda[0]['key']}
                             />
-                        } /> */}
+                        } />
 
                 </View>
 
                 <View style={StyleIndex.footerContainer}>
-
-                    <Text style={[style.txtFecharComanda, style.txtTotal]}>
-                        Total: R${somaTotal()}
-                    </Text>
-
                     <TouchableOpacity
                         style={style.btnAdicionar}
-                        onPress={() => {
-                            fecharComanda()
-                        }}
+                        onPress={
+                            () => {
+                                // console.log(comanda[0]['estabelecimento'])
+                                console.log(keyComanda, comanda)
+                            }
+                        }
                     >
                         <Text style={style.txtAdicionar}>
-                            Fechar Comanda
+                            Testes
 
                         </Text>
                     </TouchableOpacity>
@@ -170,7 +159,24 @@ const style = StyleSheet.create({
         padding: 0,
     },
     informacoes: {
-        width: 350,
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+    },
+    containerinformacoesEsquerda: {
+        justifyContent: 'flex-start',
+        width: '40%',
+        paddingLeft: 15,
+    },
+    containerinformacoesDireita: {
+        justifyContent: 'flex-start',
+        width: '60%',
+        paddingLeft: 10,
+    },
+    informacoestext: {
+        color: '#FFF',
+        fontSize: 20,
+        fontWeight: 'bold',
     },
     txtNome: {
         color: '#FFF',

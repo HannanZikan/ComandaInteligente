@@ -10,23 +10,7 @@ import StyleIndex from '../styles/index'
 export default props => {
     const user = firebase.auth().currentUser
 
-    const [comanda, setComanda] = useState('')
-    useEffect(() => {
-        try {
-            let list
-            firebase.database().ref('/Comandas')
-                .orderByChild('usuario').equalTo(user.uid)
-                .on('value', (snapshot) => {
-                    snapshot.forEach((childItem) => {
-                        list = childItem.key
-                    })
-                    setComanda(list)
-                })
-
-        } catch (error) {
-            alert(error)
-        }
-    }, [])
+    const shortId = props.route.params.shortId
 
     return (
         <Background>
@@ -44,7 +28,7 @@ export default props => {
                             Apresente o código da sua comanda no caixa:
                         </Text>
                         <Text style={style.txtCodigoComanda}>
-                            Comanda: {comanda}
+                            Comanda: {shortId}
                         </Text>
 
                     </View>

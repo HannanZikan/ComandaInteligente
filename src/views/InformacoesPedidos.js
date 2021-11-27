@@ -41,6 +41,7 @@ export default props => {
                             key: childItem.key,
                             data: childItem.val().data,
                             usuario: childItem.val().usuario,
+                            estabelecimento: childItem.val().estabelecimento
                         })
                     })
                     setComanda(list)
@@ -56,6 +57,7 @@ export default props => {
             const abrirComanda = firebase.database().ref('/Comandas').push({
                 usuario: usuario,
                 data: data,
+                estabelecimento: "Ped Lanches"
             })
 
             const list = []
@@ -67,6 +69,7 @@ export default props => {
                             key: childItem.key,
                             data: childItem.val().data,
                             usuario: childItem.val().usuario,
+                            estabelecimento: "Ped Lanches"
                         })
                     })
                     setComanda(list)

@@ -20,6 +20,7 @@ export default props => {
     const [listaPedidos, setListaPedidos] = useState([])
     const [comanda, setComanda] = useState([])
     const [soma, setSoma] = useState('')
+
     useEffect(() => {
         try {
             const list = []
@@ -31,6 +32,7 @@ export default props => {
                             key: childItem.key,
                             data: childItem.val().data,
                             usuario: childItem.val().usuario,
+                            estabelecimento: childItem.val(). estabelecimento
                         })
                     })
                     setComanda(list)
@@ -86,6 +88,7 @@ export default props => {
             .ref('/ComandasFechadas/' + user.uid + '/' + comanda[0]['key']).set({
                 usuario: comanda[0]['usuario'],
                 data: comanda[0]['data'],
+                valorTotal: somaTotal()
             })
 
         for (let i = 0; i < listaPedidos.length; i++) {
@@ -100,7 +103,6 @@ export default props => {
 
         const excluirComandaAberta = firebase.database().ref('/Comandas/' + comanda[0]['key']).remove()
 
-        goToEscolherPagamento()
     }
 
     return (
@@ -152,13 +154,12 @@ export default props => {
 
                     <TouchableOpacity
                         style={style.btnAdicionar}
-                        onPress={() => {
-                            fecharComanda()
-                        }}
+                        onPress={
+                            goToEscolherPagamento
+                        }
                     >
                         <Text style={style.txtAdicionar}>
                             Fechar Comanda
-
                         </Text>
                     </TouchableOpacity>
                 </View>

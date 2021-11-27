@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import firebase from 'firebase'
 
 export default props => {
     return (
@@ -45,6 +46,5 @@ const style = StyleSheet.create({
     iconePagamento: {
         width: 80,
         height: 80,
-        // marginRight: 10,
     },
 })

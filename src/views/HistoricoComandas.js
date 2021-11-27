@@ -13,7 +13,6 @@ import Comandas from '../components/ComadandasFechadas'
 import SetaEsquerda from '../../assets/images/left-arrow.png'
 
 export default props => {
-    const goToCadastrarCartao = () => { props.navigation.navigate("CadastrarCartao") }
     const goToPerfilUsuario = () => { props.navigation.goBack() }
 
     const user = firebase.auth().currentUser
@@ -62,7 +61,7 @@ export default props => {
                             <TouchableOpacity
                                 onPress={
                                     () => {
-                                        props.navigation.navigate("ComandaFechada", item)
+                                        props.navigation.navigate("DetalheComandaFechada", item.key)
                                     }
 
                                 }
