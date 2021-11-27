@@ -1,10 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import firebase from 'firebase'
-import StyleIndex from '../styles/index'
-
-// imagem apenas ilustrativa, retirar depois
-import sanduiche from '../../assets/images/sanduiche.png'
 
 export default props => {
 
@@ -70,11 +66,6 @@ export default props => {
                                 </View>
                                 :
                                 <View style={style.containerBtnCancelar}>
-                                    {/* <TouchableOpacity
-                                        // onPress={() => cancelarItem()}
-                                        style={style.btnCancelar}>
-                                        <Text style={style.valor}>Entregue</Text>
-                                    </TouchableOpacity> */}
                                 </View>
 
                         }
@@ -106,13 +97,13 @@ const style = StyleSheet.create({
     },
     containerImg: {
         alignItems: 'center',
-        // marginLeft: 10,
-        // backgroundColor: '#fff',
+        marginLeft: 10,
+        justifyContent: 'center',
     },
     containerTxt: {
         flex: 1,
         marginLeft: 15,
-        // backgroundColor: '#ccc',
+        paddingRight: 10,
     },
     nome: {
         color: '#FFF',

@@ -42,7 +42,6 @@ export default props => {
         } catch (error) {
             alert(error)
         }
-
     }
 
     return (

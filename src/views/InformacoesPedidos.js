@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native'
 import firebase from 'firebase'
 import Background from '../components/Background'
 import Header from '../components/Header'
@@ -7,6 +7,7 @@ import Header from '../components/Header'
 import StyleIndex from '../styles/index'
 
 import SetaEsquerda from '../../assets/images/left-arrow.png'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export default props => {
     const goToFazerPedido = () => { props.navigation.navigate("Comanda") }
@@ -130,7 +131,11 @@ export default props => {
     return (
         <Background>
             <Header />
-            <View style={StyleIndex.mainContainer}>
+            <KeyboardAvoidingView
+                behavior="height"
+                keyboardVerticalOffset={60}
+                style={StyleIndex.mainContainer}>
+
                 <TouchableOpacity style={style.containerNavegarSup}
                     onPress={antTela}
                 >
@@ -143,30 +148,32 @@ export default props => {
                     </Text>
                 </TouchableOpacity>
 
+
                 <View style={StyleIndex.content}>
+                    <ScrollView>
 
-                    <View style={style.informacoes}>
-                        <Text style={style.txtNome}>
-                            {nome}
-                        </Text>
-                        <Text style={style.txtDescricao}>
-                            {descricao}
-                        </Text>
-                        <Text style={style.txtValor}>
-                            R$ {valor}
-                        </Text>
-                        <Text style={style.txtobservacao}>
-                            Alguma observação?
-                        </Text>
-                        <TextInput
-                            style={style.input}
-                            value={observacao}
-                            onChangeText={observacao => setObservacao(observacao)}
-                            placeholder="Ex: Tirar o picles, carne mal passada"
-                            placeholderTextColor="#606060" />
+                        <View style={style.informacoes}>
+                            <Text style={style.txtNome}>
+                                {nome}
+                            </Text>
+                            <Text style={style.txtDescricao}>
+                                {descricao}
+                            </Text>
+                            <Text style={style.txtValor}>
+                                R$ {valor}
+                            </Text>
+                            <Text style={style.txtobservacao}>
+                                Alguma observação?
+                            </Text>
+                            <TextInput
+                                style={style.input}
+                                value={observacao}
+                                onChangeText={observacao => setObservacao(observacao)}
+                                placeholder="Ex: Tirar o picles, carne mal passada"
+                                placeholderTextColor="#606060" />
 
-                    </View>
-
+                        </View>
+                    </ScrollView>
                 </View>
 
                 <View style={style.footerContainer}>
@@ -202,7 +209,7 @@ export default props => {
                     </TouchableOpacity>
                 </View>
 
-            </View>
+            </KeyboardAvoidingView>
 
         </Background>
     )
@@ -312,6 +319,5 @@ const style = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
         height: 80,
-        // backgroundColor: '#ccc'
     },
 })

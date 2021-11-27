@@ -54,20 +54,16 @@ const style = StyleSheet.create({
     imgCardapio: {
         width: 85,
         height: 85,
-        // backgroundColor: '#ccc'
     },
     containerImg: {
         alignItems: 'center',
         marginLeft: 10,
-        // flex: 1,
         justifyContent: 'center',
-        // backgroundColor: '#fff',
     },
     containerTxt: {
         flex: 1,
         marginLeft: 15,
         paddingRight: 10,
-        // backgroundColor: '#ccc',
     },
     nome: {
         color: '#FFF',

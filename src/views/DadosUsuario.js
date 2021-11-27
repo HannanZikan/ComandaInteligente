@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView } from 'react-native'
 import firebase from 'firebase'
 
 import Background from '../components/Background'
@@ -9,6 +9,7 @@ import StyleIndex from '../styles/index'
 import StylePerfil from '../styles/perfil'
 
 import SetaEsquerda from '../../assets/images/left-arrow.png'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export default props => {
     const goToPerfilUsuario = () => { props.navigation.goBack() }
@@ -38,7 +39,7 @@ export default props => {
         }
     }, [])
 
-    function getCpf(){
+    function getCpf() {
         const list = []
         try {
             firebase.database().ref('Usuarios/' + uid)
@@ -98,7 +99,10 @@ export default props => {
     return (
         <Background>
             <Header />
-            <View style={StyleIndex.mainContainer}>
+            <KeyboardAvoidingView
+                behavior="height"
+                keyboardVerticalOffset={80}
+                style={StyleIndex.mainContainer}>
                 <TouchableOpacity style={StylePerfil.containerNavegarSup}
                     onPress={goToPerfilUsuario}>
                     <Image resizeMode='contain'
@@ -111,28 +115,29 @@ export default props => {
                 </TouchableOpacity>
 
                 <View style={StylePerfil.contentCentroSup}>
-                    <TextInput
-                        style={style.input}
-                        value={nome}
-                        onChangeText={nome => setNome(nome)}
-                        placeholder="Nome"
-                        placeholderTextColor="#606060" />
+                    <ScrollView>
+                        <TextInput
+                            style={style.input}
+                            value={nome}
+                            onChangeText={nome => setNome(nome)}
+                            placeholder="Nome"
+                            placeholderTextColor="#606060" />
 
-                    <TextInput
-                        style={style.input}
-                        value={email}
-                        onChangeText={email => setEmail(email)}
-                        placeholder="E-mail"
-                        placeholderTextColor="#606060" />
+                        <TextInput
+                            style={style.input}
+                            value={email}
+                            onChangeText={email => setEmail(email)}
+                            placeholder="E-mail"
+                            placeholderTextColor="#606060" />
 
-                    <TextInput
-                        style={style.input}
-                        value={cpf}
-                        keyboardType="numeric"
-                        onChangeText={cpf => setCPF(cpf)}
-                        placeholder="CPF"
-                        placeholderTextColor="#606060" />
-
+                        <TextInput
+                            style={style.input}
+                            value={cpf}
+                            keyboardType="numeric"
+                            onChangeText={cpf => setCPF(cpf)}
+                            placeholder="CPF"
+                            placeholderTextColor="#606060" />
+                    </ScrollView>
                 </View>
 
                 <View style={StyleIndex.footerContaineSpace}>
@@ -158,7 +163,7 @@ export default props => {
                         </Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
 
 
         </Background>

@@ -28,24 +28,23 @@ const style = StyleSheet.create({
     },
     container: {
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
-        paddingLeft: 25,
         paddingBottom: 5,
-        width: 370,
+        width: 330,
         borderBottomWidth: 1,
         borderBottomColor: '#FF6300',
-        // backgroundColor: '#ccc',
+        marginTop: 15
     },
     nomeMetodo: {
         marginLeft: 20,
         color: '#FFF',
-        fontSize: 32,
+        fontSize: 28,
         fontWeight: 'bold',
     },
     iconePagamento: {
-        width: 100,
-        height: 100,
+        width: 80,
+        height: 80,
         // marginRight: 10,
     },
 })

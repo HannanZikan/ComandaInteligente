@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import QRCodeScanner from 'react-native-qrcode-scanner'
 
 
@@ -40,17 +40,27 @@ export default props => {
                     <Text style={style.titleText}>
                         Escaneie o QR-Code para fazer o Check-In
                     </Text>
-                    <Text style={style.titleText}>
-                        resultado: {qrcode.data}
-                    </Text>
                 </View>
 
-                <View style={StyleIndex.contentCenter}>
+                {/* <View style={StyleIndex.contentCenter}>
                         <QRCodeScanner
                             onRead={onRead}
                             showMarker
                             containerStyle
                         />
+                </View> */}
+
+                <View style={StyleIndex.contentCenter}>
+                    <View style={style.quadro}>
+                        <TouchableOpacity
+                            onPress={goToMenu}>
+                            <Image
+                                resizeMode='contain'
+                                source={Mira}
+                                style={style.mira}
+                            />
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </Background>
@@ -72,7 +82,7 @@ const style = StyleSheet.create({
     },
     mira: {
         width: 200,
-        backgroundColor: '#ccc'
+        // backgroundColor: '#ccc'
     },
     titleContainer: {
         alignItems: 'center',

@@ -4,7 +4,7 @@ import firebase from 'firebase'
 
 import Background from '../components/Background'
 import Header from '../components/Header'
-import ItemFazerPedido from '../components/ItemComanda'
+import ItemComanda from '../components/ItemComanda'
 
 import StyleIndex from '../styles/index'
 
@@ -34,7 +34,6 @@ export default props => {
                         })
                     })
                     setComanda(list)
-                    // console.log(list[0]['key'])
                 })
 
             const getItensComanda = firebase.database().ref('/Comandas/' + list[0]['key'] + '/itens')
@@ -131,7 +130,7 @@ export default props => {
                     <FlatList data={listaPedidos}
                         keyExtractor={(item) => item.key}
                         renderItem={({ item }) =>
-                            <ItemFazerPedido
+                            <ItemComanda
                                 keyPedido={item.key}
                                 nome={item.nome}
                                 observacao={item.observacao}
@@ -145,9 +144,9 @@ export default props => {
 
                 </View>
 
-                <View style={StyleIndex.footerContainer}>
+                <View style={style.footerContainer}>
 
-                    <Text style={[style.txtFecharComanda, style.txtTotal]}>
+                    <Text style={style.txtFecharComanda}>
                         Total: R${somaTotal()}
                     </Text>
 
@@ -235,7 +234,6 @@ const style = StyleSheet.create({
         height: 45,
         backgroundColor: '#FF6300',
         padding: 5,
-        marginRight: 30,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -243,9 +241,6 @@ const style = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: '#FFF',
-    },
-    txtTotal: {
-        marginRight: 30,
     },
     containerQtde: {
         flexDirection: 'row',
@@ -271,5 +266,11 @@ const style = StyleSheet.create({
     },
     txtTotal: {
         marginRight: 30,
-    }
+    },
+    footerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        height: 80,
+    },
 })

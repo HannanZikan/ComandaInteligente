@@ -39,7 +39,7 @@ export default props => {
                         navegacao={goToPagarNoCaixa} />
                 </View>
 
-                <View style={StyleIndex.footerContainer}>
+                <View style={style.footerContainer}>
                     <TouchableOpacity
                         style={style.btnVoltarComanda}
                         onPress={goToComanda}>
@@ -61,7 +61,7 @@ const style = StyleSheet.create({
         height: 45,
         backgroundColor: '#FF6300',
         padding: 5,
-        marginRight: 30,
+        marginRight: 25,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -69,5 +69,11 @@ const style = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: '#FFF',
+    },
+    footerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        height: 80,
     },
 })

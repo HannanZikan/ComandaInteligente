@@ -23,7 +23,6 @@ export default StyleSheet.create({
         alignItems: 'center',
         paddingTop: 1,
         paddingBottom: 10,
-        width: '100%',
     },
     titleText: {
         color: '#FFF',
@@ -36,7 +35,6 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-end',
         height: 80,
-        // backgroundColor: '#ccc'
     },
     footerContaineSpace: {
         flexDirection: 'row',
