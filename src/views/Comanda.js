@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native'
 import firebase from 'firebase'
 
 import Background from '../components/Background'
@@ -32,7 +32,7 @@ export default props => {
                             key: childItem.key,
                             data: childItem.val().data,
                             usuario: childItem.val().usuario,
-                            estabelecimento: childItem.val(). estabelecimento
+                            estabelecimento: childItem.val().estabelecimento
                         })
                     })
                     setComanda(list)
@@ -68,7 +68,8 @@ export default props => {
                 })
 
         } catch (error) {
-            alert(error)
+            // alert(error)
+            Alert.alert("Atenção", "Você ainda não possui nenhuma comanda aberta.")
         }
     }, [])
 

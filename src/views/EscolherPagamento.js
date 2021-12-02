@@ -14,7 +14,8 @@ import PagarNoCaixa from '../../assets/images/pagarnocaixa.png'
 
 export default props => {
     const goToComanda = () => { props.navigation.navigate("Comanda") }
-    const goToPagarNoCaixa = (shortId) => { props.navigation.navigate("PagarNoCaixa", shortId) }
+    const goToPagarNoCaixa = (shortId) => { props.navigation.navigate("PagarNoCaixa", shortId) } 
+    const goToPagarCartao = (shortId) => { props.navigation.navigate("PagarCartao", shortId) } 
     
     const user = firebase.auth().currentUser
     const [listaPedidos, setListaPedidos] = useState([])
@@ -83,7 +84,6 @@ export default props => {
     }
 
     function fecharComandaCaixa() {
-
         // gerar números aleatórios entre 1000 e 9999
         const shortId = Math.floor(Math.random() * (10000 - 1000) + 1000)
 
@@ -112,6 +112,11 @@ export default props => {
         goToPagarNoCaixa({shortId})
     }
 
+    function fecharComandaCartao() {
+        console.log("teste")
+        goToPagarCartao()
+    }
+
     return (
         <Background>
             <Header />
@@ -126,7 +131,8 @@ export default props => {
                 <View style={StyleIndex.content}>
                     <MetodoPagamento
                         imagem={GPay}
-                        metodo='Débito/Crédito' />
+                        metodo='Débito/Crédito'
+                        navegacao={fecharComandaCartao} />
 
                     <MetodoPagamento
                         imagem={PagarNoCaixa}

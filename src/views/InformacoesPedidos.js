@@ -57,7 +57,8 @@ export default props => {
             const abrirComanda = firebase.database().ref('/Comandas').push({
                 usuario: usuario,
                 data: data,
-                estabelecimento: "Ped Lanches"
+                estabelecimento: "Ped Lanches",
+                mesa: '0001',
             })
 
             const list = []

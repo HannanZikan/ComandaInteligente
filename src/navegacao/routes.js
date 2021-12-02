@@ -19,6 +19,7 @@ import DadosUsuario from '../views/DadosUsuario'
 import EsqueciMinhaSenha from '../views/EsqueciMinhaSenha'
 import AtualizarSenha from '../views/AtualizarSenha'
 import PagarNoCaixa from '../views/PagarNoCaixa'
+import PagarCartao from '../views/PagarCartao'
 import HistoricoComandas from '../views/HistoricoComandas'
 import DetalheComandaFechada from '../views/DetalheComandaFechada'
 
@@ -40,7 +41,19 @@ function CardapioTabStack() {
             <CardapioStack.Screen name="EscolherPagamento" component={EscolherPagamento} />
             <CardapioStack.Screen name="CheckIn" component={CheckIn} />
             <CardapioStack.Screen name="PagarNoCaixa" component={PagarNoCaixa} />
+            <CardapioStack.Screen name="PagarCartao" component={PagarCartaoTabStack} />
         </CardapioStack.Navigator>
+    );
+}
+
+const PagarCartaoStack = createStackNavigator();
+
+function PagarCartaoTabStack() {
+    return (
+        <PagarCartaoStack.Navigator initialRouteName="PagarCartao"
+            screenOptions={{ headerShown: false }}>
+            <PagarCartaoStack.Screen name="PagarCartao" component={PagarCartao} />
+        </PagarCartaoStack.Navigator>
     );
 }
 
