@@ -14,45 +14,49 @@ export default props => {
     const antTela = () => { props.navigation.goBack() }
     const user = firebase.auth().currentUser
 
-    const shortId = props.route.params.shortId
     const keyComanda = props.route.params.key
+    const data = props.route.params.data
+    const estabelecimento = props.route.params.estabelecimento
+    const pagamento = props.route.params.pagamento
+    const shortId = props.route.params.shortId
+    const valorTotal = props.route.params.valorTotal
     const [listaPedidos, setListaPedidos] = useState([])
-    const [comanda, setComanda] = useState([])
-    const [soma, setSoma] = useState('')
+    // const [comanda, setComanda] = useState([])
+    // const [soma, setSoma] = useState('')
     useEffect(() => {
         try {
-            const list = []
-            const getComanda = firebase.database().ref('/ComandasFechadas/' + user.uid + '/' + keyComanda)
-                // .orderByChild('shortId').equalTo(shortId)
-                .on('value', (snapshot) => {
-                    snapshot.forEach((childItem) => {
-                        list.push({
-                            key: childItem.key,
-                            data: childItem.val().data,
-                            valorTotal: childItem.val().valorTotal,
-                            estabelecimento: childItem.val().estabelecimento,
-                        })
-                    })
-                    setComanda(list)
-                    console.log(list)
-                })
+            // const list = []
+            // const getComanda = firebase.database().ref('/ComandasFechadas/' + user.uid)
+            //     .orderByChild('shortId').equalTo(shortId)
+            //     .on('value', (snapshot) => {
+            //         snapshot.forEach((childItem) => {
+            //             list.push({
+            //                 key: childItem.key,
+            //                 data: childItem.val().data,
+            //                 valorTotal: childItem.val().valorTotal,
+            //                 estabelecimento: childItem.val().estabelecimento,
+            //             })
+            //         })
+            //         // setComanda(list)
+            //         console.log(list)
+            //     })
 
-            const getItensComanda = firebase.database().ref('/ComandasFechadas/' + user.uid + '/' + keyComanda + '/itens')
-                .on('value', (snapshot) => {
-                    const itens = []
-                    snapshot.forEach((childItem) => {
-                        itens.push({
-                            key: childItem.key,
-                            nome: childItem.val().nome,
-                            quantidade: childItem.val().quantidade,
-                            observacao: childItem.val().observacao,
-                            valorTotal: childItem.val().valorTotal,
-                            status: childItem.val().status,
-                            imagem: childItem.val().imagem
-                        })
+        const getItensComanda = firebase.database().ref('/ComandasFechadas/' + user.uid + '/' + keyComanda + '/itens')
+            .on('value', (snapshot) => {
+                const itens = []
+                snapshot.forEach((childItem) => {
+                    itens.push({
+                        key: childItem.key,
+                        nome: childItem.val().nome,
+                        quantidade: childItem.val().quantidade,
+                        observacao: childItem.val().observacao,
+                        valorTotal: childItem.val().valorTotal,
+                        status: childItem.val().status,
+                        imagem: childItem.val().imagem
                     })
-                    setListaPedidos(itens)
                 })
+                setListaPedidos(itens)
+            })
         } catch (error) {
             alert(error)
         }
@@ -74,24 +78,24 @@ export default props => {
                     </Text>
                 </TouchableOpacity>
 
-                <View style={StyleIndex.titleContainer}>
+                <View style={[StyleIndex.titleContainer, style.borda]}>
                     <Text style={StyleIndex.titleText}>
                         Comanda #{shortId}
                     </Text>
                     <View style={style.informacoes}>
-                        {/* <Text style={[style.containerinformacoesEsquerda, style.informacoestext]}>
-                            {comanda[0]['estabelecimento']}
-                        </Text> */}
-                        {/* <Text style={[style.containerinformacoesDireita, style.informacoestext]}>
-                            {comanda[0].data}
+                        <Text style={[style.containerinformacoesEsquerda, style.informacoestext]}>
+                            {estabelecimento}
+                        </Text>
+                        <Text style={[style.containerinformacoesDireita, style.informacoestext]}>
+                            {data}
                         </Text>
                     </View>
                     <View style={style.informacoes}>
                         <Text style={[style.containerinformacoesEsquerda, style.informacoestext]}>
-                            R$ {comanda[0].valorTotal},00
-                        </Text> */}
+                            R$ {valorTotal},00
+                        </Text>
                         <Text style={[style.containerinformacoesDireita, style.informacoestext]}>
-                            Débito/MasterCard
+                            {pagamento}
                         </Text>
                     </View>
                 </View>
@@ -109,28 +113,25 @@ export default props => {
                                 valorTotal={item.valorTotal}
                                 status={item.status}
                                 imagem={item.imagem}
-                                // comanda={comanda[0]['key']}
+                                comanda={keyComanda}
                             />
                         } />
 
                 </View>
 
-                <View style={StyleIndex.footerContainer}>
+                {/* <View style={StyleIndex.footerContainer}>
                     <TouchableOpacity
                         style={style.btnAdicionar}
                         onPress={
                             () => {
-                                // console.log(comanda[0]['estabelecimento'])
-                                console.log(keyComanda, comanda)
-                            }
-                        }
-                    >
+                                console.log(user.uid, keyComanda, data, estabelecimento, pagamento, shortId, valorTotal)
+                            }}>
                         <Text style={style.txtAdicionar}>
                             Testes
 
                         </Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </View>
 
         </Background>
@@ -171,7 +172,7 @@ const style = StyleSheet.create({
     containerinformacoesDireita: {
         justifyContent: 'flex-start',
         width: '60%',
-        paddingLeft: 10,
+        paddingLeft: 5,
     },
     informacoestext: {
         color: '#FFF',
@@ -256,5 +257,9 @@ const style = StyleSheet.create({
     },
     txtTotal: {
         marginRight: 30,
-    }
+    },
+    borda:{
+        borderBottomColor: '#FF6300',
+        borderBottomWidth: 2,
+    },
 })

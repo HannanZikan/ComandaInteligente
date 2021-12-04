@@ -14,9 +14,9 @@ import PagarNoCaixa from '../../assets/images/pagarnocaixa.png'
 
 export default props => {
     const goToComanda = () => { props.navigation.navigate("Comanda") }
-    const goToPagarNoCaixa = (shortId) => { props.navigation.navigate("PagarNoCaixa", shortId) } 
-    const goToPagarCartao = (shortId) => { props.navigation.navigate("PagarCartao", shortId) } 
-    
+    const goToPagarNoCaixa = (shortId) => { props.navigation.navigate("PagarNoCaixa", shortId) }
+    const goToPagarCartao = (shortId) => { props.navigation.navigate("PagarCartao", shortId) }
+
     const user = firebase.auth().currentUser
     const [listaPedidos, setListaPedidos] = useState([])
     const [comanda, setComanda] = useState([])
@@ -33,7 +33,7 @@ export default props => {
                             key: childItem.key,
                             data: childItem.val().data,
                             usuario: childItem.val().usuario,
-                            estabelecimento: childItem.val(). estabelecimento
+                            estabelecimento: childItem.val().estabelecimento
                         })
                     })
                     setComanda(list)
@@ -109,11 +109,33 @@ export default props => {
 
         const excluirComandaAberta = firebase.database().ref('/Comandas/' + comanda[0]['key']).remove()
 
-        goToPagarNoCaixa({shortId})
+        goToPagarNoCaixa({ shortId })
     }
 
     function fecharComandaCartao() {
-        console.log("teste")
+        const setComandaFechada = firebase.database()
+            .ref('/ComandasFechadas/' + user.uid + '/' + comanda[0]['key']).set({
+                usuario: comanda[0]['usuario'],
+                data: comanda[0]['data'],
+                valorTotal: somaTotal(),
+                estabelecimento: comanda[0]['estabelecimento'],
+                shortId: shortId,
+                pagamento: 'Crédito / MasterCard'
+            })
+
+        for (let i = 0; i < listaPedidos.length; i++) {
+            firebase.database().ref('/ComandasFechadas/' + user.uid + '/' + comanda[0]['key'] + '/itens').push({
+                nome: listaPedidos[i]['nome'],
+                quantidade: listaPedidos[i]['quantidade'],
+                observacao: listaPedidos[i]['observacao'],
+                valorTotal: listaPedidos[i]['valorTotal'],
+                status: listaPedidos[i]['status'],
+                imagem: listaPedidos[i]['imagem'],
+            })
+        }
+
+        const excluirComandaAberta = firebase.database().ref('/Comandas/' + comanda[0]['key']).remove()
+
         goToPagarCartao()
     }
 

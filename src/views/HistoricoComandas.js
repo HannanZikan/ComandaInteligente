@@ -28,7 +28,8 @@ export default props => {
                         data: childItem.val().data,
                         estabelecimento: childItem.val().estabelecimento,
                         pagamento: childItem.val().pagamento,
-                        shortId: childItem.val().shortId
+                        shortId: childItem.val().shortId,
+                        valorTotal: childItem.val().valorTotal,
                     })
                 })
                 setListFire(list)
@@ -61,15 +62,15 @@ export default props => {
                             <TouchableOpacity
                                 onPress={
                                     () => {
-                                        props.navigation.navigate("DetalheComandaFechada", item.key)
+                                        props.navigation.navigate("DetalheComandaFechada", item)
                                     }
-
                                 }
                                 keyComanda={item.key}
                                 data={item.data}
                                 estabelecimento={item.estabelecimento}
                                 pagamento={item.pagamento}
-                                shortId={item.shortId}>
+                                shortId={item.shortId}
+                                valorTotal={item.valorTotal}>
                                 <Comandas
                                     keyComanda={item.key}
                                     data={item.data}
