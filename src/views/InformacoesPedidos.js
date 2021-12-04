@@ -97,7 +97,7 @@ export default props => {
                 nome: nome,
                 observacao: observacao,
                 quantidade: quantidade,
-                status: '1',
+                status: 1,
                 valorTotal: valorTotal,
                 imagem: imagem
             })

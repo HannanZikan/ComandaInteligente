@@ -95,6 +95,7 @@ export default props => {
                 valorTotal: somaTotal(),
                 estabelecimento: comanda[0]['estabelecimento'],
                 shortId: shortId,
+                pagamento: 'Caixa - Débito'
             })
 
         for (let i = 0; i < listaPedidos.length; i++) {
@@ -108,7 +109,7 @@ export default props => {
             })
         }
 
-        // const excluirComandaAberta = firebase.database().ref('/Comandas/' + comanda[0]['key']).remove()
+        const excluirComandaAberta = firebase.database().ref('/Comandas/' + comanda[0]['key']).remove()
 
         goToPagarNoCaixa({ shortId })
     }

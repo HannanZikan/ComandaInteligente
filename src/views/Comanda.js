@@ -35,6 +35,7 @@ export default props => {
                             estabelecimento: childItem.val().estabelecimento
                         })
                     })
+                    // console.log(list)
                     setComanda(list)
                 })
 
@@ -56,7 +57,7 @@ export default props => {
                 })
 
             const getSoma = firebase.database().ref('/Comandas/' + list[0]['key'] + '/itens')
-                .orderByChild('status').startAt('1').endAt('3')
+                .orderByChild('status').startAt(1).endAt(3)
                 .on('value', (snapshot) => {
                     const total = []
                     snapshot.forEach((childItem) => {
@@ -69,7 +70,7 @@ export default props => {
 
         } catch (error) {
             // alert(error)
-            Alert.alert("Atenção", "Você ainda não possui nenhuma comanda aberta.")
+            // Alert.alert("Atenção", "Você ainda não possui nenhuma comanda aberta.")
         }
     }, [])
 
