@@ -22,6 +22,7 @@ import PagarNoCaixa from '../views/PagarNoCaixa'
 import PagarCartao from '../views/PagarCartao'
 import HistoricoComandas from '../views/HistoricoComandas'
 import DetalheComandaFechada from '../views/DetalheComandaFechada'
+import TelaObrigado from '../views/TelaObrigado'
 
 import iconMenu from '../../assets/images/icon-menu.png'
 import iconCardapio from '../../assets/images/cardapio.png'
@@ -53,6 +54,7 @@ function PagarCartaoTabStack() {
         <PagarCartaoStack.Navigator initialRouteName="PagarCartao"
             screenOptions={{ headerShown: false }}>
             <PagarCartaoStack.Screen name="PagarCartao" component={PagarCartao} />
+            <PagarCartaoStack.Screen name="TelaObrigado" component={TelaObrigado} />
         </PagarCartaoStack.Navigator>
     );
 }

@@ -25,7 +25,8 @@
     "react-native-qrcode-scanner": "^1.5.4",
     "react-native-reanimated": "^2.1.0",
     "react-native-safe-area-context": "^3.2.0",
-    "react-native-screens": "^3.2.0"
+    "react-native-screens": "^3.2.0",
+    "react-native-stripe-checkout-webview": "^0.0.13"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

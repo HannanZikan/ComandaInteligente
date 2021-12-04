@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, TextInput } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, TextInput, Button, Alert } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import firebase from 'firebase'
 
@@ -10,10 +10,10 @@ import StyleIndex from '../styles/index'
 import StylePerfil from '../styles/perfil'
 
 import SetaEsquerda from '../../assets/images/left-arrow.png'
-import { Fragment } from 'react'
+import cartao from '../../assets/images/icon-mastercard.png'
 
 export default props => {
-    const goToPedidos = () => { props.navigation.navigate("Pedidos") }
+    const goToObrigado = () => { props.navigation.navigate("TelaObrigado") }
     const goToFormasPagamento = () => { props.navigation.goBack() }
 
     const [tipoCartao] = useState(['Selecione o tipo', 'Débito', 'Crédito']);
@@ -24,7 +24,7 @@ export default props => {
     const [validade, setValidade] = useState('')
     const [cvv, setCvv] = useState('')
     const [nomeTitular, setNomeTitular] = useState('')
-    const [cpfTitular, setCpfTitular] = useState('')
+    const [cpf, setCpfTitular] = useState('')
 
     function pushFire() {
         if (tipoSelecionado != 'Selecione o tipo') {
@@ -36,7 +36,7 @@ export default props => {
                     validade: validade,
                     cvv: cvv,
                     nomeTitular: nomeTitular,
-                    cpfTitular: cpfTitular
+                    cpfTitular: cpf
                 })
             } catch (error) {
                 alert(error)
@@ -52,78 +52,80 @@ export default props => {
         }
     }
 
+    function confirmarPagamento(){
+        goToObrigado()
+        // if(cpf != '' && nomeTitular != '' && numeroCartao != '' && validade != '' && cvv != ''){
+        //     Alert.alert("Sucesso!", "Pagamento realizado com sucesso!")
+        // } else {
+        //     Alert.alert("Erro", "Ocorreu um erro inesperado. Por favor tente novamente.")
+        // }
+    }
+
     return (
 
-        <Fragment>
+        <Background>
             <View style={StyleIndex.contentCenter}>
-                {/* <ScrollView> */}
-                    <View>
-                        
-                        <View style={style.containerSelecionarTipo}>
-                            <Picker
-                                style={style.selecionarTipo}
-                                selectedValue={tipoSelecionado}
-                                onValueChange={(itemValue) =>
-                                    setTipoSelecionado(itemValue)
-                                }>
-                                {
-                                    tipoCartao.map(tipo => {
-                                        return <Picker.Item label={tipo} value={tipo} />
-                                    })
-                                }
-                            </Picker>
-                        </View>
-                        
-                        <TextInput
-                            style={style.input}
-                            value={numeroCartao}
-                            keyboardType='numeric'
-                            onChangeText={numeroCartao => setNumeroCartao(numeroCartao)}
-                            placeholder="Número do cartão"
-                            placeholderTextColor="#606060" />
-                        <View style={style.containerValCvv}>
-                            <TextInput
-                                style={style.inputValCVV}
-                                value={validade}
-                                onChangeText={validade => setValidade(validade)}
-                                placeholder="Validade"
-                                placeholderTextColor="#606060" />
-                            <TextInput
-                                style={style.inputValCVV}
-                                value={cvv}
-                                keyboardType='numeric'
-                                onChangeText={cvv => setCvv(cvv)}
-                                placeholder="CVV"
-                                placeholderTextColor="#606060" />
-                        </View>
-                        <TextInput
-                            style={style.input}
-                            value={nomeTitular}
-                            onChangeText={nomeTitular => setNomeTitular(nomeTitular)}
-                            placeholder="Nome do Titular"
-                            placeholderTextColor="#606060" />
-                        <TextInput
-                            style={style.input}
-                            value={cpfTitular}
-                            keyboardType='numeric'
-                            onChangeText={cpfTitular => setCpfTitular(cpfTitular)}
-                            placeholder="CPF/CNPJ do titular"
-                            placeholderTextColor="#606060" />
 
-                    </View >
-                {/* </ScrollView> */}
+                <TextInput
+                    style={style.input}
+                    value={cpf}
+                    keyboardType='numeric'
+                    onChangeText={cpfTitular => setCpfTitular(cpfTitular)}
+                    placeholder="CPF"
+                    placeholderTextColor="#606060" />
 
-                {/* <View style={StyleIndex.footerContainer}>
+                <TextInput
+                    style={style.input}
+                    value={nomeTitular}
+                    onChangeText={nomeTitular => setNomeTitular(nomeTitular)}
+                    placeholder="Nome do titular"
+                    placeholderTextColor="#606060" />
+
+                <View style={style.containerCartao}>
+                    <TextInput
+                        style={style.inputCartao}
+                        value={numeroCartao}
+                        keyboardType='numeric'
+                        onChangeText={numeroCartao => setNumeroCartao(numeroCartao)}
+                        placeholder="Número do cartão"
+                        placeholderTextColor="#606060" />
+                    <Image
+                        resizeMode='contain'
+                        style={style.cartao}
+                        source={cartao}
+                    />
+                </View>
+
+                <View style={style.containerValCvv}>
+                    <TextInput
+                        style={style.inputValCVV}
+                        value={validade}
+                        onChangeText={validade => setValidade(validade)}
+                        placeholder="Validade"
+                        placeholderTextColor="#606060" />
+                    <TextInput
+                        style={style.inputValCVV}
+                        value={cvv}
+                        keyboardType='numeric'
+                        onChangeText={cvv => setCvv(cvv)}
+                        placeholder="CVV"
+                        placeholderTextColor="#606060" />
+                </View>
+
+                <View style={style.containerPagar}>
                     <TouchableOpacity
-                        style={style.btnAdicionarCartao}>
-                        <Text style={style.txtAdicionarCartao}
-                            onPress={pushFire}>
+                        onPress={()=>{
+                            // console.log('teste')
+                            confirmarPagamento()
+                        }}
+                        style={style.btnPagar}>
+                        <Text style={style.txtPagar}>
                             Pagar
                         </Text>
                     </TouchableOpacity>
-                </View> */}
+                </View>
             </View>
-        </Fragment>
+        </Background>
 
     )
 }
@@ -142,10 +144,10 @@ const style = StyleSheet.create({
     txtAdicionarCartao: {
         fontSize: 32,
         fontWeight: 'bold',
-        color: '#000',
+        color: '#fff',
     },
     selecionarTipo: {
-        color: '#000',
+        color: '#fff',
         justifyContent: 'flex-start',
         // fontWeight: 'bold',
         // fontSize: 24,
@@ -159,6 +161,26 @@ const style = StyleSheet.create({
         // marginTop: 15,
         // backgroundColor: '#ccc'
     },
+    containerPagar: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 80,
+        width: 300,
+        marginTop: 30,
+        // backgroundColor: '#ccc'
+    },
+    containerCartao: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        // alignItems: 'center',
+        width: 300,
+        paddingRight: 5,
+        // backgroundColor: '#ccc'
+    },
+    cartao: {
+        width: 40,
+    },
     input: {
         height: 30,
         width: 300,
@@ -169,7 +191,19 @@ const style = StyleSheet.create({
         textAlign: 'left',
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#000',
+        color: '#fff',
+    },
+    inputCartao: {
+        height: 30,
+        width: 240,
+        marginTop: 25,
+        padding: 0,
+        borderBottomWidth: 2,
+        borderColor: '#FF6300',
+        textAlign: 'left',
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#fff',
     },
     containerValCvv: {
         flexDirection: 'row',
@@ -186,11 +220,25 @@ const style = StyleSheet.create({
         textAlign: 'left',
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#000',
+        color: '#fff',
     },
     centralizado: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
+    btnPagar: {
+        width: 180,
+        height: 45,
+        backgroundColor: '#FF6300',
+        borderRadius: 20,
+        padding: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    txtPagar: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#FFF',
+    },
 })
