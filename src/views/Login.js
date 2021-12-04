@@ -22,8 +22,8 @@ export default props => {
         zerarCampos()
     }
 
-    const [email, setEmail] = useState('hannanczikan@gmail.com')
-    const [senha, setSenha] = useState('123456')
+    const [email, setEmail] = useState('')
+    const [senha, setSenha] = useState('')
 
     const onChangeEmail = (email) => {
         setEmail(email)

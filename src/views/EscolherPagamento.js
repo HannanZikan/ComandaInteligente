@@ -21,8 +21,12 @@ export default props => {
     const [listaPedidos, setListaPedidos] = useState([])
     const [comanda, setComanda] = useState([])
     const [soma, setSoma] = useState('')
+    const [shortId, setShortId] = useState('')
 
     useEffect(() => {
+        // gerar números aleatórios entre 1000 e 9999
+        setShortId(Math.floor(Math.random() * (10000 - 1000) + 1000))
+        console.log(shortId)
         try {
             const list = []
             const getComanda = firebase.database().ref('/Comandas')
@@ -84,9 +88,6 @@ export default props => {
     }
 
     function fecharComandaCaixa() {
-        // gerar números aleatórios entre 1000 e 9999
-        const shortId = Math.floor(Math.random() * (10000 - 1000) + 1000)
-
         const setComandaFechada = firebase.database()
             .ref('/ComandasFechadas/' + user.uid + '/' + comanda[0]['key']).set({
                 usuario: comanda[0]['usuario'],
@@ -107,7 +108,7 @@ export default props => {
             })
         }
 
-        const excluirComandaAberta = firebase.database().ref('/Comandas/' + comanda[0]['key']).remove()
+        // const excluirComandaAberta = firebase.database().ref('/Comandas/' + comanda[0]['key']).remove()
 
         goToPagarNoCaixa({ shortId })
     }
@@ -136,7 +137,7 @@ export default props => {
 
         const excluirComandaAberta = firebase.database().ref('/Comandas/' + comanda[0]['key']).remove()
 
-        goToPagarCartao()
+        goToPagarCartao({ shortId })
     }
 
     return (

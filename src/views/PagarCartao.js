@@ -53,12 +53,12 @@ export default props => {
     }
 
     function confirmarPagamento(){
-        goToObrigado()
-        // if(cpf != '' && nomeTitular != '' && numeroCartao != '' && validade != '' && cvv != ''){
-        //     Alert.alert("Sucesso!", "Pagamento realizado com sucesso!")
-        // } else {
-        //     Alert.alert("Erro", "Ocorreu um erro inesperado. Por favor tente novamente.")
-        // }
+        if(cpf != '' && nomeTitular != '' && numeroCartao != '' && validade != '' && cvv != ''){
+            Alert.alert("Sucesso!", "Pagamento realizado com sucesso!")
+            goToObrigado()
+        } else {
+            Alert.alert("Erro", "Ocorreu um erro inesperado. Por favor tente novamente.")
+        }
     }
 
     return (

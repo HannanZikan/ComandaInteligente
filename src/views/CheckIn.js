@@ -42,15 +42,15 @@ export default props => {
                     </Text>
                 </View>
 
-                {/* <View style={StyleIndex.contentCenter}>
+                <View style={StyleIndex.contentCenter}>
                         <QRCodeScanner
                             onRead={onRead}
                             showMarker
                             containerStyle
                         />
-                </View> */}
+                </View>
 
-                <View style={StyleIndex.contentCenter}>
+                {/* <View style={StyleIndex.contentCenter}>
                     <View style={style.quadro}>
                         <TouchableOpacity
                             onPress={goToMenu}>
@@ -61,7 +61,7 @@ export default props => {
                             />
                         </TouchableOpacity>
                     </View>
-                </View>
+                </View> */}
             </View>
         </Background>
     )
